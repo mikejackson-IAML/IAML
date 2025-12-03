@@ -1024,7 +1024,8 @@
 
 .benefits-list {
   list-style: none;
-  padding-left: 2.5rem;
+  padding-left: 4rem;
+  padding-right: 2rem;
   margin: var(--space-xl) 0;
 }
 
@@ -1100,7 +1101,8 @@ hr.separator {
   }
 
   .benefits-list {
-    padding-left: 2.5rem;
+    padding-left: 3rem;
+    padding-right: 1.5rem;
   }
 
   .benefits-list li {
