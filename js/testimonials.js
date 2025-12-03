@@ -392,19 +392,35 @@ const testimonialsData = [
         const slide = e.target.closest('.splide__slide');
         if (!slide) return;
 
-        // FIX: Get logical index from Splide's data attribute, not DOM position
-        const clickedIndex = parseInt(slide.getAttribute('data-splide-index') || '0', 10);
         const spotlightPos = getSpotlightPosition();
 
         // On mobile (spotlightPos === -1), just navigate to the card
         if (spotlightPos === -1) {
+          const clickedIndex = parseInt(slide.getAttribute('data-splide-index') || '0', 10);
           splide.go(clickedIndex);
           return;
         }
 
-        // Calculate target index to position clicked card at spotlight
-        const targetIndex = clickedIndex - spotlightPos;
-        splide.go(targetIndex);
+        // Get all visible slides
+        const visibleSlides = document.querySelectorAll('#testimonials-splide .splide__slide.is-visible');
+
+        // Find the position of the clicked slide among visible slides
+        let clickedPosition = -1;
+        visibleSlides.forEach((visibleSlide, index) => {
+          if (visibleSlide === slide) {
+            clickedPosition = index;
+          }
+        });
+
+        if (clickedPosition === -1) return; // Safety check
+
+        // Calculate how many positions to move
+        const moveBy = clickedPosition - spotlightPos;
+
+        // Move the carousel relatively
+        if (moveBy !== 0) {
+          splide.go(moveBy > 0 ? `+${moveBy}` : `${moveBy}`);
+        }
       });
     }
     
