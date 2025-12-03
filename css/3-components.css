@@ -889,7 +889,7 @@
 
 /* Quote Text */
 .testimonials-scroll-section .testimonial-card blockquote {
-  margin: 1rem 0 1.5rem 0;
+  margin: 0.5rem 0 1rem 0;
   font-size: 1.0625rem;
   line-height: 1.6;
   color: var(--gray-600);
@@ -999,7 +999,7 @@
   background: linear-gradient(135deg, rgba(24, 139, 246, 0.06) 0%, rgba(24, 139, 246, 0.02) 100%);
   border: 1px solid rgba(24, 139, 246, 0.12);
   border-radius: var(--radius-lg);
-  padding: var(--space-xl) var(--space-xl) var(--space-2xl) var(--space-xl);
+  padding: var(--space-xl) var(--space-2xl) var(--space-2xl) var(--space-2xl);
   margin-top: var(--space-xl);
   box-shadow: 0 2px 8px rgba(24, 139, 246, 0.04);
 }
