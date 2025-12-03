@@ -887,9 +887,13 @@
   opacity: 0.9;
 }
 
+.testimonials-scroll-section .star-wrapper {
+  margin-bottom: 0.125rem;
+}
+
 /* Quote Text */
 .testimonials-scroll-section .testimonial-card blockquote {
-  margin: 0.5rem 0 1rem 0;
+  margin: 0.125rem 0 0.5rem 0;
   font-size: 1.0625rem;
   line-height: 1.6;
   color: var(--gray-600);
