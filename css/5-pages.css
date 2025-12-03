@@ -2119,3 +2119,385 @@
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(214, 40, 40, 0.4);
   }
+
+  /* ===== PROGRAM PAGE HERO SECTION ===== */
+
+  /* Two-column hero layout for program pages */
+  .hero-section-program {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--black);
+    color: var(--white);
+    padding: var(--space-4xl) 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-section-program .container {
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--space-2xl);
+  }
+
+  .hero-program-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4xl);
+    align-items: center;
+  }
+
+  /* Program Header - Left Column */
+  .program-header {
+    width: 100%;
+    max-width: 600px;
+    background: transparent;
+    padding: 0;
+  }
+
+  .program-title {
+    margin: 0 0 var(--space-2xl) 0;
+    color: var(--white);
+    font-family: var(--font-heading);
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    font-weight: 400;
+    line-height: 1.2;
+  }
+
+  .program-description {
+    max-width: 100%;
+    margin: 0 0 var(--space-2xl) 0;
+    color: rgba(255, 255, 255, 0.85);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+
+  .register-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-sm);
+    width: fit-content;
+    margin: 0;
+    padding: 22px 40px;
+    background: #e93d3d;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 2px solid rgba(233, 61, 61, 0.8);
+    border-radius: 12px;
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1.125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    box-shadow: 0 4px 12px rgba(233, 61, 61, 0.3),
+                0 2px 6px rgba(0, 0, 0, 0.2);
+    transition: all var(--transition-base) ease;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+  }
+
+  .register-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+    transition: left 0.6s ease;
+  }
+
+  .register-button:hover {
+    background: #ff4d4d;
+    border-color: rgba(255, 77, 77, 1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(233, 61, 61, 0.4),
+                0 4px 10px rgba(0, 0, 0, 0.25);
+  }
+
+  .register-button:hover::before {
+    left: 100%;
+  }
+
+  .register-button:active {
+    transform: translateY(0px);
+    box-shadow: 0 2px 8px rgba(233, 61, 61, 0.4),
+                0 1px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .register-button:focus-visible {
+    outline: 3px solid rgba(233, 61, 61, 0.5);
+    outline-offset: 4px;
+  }
+
+  /* Next Program Card Component */
+  .next-program-card {
+    width: 100%;
+    height: fit-content;
+    font-family: var(--font-body);
+  }
+
+  .program-card-container {
+    width: 100%;
+    height: 100%;
+    min-height: 400px;
+    position: relative;
+  }
+
+  .hero-program-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+                0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                0 0 0 1px rgba(255, 255, 255, 0.03);
+    transition: all var(--transition-base) ease;
+  }
+
+  .hero-program-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.25),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+  }
+
+  .card-image-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero-background-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(180deg,
+        rgba(15, 23, 42, 0.3) 0%,
+        rgba(30, 41, 59, 0.7) 40%,
+        rgba(15, 23, 42, 0.95) 100%
+    );
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: var(--space-2xl);
+    color: var(--white);
+  }
+
+  .next-program-badge {
+    background: rgba(107, 114, 128, 0.9);
+    color: var(--white);
+    text-align: center;
+    padding: var(--space-sm) var(--space-lg);
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 2px;
+    align-self: center;
+    border-radius: var(--radius-full);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 12px rgba(107, 114, 128, 0.4),
+                0 2px 6px rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 10;
+  }
+
+  .program-info {
+    text-align: center;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .program-location {
+    font-family: var(--font-body);
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: var(--space-sm);
+    text-transform: capitalize;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    letter-spacing: 1.5px;
+    color: var(--white);
+  }
+
+  .program-dates {
+    font-family: var(--font-body);
+    font-size: 16px;
+    margin-bottom: var(--space-lg);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    font-weight: 400;
+    color: var(--white);
+  }
+
+  .program-link-container {
+    text-align: center;
+    margin-top: auto;
+    padding-top: var(--space-md);
+  }
+
+  .view-all-programs-link {
+    color: var(--blue-primary);
+    font-family: var(--font-body);
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    opacity: 0.9;
+    transition: all var(--transition-base) ease;
+    border-bottom: 1px solid transparent;
+  }
+
+  .view-all-programs-link:hover {
+    opacity: 1;
+    border-bottom: 1px solid var(--blue-primary);
+    transform: translateY(-1px);
+  }
+
+  .view-all-programs-link:focus-visible {
+    outline: 2px solid var(--blue-primary);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Responsive: Tablet and below */
+  @media (max-width: 1024px) {
+    .hero-program-wrapper {
+      grid-template-columns: 1fr;
+      gap: var(--space-3xl);
+    }
+
+    .program-header {
+      max-width: 100%;
+    }
+
+    .program-card-container {
+      min-height: 350px;
+    }
+  }
+
+  /* Responsive: Tablet */
+  @media (max-width: 768px) {
+    .hero-section-program {
+      min-height: auto;
+      padding: var(--space-3xl) 0;
+    }
+
+    .hero-section-program .container {
+      padding: 0 var(--space-lg);
+    }
+
+    .hero-program-wrapper {
+      gap: var(--space-2xl);
+    }
+
+    .program-title {
+      font-size: clamp(1.875rem, 5vw, 2.5rem);
+      margin-bottom: var(--space-xl);
+    }
+
+    .program-description {
+      font-size: 1rem;
+      margin-bottom: var(--space-xl);
+    }
+
+    .register-button {
+      padding: 18px 32px;
+      font-size: 1rem;
+    }
+
+    .program-card-container {
+      min-height: 300px;
+    }
+
+    .card-overlay {
+      padding: var(--space-xl);
+    }
+
+    .program-location {
+      font-size: 20px;
+    }
+
+    .program-dates {
+      font-size: 14px;
+    }
+
+    .next-program-badge {
+      font-size: 11px;
+      padding: var(--space-sm) var(--space-md);
+    }
+
+    .view-all-programs-link {
+      font-size: 13px;
+    }
+
+    .program-link-container {
+      padding-top: var(--space-sm);
+    }
+  }
+
+  /* Responsive: Mobile */
+  @media (max-width: 480px) {
+    .hero-section-program {
+      padding: var(--space-2xl) 0;
+    }
+
+    .hero-section-program .container {
+      padding: 0 var(--space-md);
+    }
+
+    .hero-program-wrapper {
+      gap: var(--space-xl);
+    }
+
+    .program-title {
+      font-size: 1.75rem;
+      margin-bottom: var(--space-lg);
+    }
+
+    .program-description {
+      font-size: 0.9375rem;
+      margin-bottom: var(--space-lg);
+    }
+
+    .register-button {
+      font-size: 0.9rem;
+      padding: 16px 28px;
+      width: 100%;
+    }
+
+    .card-overlay {
+      padding: var(--space-lg);
+    }
+
+    .program-location {
+      font-size: 18px;
+    }
+
+    .view-all-programs-link {
+      font-size: 12px;
+    }
+  }
