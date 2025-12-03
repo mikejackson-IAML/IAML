@@ -44,13 +44,15 @@
 .btn-secondary {
   background: var(--white);
   color: var(--gray-700);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
 }
 
 .btn-secondary:hover:not(:disabled) {
   background: var(--gray-50);
+  border-color: rgba(0, 0, 0, 0.2);
   transform: scale(1.05);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 }
 
 .btn-register,
