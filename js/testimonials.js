@@ -284,7 +284,6 @@ const testimonialsData = [
           .replace(/(^"|"$)/g, '');
         
         li.innerHTML = `
-          <a href="#" class="testimonial-link"></a>
           <div class="testimonial-card relative rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,.03)]">
             <div class="star-rating">
               <img src="${starImageUrl}" alt="5 star rating" class="h-5 w-auto opacity-90 star-image">
