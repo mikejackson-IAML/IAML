@@ -306,30 +306,47 @@ class ProgramRecommendationEngine {
       showThinkingAnimation();
       return;
     }
-    
+
     const q = quizData.questions[currentQuestion];
     const pct = ((currentQuestion + 1) / quizData.questions.length) * 100;
-    
+
     const progressText = document.getElementById('progressText');
     const progressFill = document.getElementById('progressFill');
     const questionText = document.getElementById('questionText');
-    
+
     if (progressText) progressText.textContent = `Question ${currentQuestion + 1} of ${quizData.questions.length}`;
     if (progressFill) progressFill.style.width = `${pct}%`;
     if (questionText) questionText.textContent = q.title;
-    
+
     const optionsContainer = document.getElementById('optionsContainer');
     if (!optionsContainer) return;
-    
-    optionsContainer.innerHTML = '';
+
+    // Clear options safely
+    while (optionsContainer.firstChild) {
+      optionsContainer.removeChild(optionsContainer.firstChild);
+    }
+
+    // Create option buttons safely without innerHTML
     q.options.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'option-btn';
-      btn.innerHTML = `<span class="option-title">${opt.title}</span><span class="option-desc">${opt.description || ''}</span>`;
-      btn.onclick = () => selectOption(btn, q.id, opt.value, opt.title, q.title, currentQuestion + 1);
+
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'option-title';
+      titleSpan.textContent = opt.title;
+      btn.appendChild(titleSpan);
+
+      const descSpan = document.createElement('span');
+      descSpan.className = 'option-desc';
+      descSpan.textContent = opt.description || '';
+      btn.appendChild(descSpan);
+
+      // Use addEventListener instead of onclick
+      btn.addEventListener('click', () => selectOption(btn, q.id, opt.value, opt.title, q.title, currentQuestion + 1));
+
       optionsContainer.appendChild(btn);
     });
-    
+
     const backButton = document.getElementById('backButton');
     if (backButton) {
       backButton.style.display = currentQuestion > 0 ? 'block' : 'none';

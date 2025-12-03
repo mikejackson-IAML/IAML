@@ -151,17 +151,11 @@
     }
     
     // ===== CONSOLE BRANDING =====
+    // SECURITY NOTE: Console branding disabled in production to prevent information disclosure
     function showConsoleBranding() {
-      const styles = [
-        'color: #188bf6',
-        'font-size: 20px',
-        'font-weight: bold',
-        'text-shadow: 2px 2px 0px rgba(0,0,0,0.2)'
-      ].join(';');
-      
-      console.log('%cIAML', styles);
-      console.log('%cInstitute for Applied Management & Law', 'color: #64748B; font-size: 12px;');
-      console.log('%c🚀 Site built with care by Re-Vitalized Properties', 'color: #9ca3af; font-size: 11px; font-style: italic;');
+      // Disabled for security - see SECURITY_AUDIT_REPORT.md
+      // Only enable in development environment if needed
+      return;
     }
     
     // ===== MAIN INITIALIZATION =====

@@ -67,46 +67,81 @@ const testimonialsData = [
   function initializeTestimonialsCarousel() {
     const list = document.getElementById('testimonials-list');
     if (!list) return;
-    
+
     // Star rating image URL
     const starImageUrl = 'https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/68d667936fe1a53fe6603670.png';
-    
-    // Populate slides
+
+    // Populate slides safely without innerHTML
     if (Array.isArray(testimonialsData) && testimonialsData.length) {
-      list.innerHTML = '';
+      // Clear list safely
+      while (list.firstChild) {
+        list.removeChild(list.firstChild);
+      }
+
       testimonialsData.forEach(({ quote, name, title, company }) => {
         const li = document.createElement('li');
         li.className = 'splide__slide';
-        
-        // Clean quote text
+
+        // Clean quote text - basic HTML entity decoding
         const clean = String(quote || '')
           .replace(/&#39;/g, "'")
           .replace(/&quot;/g, '"')
           .replace(/&amp;/g, '&')
           .replace(/(^"|"$)/g, '');
-        
-        li.innerHTML = `
-          <a href="#" class="testimonial-link"></a>
-          <div class="testimonial-card relative rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,.03)]">
-            <div class="flex mb-4">
-              <img src="${starImageUrl}" alt="5 star rating" class="h-5 w-auto opacity-90 star-image">
-            </div>
-            <blockquote class="text-gray-200 text-lg leading-relaxed mb-6 relative z-10 italic font-normal">
-              "${clean}"
-            </blockquote>
-            <div class="pt-4 mt-auto">
-              <div class="author-name">${name || ''}</div>
-              <div class="text-gray-400 text-sm">${title || ''}</div>
-              <div class="text-gray-400 text-sm font-medium">${company || ''}</div>
-            </div>
-          </div>`;
+
+        // Create testimonial card structure safely
+        const link = document.createElement('a');
+        link.href = '#';
+        link.className = 'testimonial-link';
+        li.appendChild(link);
+
+        const card = document.createElement('div');
+        card.className = 'testimonial-card relative rounded-2xl border border-white/10 bg-white/5 p-6 shadow-[0_0_0_1px_rgba(255,255,255,.03)]';
+
+        // Star rating
+        const starDiv = document.createElement('div');
+        starDiv.className = 'flex mb-4';
+        const starImg = document.createElement('img');
+        starImg.src = starImageUrl;
+        starImg.alt = '5 star rating';
+        starImg.className = 'h-5 w-auto opacity-90 star-image';
+        starDiv.appendChild(starImg);
+        card.appendChild(starDiv);
+
+        // Blockquote - use textContent to safely insert cleaned quote
+        const blockquote = document.createElement('blockquote');
+        blockquote.className = 'text-gray-200 text-lg leading-relaxed mb-6 relative z-10 italic font-normal';
+        blockquote.textContent = `"${clean}"`;
+        card.appendChild(blockquote);
+
+        // Author info
+        const authorDiv = document.createElement('div');
+        authorDiv.className = 'pt-4 mt-auto';
+
+        const nameDiv = document.createElement('div');
+        nameDiv.className = 'author-name';
+        nameDiv.textContent = name || '';
+        authorDiv.appendChild(nameDiv);
+
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'text-gray-400 text-sm';
+        titleDiv.textContent = title || '';
+        authorDiv.appendChild(titleDiv);
+
+        const companyDiv = document.createElement('div');
+        companyDiv.className = 'text-gray-400 text-sm font-medium';
+        companyDiv.textContent = company || '';
+        authorDiv.appendChild(companyDiv);
+
+        card.appendChild(authorDiv);
+        li.appendChild(card);
         list.appendChild(li);
       });
     }
     
     // Check if Splide is loaded
     if (typeof Splide === 'undefined') {
-      console.warn('Splide library not loaded');
+      // Splide library not available - carousel won't initialize
       return;
     }
     
