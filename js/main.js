@@ -150,14 +150,6 @@
       });
     }
 
-    // ===== COPYRIGHT YEAR =====
-    function updateCopyrightYear() {
-      const yearElement = document.getElementById('year');
-      if (yearElement) {
-        yearElement.textContent = new Date().getFullYear() + ' ';
-      }
-    }
-    
     // ===== CONSOLE BRANDING =====
     function showConsoleBranding() {
       const styles = [
@@ -183,7 +175,6 @@
       initializeFormValidation();
       fixViewportHeight();
       initializeBackToTop();
-      updateCopyrightYear();
 
       // Branding
       if (SITE_CONFIG.debugMode) {
