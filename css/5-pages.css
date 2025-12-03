@@ -1233,7 +1233,7 @@
   /* Author styling */
   .author-name {
     font-weight: 600;
-    color: var(--gray-100);
+    color: var(--blue-primary);
     font-size: 1.125rem;
     line-height: 1.25;
     display: inline-block;
@@ -1948,6 +1948,7 @@
     max-height: 90vh;
     overflow-y: auto;
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+    position: relative;
     /* Hide scrollbar while maintaining scroll functionality */
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE/Edge */
