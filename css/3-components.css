@@ -811,7 +811,7 @@
 
 /* ===== TESTIMONIALS SCROLL SECTION ===== */
 .testimonials-scroll-section {
-  padding: 6rem 0;
+  padding: 12.25rem 0 15rem 0;
 }
 
 .scroll-grid {
@@ -1008,7 +1008,7 @@
   background: var(--white);
   border: 1px solid var(--gray-300);
   border-radius: var(--radius-lg);
-  padding: var(--space-2xl);
+  padding: var(--space-2xl) var(--space-2xl) var(--space-lg) var(--space-2xl);
   margin-top: var(--space-xl);
   box-shadow: var(--shadow-md);
 }
