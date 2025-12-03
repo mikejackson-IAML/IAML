@@ -996,6 +996,7 @@
 
 .content-section h2 {
   margin-bottom: var(--space-lg);
+  max-width: 600px;
 }
 
 .content-section p {
@@ -1004,12 +1005,12 @@
 
 /* Benefits Section */
 .benefits-section {
-  background: linear-gradient(135deg, rgba(24, 139, 246, 0.06) 0%, rgba(24, 139, 246, 0.02) 100%);
-  border: 1px solid rgba(24, 139, 246, 0.12);
+  background: var(--white);
+  border: 1px solid var(--gray-300);
   border-radius: var(--radius-lg);
-  padding: var(--space-xl) var(--space-2xl) var(--space-2xl) var(--space-2xl);
+  padding: var(--space-2xl) var(--space-4xl);
   margin-top: var(--space-xl);
-  box-shadow: 0 2px 8px rgba(24, 139, 246, 0.04);
+  box-shadow: var(--shadow-md);
 }
 
 .benefits-section h3 {
@@ -1023,7 +1024,7 @@
 
 .benefits-list {
   list-style: none;
-  padding-left: 1.5rem;
+  padding-left: 2.5rem;
   margin: var(--space-xl) 0;
 }
 
@@ -1090,8 +1091,16 @@ hr.separator {
     padding-top: 0;
   }
 
+  .benefits-section {
+    padding: var(--space-2xl) var(--space-3xl);
+  }
+
   .benefits-section h3 {
     font-size: 1.5rem;
+  }
+
+  .benefits-list {
+    padding-left: 2.5rem;
   }
 
   .benefits-list li {
