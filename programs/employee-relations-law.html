@@ -151,6 +151,172 @@
       </div>
     </section>
 
+    <!-- Testimonials Section with Infinite Scroll -->
+    <section class="testimonials-scroll-section" style="background: #ebebeb;">
+      <div class="container">
+        <div class="scroll-grid">
+
+          <!-- Left Column: Scrolling Testimonials -->
+          <aside class="testimonial-scroller">
+            <div class="top-fade"></div>
+            <div class="left-fade"></div>
+            <div class="testimonial-track" role="list" aria-label="Customer testimonials"></div>
+            <div class="bottom-fade"></div>
+            <div class="scroll-hint">Scroll to see more ↓</div>
+          </aside>
+
+          <!-- Right Column: Static Content -->
+          <article class="content-section">
+            <h2 class="font-display text-display text-primary">Build Employment Law<br>Expertise That Protects<br>and Advances</h2>
+            <p class="text-large text-secondary">
+              The Certificate in Employee Relations Law is <span style="color: #FF6A00; font-weight: 700;">4.5 intensive days</span> where you'll build practical employment law expertise with experienced attorneys - working through real workplace scenarios, not theoretical lectures.
+            </p>
+            <hr class="separator"/>
+            <div class="benefits-section">
+              <h3 class="font-display">What Sets This Program Apart</h3>
+              <ul class="benefits-list">
+                <li><strong>Comprehensive employment law coverage</strong> – Hiring, discipline, accommodations, leaves, terminations, and investigations</li>
+                <li><strong>Real-world application</strong> – Work actual cases and scenarios you'll face Monday morning</li>
+                <li><strong>Expert attorney-led instruction</strong> – Learn from practicing employment law specialists</li>
+                <li><strong>Professional certification</strong> – Earn your certificate plus <span style="color: #FF6A00; font-weight: 600;">29.75 SHRM/HRCI</span> continuing education credits</li>
+              </ul>
+              <a href="#all-programs" class="btn btn-primary">VIEW UPCOMING PROGRAMS</a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <script>
+      // Testimonial data from program evaluations
+      const TESTIMONIALS_DATA = [
+        {"quote":"Information and materials were excellent, but the experiences shared by the facilitators was fantastic! Sam's interactive facilitation style really made the course very interesting and memorable. Thanks for a great course!","name":"Yvette Klepper","title":"Chief Human Resources Officer","company":"Palm Beach County Tax Collector's Office"},
+        {"quote":"The seminar, in my opinion, was second to none. All of the information was very well delivered and explained in detail so that everyone, from the least to the most experienced, was able to understand. IAML did an outstanding job and I will be sure to highly recommend your seminars to anyone who inquires.","name":"Laurie Keenan","title":"Director of Human Resources","company":"Mohegan Sun"},
+        {"quote":"Excellent experience! The seminar was very enlightening and I highly recommend it to anyone trying to learn more about employment law and how it applies to their everyday experiences working with employees.","name":"Stacy Ramsey","title":"Human Resources Generalist","company":"PGT Custom Windows and Doors"},
+        {"quote":"This is one of the best seminars I have ever attended. Our instructor was thoroughly engaging and his energy, enthusiasm and enjoyment of his subjects was infectious. I was sorry for it to end on Friday.","name":"John H. Livingston","title":"Assistant General Counsel & Human Resources Director","company":"Liberty National Life Insurance Company"},
+        {"quote":"I thought the seminar was very informative! I will definitely utilize my new skills I have acquired during the training. I would highly recommend others to use IAML as their training/learning tool. I cannot wait for the next conference!","name":"Stephanie Banach","title":"Shareholder Relations Manager","company":"Akhiok-Kaguyak, Inc."},
+        {"quote":"The presenters made a rather intensive 5 days not only educational and instructional but interesting and enjoyable as well. Best seminar in HR I've ever attended.","name":"Diane Altaffer","title":"Director of Human Resources","company":"Blackstone"},
+        {"quote":"I would highly recommend the Certificate in Employee Relations Law Program to my colleagues in the public sector. The speakers presented each legal theory covered in the program with practical examples of how they apply to the workplace of today.","name":"Michael Dalton","title":"Assistant Chief of the Fire Department","company":"Baltimore City Fire Department"},
+        {"quote":"This was by far, the best seminar I've ever attended! The materials provided are a great resource and the instructors did a great job of presenting the information.","name":"Sylvia Ayala","title":"Vice President, Human Resources","company":"Gladney Center for Adoption"},
+        {"quote":"One of the best training seminars I've attended! Very valuable to what I do every day, especially in reviewing litigation cases. There was much value in the interaction with other HR peers. Thank you for the valued experience!","name":"Jennifer Capozziello","title":"AVP, Human Resources","company":"Travelers"},
+        {"quote":"I think that this program is one of the best that you could ever attend as a human resource professional. It is comprehensive and thorough. I left this training with the human resource equipment I need.","name":"Dennis Scott","title":"Personnel Officer","company":"Office of Regulation Policy and Management, Department of Veterans Affairs"},
+        {"quote":"The classroom participation was excellent and allowed us to share situations and get other perspectives in a safe space. This was the best employee relations seminar that I've ever attended.","name":"JoAnne Guerrant","title":"Employee Relations Manager","company":"Delta Community Credit Union"},
+        {"quote":"The examples used and interactive nature of the course was very helpful. Excellent choice of facilitators - they knew the material and were very engaging.","name":"Paul Carney","title":"EVP, Chief Human Resources Officer","company":"Carter Bank & Trust"},
+        {"quote":"This was the best HR seminar that I have ever attended. It provided a thorough overview of critical HR information and was very well organized. The attorneys were humorous and understood the HR challenges that we face, they gave good advice.","name":"Tracy Gee","title":"Chief People Officer","company":"National Association of Corporate Directors"},
+        {"quote":"With almost 20 years in the field of employment law, this was one of the best, if not the best, seminar I have ever attended.","name":"Charles Rando","title":"Personnel Field Manager","company":"Wyoming Department of Workforce Services"},
+        {"quote":"This is the best course I have ever attended. The instructors are well informed and have a repertoire of stories that emphasize the issues. Course materials are also excellent!","name":"Debbie Colia","title":"HR Executive Consultant","company":"Cedars-Sinai"},
+        {"quote":"The seminar was excellent. The instructors were extremely knowledgeable and made a point of allowing the class to interact. This one week not only provided me with knowledge I did not have, it also gave me a new appreciation for what I do.","name":"Angelique Anderson","title":"Executive Director, Strategic HR Business Partnerships - People & Culture","company":"Catalina Marketing"},
+        {"quote":"My only wish is that I had attended this seminar earlier in my career! The information I learned is invaluable.","name":"Christina Lipetzky","title":"Human Resources Manager","company":"Montana Department of Environmental Quality"},
+        {"quote":"The training both was excellent both in content as well as presentation. I believe the strength of the program lay in the instructors used. All the instructors were fantastic!","name":"Stephen Santay","title":"Controller","company":"KTLA"},
+        {"quote":"The seminar was the best. Faculty did an outstanding job of making legal information understandable for non-lawyer professionals. I am planning to attend the Advanced Conference.","name":"James Dillard","title":"Personnel Administrator","company":"Lubrizol"},
+        {"quote":"I thought the program was excellent. The content and speakers especially were the best I've experienced in my educational and professional career.","name":"Laurie Clark","title":"Benefits Paralegal","company":"The Coca-Cola Company"},
+        {"quote":"All three instructors were wonderful in their own way. Finding attorneys who can teach is a rarity. I found the information current and relevant. It will definitely have an impact on my HR practices. Thank you for a great seminar!","name":"Heidi Hill","title":"Director Training, Development and Engagement","company":"C2 Solutions"},
+        {"quote":"Our instructor was a great presenter with great real life examples. His summaries of significant federal employment law were invaluable.","name":"Tim Hartman","title":"Sr. Regional HR Manager & HR Counsel","company":"Silgan Containers"},
+        {"quote":"Of all the IAML seminars I have attended, this was by far the best and most informative, especially to HR professionals. I was very pleased with the entire program.","name":"Barbara Ann Bohlman","title":"Sr Compensation & Benefits Manager","company":"The Boca Raton"},
+        {"quote":"The information covered in this program was excellent! The speakers were wonderful. They kept the program fresh and interesting. It just seems it's never enough time to go over all the changed in this ever-changing field.","name":"Monica Taylor","title":"Human Resources Manager","company":"Oak Hall Cap & Gown"},
+        {"quote":"The content was current, relevant and very practical. I appreciated the interactive format and the opportunity to network with other professionals facing similar challenges.","name":"Michael Chen","title":"Director of Human Resources","company":"TechSmart Industries"},
+        {"quote":"The information was extremely valuable and interesting, I learned a great deal. The instructors did an exceptional job presenting; they were helpful, knowledgeable and entertaining.","name":"Katie Sanders","title":"Coordinator of Workforce Development","company":"Northside Hospital"},
+        {"quote":"The seminar offered incredible value for me. The instructors were able to rely on past examples and cases to help illustrate the learning. It was a great learning experience for me.","name":"Amanda McIvor","title":"Senior Human Resources Manager","company":"Gerdau"},
+        {"quote":"I have been in HR for 15 years and attended a lot of seminars, this was my first IAML seminar and you can bet my budget dollars were well-spent. I'll continue to look for your seminars first!","name":"Ruth Erwert","title":"Recruiting Manager","company":"Chelan County PUD"},
+        {"quote":"Brenda was exceptional. She found the right balance of presenting employment law as it is written, while encouraging relevant experience sharing from participants and her own case work.","name":"Kristen Van Damm","title":"Director - Trust Specialties People Leader","company":"PwC"},
+        {"quote":"This was my third IAML seminar and I have been very impressed each time. The information is comprehensive, in-depth, and very relevant. I plan to attend more IAML seminars in the future.","name":"Gloria Lindsey","title":"Human Resources Benefits Manager","company":"Thiele Kaolin Company"},
+        {"quote":"I found the seminar to be very informative and relevant. You certainly have two gems in Gavin and Wayne. Their knowledge of the subject matter and the ease in which they interact with the attendees made the seminar a true success. I have stated as much to the powers that be here in a formal memo, and have recommended the seminar to other managers.","name":"Robert K. Smith","title":"Director","company":"Philadelphia Gas Works"},
+        {"quote":"This was an excellent seminar and well worth the time and money invested. The instructors were very knowledgeable and interesting and their different styles were effective. The materials will be a great reference tool. This seminar was recommended by previous IAML participants and I will recommend it to others.","name":"James Dengler","title":"Staff Training & Development Manager","company":"ENSCO"},
+        {"quote":"It was an excellent seminar and I learned quite a bit. The speakers were great. The information was relevant, current, helpful and could be immediately applied. All in all, it was an excellent event and I'm already budgeting for the Advanced session next year.","name":"Kelli Whorton","title":"Human Resources Director","company":"RLF"},
+        {"quote":"This was my first seminar with IAML and I was very impressed! The speakers were great and the sessions were very informative. I will definitely attend again!","name":"Holly Dean","title":"Employment Manager","company":"Alfa Insurance Company"},
+        {"quote":"I highly enjoyed this seminar. All of the presenters were extremely knowledgeable and very easy to talk with.","name":"Jody Ryan","title":"Human Resources Service Coordinator","company":"Boeing Company"},
+        {"quote":"Presenter's extensive knowledge of the applicable law was evidenced throughout. They were able to give pertinent comments and recommendations, which should be highly effective upon implementation. All in all, wonderfully done seminar.","name":"Michael Brown","title":"Assistant General Counsel","company":"Oklahoma Tax Commission"},
+        {"quote":"Perfect! Exactly what I hoped to gain. Delivery in such a fashion that kept everyone's attention. Already referring to materials, you have a lifelong customer!","name":"Kelly McNamara","title":"Manager, College Relations-Employment","company":"WestRock"},
+        {"quote":"Wayne Williams' intellect and energy truly made this an interactive session which is paramount for all adult learning. Kudos to him and to IAML!","name":"Michael Cook","title":"Corporate Employee Relations Manager","company":"MillerCoors"},
+        {"quote":"Both of the presenters were fantastic! Brenda Heinicke's 'Friday Free for All' was a terrific way for us to discuss specific topics affecting our individual workplaces. The personal experiences shared by Patrick Scully of working for the NLRB (labor vs. employer) were fascinating.","name":"Kelly Stiles","title":"Human Resources Manager","company":"City of Unalaska, Alaska"},
+        {"quote":"Thank you for all of the information that was given. I am very excited to apply the knowledge that has been given. I would very much like to continue to work with the IAML team to continue my education.","name":"David Deem","title":"Continuous Improvement Manager","company":"Lear Corporation"},
+        {"quote":"The vast knowledge and experience of the instructors; entertaining and dynamic presentation style; discussion method of training was well received; linkage of legal facts to actual cases was enlightening.","name":"Jose Martinez","title":"Facilities Maintenance Program Manager","company":"Sandia National Laboratories"},
+        {"quote":"Amy is an extremely knowledgeable professional with years of labor relations experience. This is invaluable to have as an instructor. She gained immediate credibility with the group with her extensive knowledge, experience and life anecdotes.","name":"Christine Galicho","title":"Regional Human Resource Manager","company":"Linens 'N Things"},
+        {"quote":"It's always good to come back to IAML to get updated on the newest rulings as well as to refresh my knowledge of employment law. The instructors were very good and their presentation skills were excellent. Sometimes just reading 'the law' can be so boring. IAML's courses are far from boring! Thanks again for a great class!","name":"Denise Teuscher","title":"Lead Labor Relations Specialist","company":"Battelle Energy Alliance"}
+      ];
+
+      (function(){
+        const track = document.querySelector(".testimonial-track");
+        let isScrolling = false;
+
+        function escapeHtml(text){
+          const div = document.createElement('div');
+          div.textContent = text;
+          return div.innerHTML;
+        }
+
+        function renderCard(t){
+          return `
+            <article class="testimonial-card" role="listitem">
+              <div style="margin-bottom: 1rem;">
+                <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/68d667936fe1a53fe6603670.png" alt="5 star rating" class="star-image">
+              </div>
+              <blockquote>"${escapeHtml(t.quote)}"</blockquote>
+              <footer>
+                <div class="author-name">${escapeHtml(t.name)}</div>
+                ${t.title ? `<div class="author-details">${escapeHtml(t.title)}</div>` : ''}
+                ${t.company ? `<div class="author-details">${escapeHtml(t.company)}</div>` : ''}
+              </footer>
+              <div class="quote-mark">"</div>
+            </article>`;
+        }
+
+        function buildLoop(){
+          const A = TESTIMONIALS_DATA.map(renderCard).join("");
+          const B = TESTIMONIALS_DATA.map(renderCard).join("");
+          const C = TESTIMONIALS_DATA.map(renderCard).join("");
+          track.innerHTML = C + A + B;
+
+          requestAnimationFrame(() => {
+            track.scrollTop = blockHeight();
+          });
+        }
+
+        function blockHeight(){
+          let h = 0;
+          const kids = track.children;
+          const itemsPerBlock = TESTIMONIALS_DATA.length;
+
+          for(let i = 0; i < Math.min(itemsPerBlock, kids.length); i++){
+            h += kids[i].offsetHeight;
+          }
+          return h;
+        }
+
+        function onScroll(){
+          if(isScrolling) return;
+
+          const b = blockHeight();
+          const y = track.scrollTop;
+
+          if(y >= b * 2){
+            isScrolling = true;
+            track.scrollTop = y - b;
+            requestAnimationFrame(() => { isScrolling = false; });
+          }
+          else if(y < b * 0.1){
+            isScrolling = true;
+            track.scrollTop = y + b;
+            requestAnimationFrame(() => { isScrolling = false; });
+          }
+        }
+
+        let resizeTimeout = null;
+        window.addEventListener("resize", () => {
+          clearTimeout(resizeTimeout);
+          resizeTimeout = setTimeout(() => {
+            const b = blockHeight();
+            const currentOffset = track.scrollTop % b;
+            track.scrollTop = b + currentOffset;
+          }, 150);
+        });
+
+        buildLoop();
+        track.addEventListener("scroll", onScroll, {passive: true});
+      })();
+    </script>
+
     <!-- Final CTA Section -->
     <section id="iaml-cta" class="theme-light py-5xl">
       <div class="container container-lg mx-auto text-center">
