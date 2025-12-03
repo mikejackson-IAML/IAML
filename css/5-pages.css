@@ -1341,7 +1341,7 @@
   /* Navigation arrows positioned below testimonials */
   #testimonials-splide .splide__arrows {
     position: absolute;
-    bottom: -80px;
+    bottom: -110px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -1363,9 +1363,10 @@
   }
 
   #testimonials-splide .splide__arrow:hover {
-    background: rgba(255, 255, 255, 0.25);
+    background: rgba(24, 139, 246, 0.2);
+    border-color: var(--blue-primary);
     opacity: 1;
-    transform: scale(1.05);
+    box-shadow: 0 0 0 2px rgba(24, 139, 246, 0.4);
   }
 
   #testimonials-splide .splide__arrow svg {
@@ -1376,14 +1377,14 @@
 
   /* Add padding to testimonials section for arrows */
   #tst-testimonials {
-    padding-bottom: 120px;
+    padding-bottom: 150px;
     position: relative;
     overflow: visible;
   }
 
   #testimonials-splide {
     position: relative;
-    padding: 20px 40px 0;
+    padding-top: 20px;
   }
 
   /* Allow testimonial cards to expand upward on hover without being clipped */
@@ -1411,7 +1412,7 @@
     }
 
     #testimonials-splide {
-      padding: 20px var(--space-md) 0;
+      padding-top: 20px;
     }
 
     .testimonial-headline-left h2,
@@ -1434,7 +1435,7 @@
     }
 
     #testimonials-splide {
-      padding: 20px var(--space-sm) 0;
+      padding-top: 20px;
     }
   }
 
@@ -1468,11 +1469,11 @@
     }
 
     #testimonials-splide .splide__arrows {
-      bottom: -70px;
+      bottom: -100px;
     }
 
     #tst-testimonials {
-      padding-bottom: 100px;
+      padding-bottom: 130px;
     }
   }
 
@@ -1760,7 +1761,7 @@
     gap: 16px;
     flex-wrap: wrap;
     margin-top: 32px;
-    margin-bottom: 100px;
+    margin-bottom: 150px;
   }
   
   .cta-cascade {
@@ -1785,6 +1786,7 @@
   }
 
   #iaml-cta {
+    padding-top: calc(15rem + 35px);
     padding-bottom: 12rem;
   }
 
@@ -1912,6 +1914,10 @@
     
     .faculty-section {
       padding: 24px 20px 60px;
+    }
+
+    #iaml-cta {
+      padding-top: calc(8rem + 35px);
     }
   }
   
