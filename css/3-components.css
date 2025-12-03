@@ -977,7 +977,7 @@
   z-index: 15;
   font-size: 0.875rem;
   color: var(--gray-800);
-  margin-top: 0.5rem;
+  margin-top: calc(0.5rem + 15px);
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   font-weight: 500;
