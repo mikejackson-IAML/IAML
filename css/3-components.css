@@ -1008,7 +1008,7 @@
   background: var(--white);
   border: 1px solid var(--gray-300);
   border-radius: var(--radius-lg);
-  padding: var(--space-2xl) var(--space-4xl);
+  padding: var(--space-2xl);
   margin-top: var(--space-xl);
   box-shadow: var(--shadow-md);
 }
@@ -1092,7 +1092,7 @@ hr.separator {
   }
 
   .benefits-section {
-    padding: var(--space-2xl) var(--space-3xl);
+    padding: var(--space-2xl);
   }
 
   .benefits-section h3 {
