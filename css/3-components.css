@@ -973,10 +973,17 @@
 
 /* Scroll Hint */
 .scroll-hint {
+  position: relative;
+  z-index: 15;
   font-size: 0.875rem;
-  color: var(--gray-500);
+  color: var(--gray-700);
   margin-top: 0.5rem;
   text-align: center;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
 }
 
 /* Content Section (Right Column) */
