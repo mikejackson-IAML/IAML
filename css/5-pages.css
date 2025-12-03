@@ -732,7 +732,7 @@
     max-width: 1200px;
     width: 100%;
     display: grid;
-    grid-template-columns: 50% 45%;
+    grid-template-columns: 1fr 0.9fr;
     gap: 80px;
     align-items: start;
     position: relative;
