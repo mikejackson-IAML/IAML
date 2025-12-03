@@ -20,18 +20,18 @@
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
   
   <title>IAML - Professional HR Training & Employment Law Education</title>
-  
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <!-- Splide CSS (for testimonials carousel) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
-  
+
   <!-- Main CSS -->
   <link rel="stylesheet" href="css/main.css">
-  
+
   <!-- Google Analytics (Replace with your GA4 ID) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
@@ -40,41 +40,6 @@
     gtag('js', new Date());
     gtag('config', 'G-XXXXXXXXXX');
   </script>
-
-  <!-- Button Style Override -->
-  <style>
-    .btn {
-      padding: 16px 32px !important;
-      border-radius: 12px !important;
-      font-weight: 700 !important;
-      box-shadow: none !important;
-      margin: 0 12px !important;
-    }
-
-    .btn-primary {
-      background: #3b5998 !important;
-      border: 2px solid #2d4373 !important;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    .btn-primary:hover {
-      background: #2d4373 !important;
-      border-color: #1e2d4f !important;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25) !important;
-    }
-
-    .btn-register {
-      background: #e41e26 !important;
-      border: 2px solid #c41920 !important;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
-    }
-
-    .btn-register:hover {
-      background: #c41920 !important;
-      border-color: #a01519 !important;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25) !important;
-    }
-  </style>
 </head>
 <body>
 
@@ -344,18 +309,23 @@
     
     <!-- Testimonials Section -->
     <section class="testimonials-section">
-      <div class="container">
-        <div class="testimonial-headline">
+      <div class="testimonial-headline">
+        <div class="testimonial-headline-left">
           <h2>Real Results from Real Professionals</h2>
-          <p>Don't take our word for it. Hear from HR professionals who walked out with solutions they used the next week.</p>
         </div>
-        
-        <div id="testimonials-splide" class="splide">
-          <div class="splide__track">
-            <ul class="splide__list" id="testimonials-list">
-              <!-- JavaScript will populate testimonials -->
-            </ul>
-          </div>
+        <div class="testimonial-headline-right">
+          <p>Don't take our word for it. Hear from HR professionals who walked out with solutions they used the next week.</p>
+          <a href="https://iaml.com/featured-programs" class="testimonial-cta-link">
+            Explore featured programs →
+          </a>
+        </div>
+      </div>
+
+      <div id="testimonials-splide" class="splide">
+        <div class="splide__track">
+          <ul class="splide__list" id="testimonials-list">
+            <!-- JavaScript will populate testimonials -->
+          </ul>
         </div>
       </div>
     </section>
@@ -665,10 +635,10 @@
           
           <div class="cta-button-group">
             <button class="btn btn-primary hover-lift" id="openContactModal" onclick="connectPopup_open()">
-              Let's Talk
+              LET'S TALK
             </button>
             <a href="#all-programs" class="btn btn-register hover-lift">
-              Register Now
+              REGISTER NOW
             </a>
           </div>
         </div>
