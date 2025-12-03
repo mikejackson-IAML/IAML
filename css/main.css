@@ -22,14 +22,6 @@
    Global Utilities (if needed)
    ============================================ */
 
-/* Full-width sections */
-.full-width-section {
-  width: 100%;
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  box-sizing: border-box;
-}
-
 /* Section padding */
 .section-padding {
   padding: 80px 40px;
