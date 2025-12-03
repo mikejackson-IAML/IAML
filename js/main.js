@@ -154,7 +154,7 @@
     function updateCopyrightYear() {
       const yearElement = document.getElementById('year');
       if (yearElement) {
-        yearElement.textContent = new Date().getFullYear();
+        yearElement.textContent = new Date().getFullYear() + ' ';
       }
     }
     
