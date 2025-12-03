@@ -26,8 +26,11 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Splide CSS (for testimonials carousel) -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+  <!-- Splide CSS (for testimonials carousel) with SRI hash for security -->
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css"
+        integrity="sha384-o7iYk9YD+PZYMlwgJXFhtVP1MHSE0hRyTGT3s3kI6Yeo2yW34UiYPaL0cAcE/TIN"
+        crossorigin="anonymous">
   
   <!-- Main CSS -->
   <link rel="stylesheet" href="css/main.css">
@@ -98,7 +101,7 @@
         </nav>
 
         <!-- Desktop CTA Button -->
-        <a href="#" class="header-cta" onclick="connectPopup_open(); return false;">
+        <a href="#" class="header-cta" id="header-cta-desktop">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
             </svg>
@@ -120,7 +123,7 @@
     <a href="https://iaml.com/featured-programs">Featured Programs</a>
     <a href="https://iaml.com/corporate-training">Corporate Training</a>
     <a href="https://iaml.com/about-us">Why IAML</a>
-    <a href="#" class="header-cta" onclick="connectPopup_open(); closeMobileMenu(); return false;">
+    <a href="#" class="header-cta" id="header-cta-mobile">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
             <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
         </svg>
@@ -313,7 +316,7 @@
                 <p id="questionText">What best describes your current role?</p>
               </div>
               <div class="quiz-options" id="optionsContainer"></div>
-              <button class="back-button" id="backButton" onclick="goBack()">← BACK</button>
+              <button class="back-button" id="backButton">← BACK</button>
             </div>
           </div>
           
@@ -664,7 +667,7 @@
           </p>
           
           <div class="cta-button-group">
-            <button class="btn btn-primary hover-lift" id="openContactModal" onclick="connectPopup_open()">
+            <button class="btn btn-primary hover-lift" id="openContactModal">
               Let's Talk
             </button>
             <a href="#all-programs" class="btn btn-register hover-lift">
@@ -734,7 +737,7 @@
   <!-- Quiz Recommendation Modal -->
   <div id="recommendationModal" class="modal" aria-hidden="true">
     <div class="modal-content" role="dialog" aria-modal="true">
-      <button class="modal-close" onclick="closeModal()" aria-label="Close">&times;</button>
+      <button class="modal-close" id="recommendationModalClose" aria-label="Close">&times;</button>
       <div class="modal-header">
         <h2 class="modal-program-title" id="modalProgramTitle"></h2>
         <p class="modal-program-description" id="modalProgramDescription"></p>
@@ -751,8 +754,8 @@
         <div class="modal-cta-section">
           <p class="modal-cta-text">Ready to advance your career with this program?</p>
           <div class="modal-cta-buttons">
-            <button class="btn btn-primary" onclick="alert('Info request placeholder')">GET MORE INFORMATION →</button>
-            <button class="btn btn-secondary" onclick="closeModal()">START OVER →</button>
+            <button class="btn btn-primary" id="getMoreInfoBtn">GET MORE INFORMATION →</button>
+            <button class="btn btn-secondary" id="startOverBtn">START OVER →</button>
           </div>
         </div>
       </div>
@@ -760,11 +763,11 @@
   </div>
   
   <!-- Connect Modal -->
-  <div class="connectPopup-overlay" id="connectPopup_Modal" onclick="connectPopup_closeOnOverlay(event)">
-    <div class="connectPopup-modal" onclick="event.stopPropagation();">
+  <div class="connectPopup-overlay" id="connectPopup_Modal">
+    <div class="connectPopup-modal" id="connectPopup_ModalInner">
       <div class="connectPopup-header">
         <h3>Connect with Us in 20 Seconds or Less</h3>
-        <button class="connectPopup-closeBtn" onclick="connectPopup_close()" aria-label="Close">&times;</button>
+        <button class="connectPopup-closeBtn" id="connectPopup_closeBtn" aria-label="Close">&times;</button>
       </div>
       <div class="connectPopup-body" id="connectPopup_Content">
         <!-- Dynamic content -->
@@ -774,10 +777,15 @@
 
   <!-- ===== JAVASCRIPT ===== -->
 
-  <!-- External Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+  <!-- External Libraries with SRI integrity checks -->
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"
+          integrity="sha384-TwC7U6jK9gj+GGdlFBPQ3qyNrgc8K3T5kgBzDlH4pKUTcZ4KGYbU8zt8/WQU3vj8"
+          crossorigin="anonymous"></script>
 
-  <!-- Environment Configuration (must load first) -->
+  <!-- Security Utilities (must load first for other scripts to use) -->
+  <script src="js/security-utils.js"></script>
+
+  <!-- Environment Configuration -->
   <script src="js/env-config.js"></script>
 
   <!-- Your JavaScript Files -->
@@ -788,6 +796,120 @@
   <script src="js/faq.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
+
+  <!-- Event Listeners (Secure - No Inline Handlers) -->
+  <script>
+    // ============================================================================
+    // SECURE EVENT LISTENERS
+    // All onclick handlers have been removed and replaced with addEventListener
+    // ============================================================================
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Header CTA buttons - Connect with us
+      const headerCtaDesktop = document.getElementById('header-cta-desktop');
+      const headerCtaMobile = document.getElementById('header-cta-mobile');
+      const openContactModal = document.getElementById('openContactModal');
+
+      if (headerCtaDesktop) {
+        headerCtaDesktop.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (typeof connectPopup_open === 'function') {
+            connectPopup_open();
+          }
+        });
+      }
+
+      if (headerCtaMobile) {
+        headerCtaMobile.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (typeof connectPopup_open === 'function') {
+            connectPopup_open();
+          }
+          // Close mobile menu if function exists
+          if (typeof closeMobileMenu === 'function') {
+            closeMobileMenu();
+          }
+        });
+      }
+
+      if (openContactModal) {
+        openContactModal.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (typeof connectPopup_open === 'function') {
+            connectPopup_open();
+          }
+        });
+      }
+
+      // Quiz back button
+      const backButton = document.getElementById('backButton');
+      if (backButton) {
+        backButton.addEventListener('click', function() {
+          if (typeof goBack === 'function') {
+            goBack();
+          }
+        });
+      }
+
+      // Recommendation modal close button
+      const recommendationModalClose = document.getElementById('recommendationModalClose');
+      if (recommendationModalClose) {
+        recommendationModalClose.addEventListener('click', function() {
+          if (typeof closeModal === 'function') {
+            closeModal();
+          }
+        });
+      }
+
+      // Recommendation modal buttons
+      const getMoreInfoBtn = document.getElementById('getMoreInfoBtn');
+      if (getMoreInfoBtn) {
+        getMoreInfoBtn.addEventListener('click', function() {
+          // Placeholder - replace with actual functionality
+          alert('For more information, please contact us at info@iaml.com or call (555) 123-4567');
+        });
+      }
+
+      const startOverBtn = document.getElementById('startOverBtn');
+      if (startOverBtn) {
+        startOverBtn.addEventListener('click', function() {
+          if (typeof closeModal === 'function') {
+            closeModal();
+          }
+        });
+      }
+
+      // Connect popup modal close button
+      const connectPopupCloseBtn = document.getElementById('connectPopup_closeBtn');
+      if (connectPopupCloseBtn) {
+        connectPopupCloseBtn.addEventListener('click', function() {
+          if (typeof connectPopup_close === 'function') {
+            connectPopup_close();
+          }
+        });
+      }
+
+      // Connect popup overlay click to close
+      const connectPopupModal = document.getElementById('connectPopup_Modal');
+      const connectPopupModalInner = document.getElementById('connectPopup_ModalInner');
+
+      if (connectPopupModal && connectPopupModalInner) {
+        connectPopupModal.addEventListener('click', function(e) {
+          // Only close if clicking the overlay, not the modal content
+          if (e.target === connectPopupModal) {
+            if (typeof connectPopup_close === 'function') {
+              connectPopup_close();
+            }
+          }
+        });
+
+        // Prevent clicks inside modal from closing it
+        connectPopupModalInner.addEventListener('click', function(e) {
+          e.stopPropagation();
+        });
+      }
+    });
+  </script>
 
   <!-- Header Scroll Behavior -->
   <script>
