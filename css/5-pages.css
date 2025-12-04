@@ -1312,7 +1312,7 @@
   }
 
   #testimonials-splide .testimonial-card {
-    min-height: 400px;
+    min-height: 450px;
     height: 100%;
     width: 100%;
     display: flex;
@@ -1430,13 +1430,13 @@
   /* Responsive adjustments */
   @media (max-width: 1400px) {
     #testimonials-splide .testimonial-card {
-      min-height: 380px;
+      min-height: 430px;
     }
   }
 
   @media (max-width: 1024px) {
     #testimonials-splide .testimonial-card {
-      min-height: 360px;
+      min-height: 410px;
     }
   }
 
@@ -1448,7 +1448,7 @@
     }
 
     #testimonials-splide .testimonial-card {
-      min-height: 340px;
+      min-height: 390px;
     }
 
     #testimonials-splide .splide__arrow {
@@ -1467,7 +1467,7 @@
 
   @media (max-width: 480px) {
     #testimonials-splide .testimonial-card {
-      min-height: 320px;
+      min-height: 370px;
       padding: 1.5rem;
     }
 
