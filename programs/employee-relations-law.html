@@ -7354,6 +7354,369 @@ button#prev-btn {
       renderProgressForStep3();
     })();
   </script>
+
+    <!-- Faculty Section Styles -->
+    <style>
+        /* Hero Headline Section Styles */
+        .hero-headline-section-attroneys {
+            background: #f8fafc;
+            padding: 135px 20px 40px;
+            text-align: center;
+            width: 100vw;
+            margin: 0;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            box-sizing: border-box;
+        }
+        
+        .headline-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 600;
+            color: #1E293B;
+            line-height: 1.2;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        
+        .section-subtitle {
+            font-family: 'Lato', sans-serif;
+            font-size: 19px;
+            color: #64748B;
+            max-width: 850px;
+            line-height: 1.6;
+            text-align: center;
+            margin: 0 auto;
+        }
+        
+        /* Faculty Section Styles */
+        .faculty-section {
+            background: #f8fafc;
+            padding: 36px 40px 80px;
+            width: 100vw;
+            margin: 0;
+            margin-left: calc(-50vw + 50%);
+            margin-right: calc(-50vw + 50%);
+            box-sizing: border-box;
+        }
+        
+        .faculty-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .faculty-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-top: 29px;
+        }
+        
+        /* Faculty Card Styles */
+        .faculty-card {
+            background: transparent;
+            border: none;
+            border-radius: 16px;
+            box-shadow: none;
+            transition: all 0.3s ease;
+            overflow: visible;
+        }
+        
+        .faculty-card:hover {
+            transform: translateY(-4px);
+        }
+        
+        .faculty-card-inner {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+        
+        /* Faculty Image Container */
+        .faculty-image {
+            aspect-ratio: 3 / 2;
+            border: none;
+            border-radius: 12px;
+            background: #f5f5f5;
+            overflow: hidden;
+            margin: 20px 20px 0 20px;
+            box-shadow: 
+                0 2px 4px rgba(0, 0, 0, 0.04),
+                0 8px 16px rgba(0, 0, 0, 0.06);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        
+        .faculty-card:hover .faculty-image {
+            box-shadow: 
+                0 4px 8px rgba(0, 0, 0, 0.08),
+                0 12px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+        
+        .faculty-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        /* Faculty Content Area */
+        .faculty-content {
+            padding: 20px 28px 28px 28px;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        
+        .faculty-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1f2937;
+            margin-bottom: 8px;
+        }
+        
+        .faculty-title {
+            font-family: 'Lato', sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            color: #7c3aed;
+            margin-bottom: 16px;
+        }
+        
+        .faculty-bio {
+            font-family: 'Lato', sans-serif;
+            font-size: 15px;
+            color: #374151;
+            line-height: 1.6;
+            flex: 1;
+            margin-bottom: 16px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-height: calc(1.6em * 3);
+        }
+        
+        .faculty-link {
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #188bf6;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .faculty-link:hover {
+            color: #0c5ca8;
+        }
+        
+        /* Responsive Breakpoints */
+        @media (max-width: 1024px) {
+            .faculty-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+            
+            .section-title {
+                font-size: 42px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .faculty-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .section-title {
+                font-size: 36px;
+            }
+            
+            .section-subtitle {
+                font-size: 17px;
+            }
+            
+            .faculty-content {
+                padding: 16px 24px 24px 24px;
+            }
+            
+            .faculty-image {
+                margin: 16px 16px 0 16px;
+            }
+            
+            .hero-headline-section-attroneys {
+                padding: 115px 20px 30px;
+                width: 100vw;
+                margin-left: calc(-50vw + 50%);
+                margin-right: calc(-50vw + 50%);
+            }
+            
+            .faculty-section {
+                padding: 24px 20px 60px;
+                width: 100vw;
+                margin-left: calc(-50vw + 50%);
+                margin-right: calc(-50vw + 50%);
+            }
+        }
+    </style>
+
+    <!-- Hero Headline Section -->
+    <section class="hero-headline-section-attroneys">
+        <div class="headline-content">
+            <h1 class="section-title">The Attorneys and HR Leaders Behind These Results</h1>
+            <p class="section-subtitle">Those success stories you just read? They happen because our faculty aren't career academics, they're practicing employment attorneys and seasoned HR executives teaching what actually works. Every case study, every strategy, every solution comes from decades of courtroom victories and HR crises successfully navigated.</p>
+        </div>
+    </section>
+
+    <!-- Faculty Section -->
+    <section class="faculty-section">
+        <div class="faculty-container">
+            <div class="faculty-grid">
+                <!-- Card 1 - Ray Deeny, Esq. -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667eb6947d86fd7edcc6f.svg" alt="Ray Deeny, Esq.">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">Ray Deeny, Esq.</h3>
+                            <p class="faculty-title">Partner at Taft Stettinius & Hollister LLP</p>
+                            <p class="faculty-bio">Ray is widely regarded as a dean of labor and employment law, known for his encyclopedic knowledge and unmatched command of workplace regulations. For over 40 years, he has represented management nationwide, blending a powerhouse advisory practice with a formidable litigation record.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#ray-deeny-esq" class="faculty-link">Read Ray's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2 - John F. Wymer, III, Esq. -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebba45f28666768ce6.svg" alt="John F. Wymer, III, Esq.">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">John F. Wymer, III, Esq.</h3>
+                            <p class="faculty-title">Partner, Labor & Employment at Thompson Hine LLP</p>
+                            <p class="faculty-bio">John F. Wymer is a nationally recognized labor and employment attorney and partner in Thompson Hine LLP's Labor & Employment group. With decades of experience, he represents public and private sector employers nationwide in employment discrimination, wage-and-hour, labor negotiations, union matters, ERISA claims, and more.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#john-f-wymer-iii-esq" class="faculty-link">Read John's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3 - Wayne W. Williams, Esq. -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebe98d66054ecb05fb.svg" alt="Wayne W. Williams, Esq.">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">Wayne W. Williams, Esq.</h3>
+                            <p class="faculty-title">Founder, Law Offices of Wayne W. Williams</p>
+                            <p class="faculty-bio">Wayne Williams is a distinguished employment and labor law attorney based in Colorado Springs. As the founder of his own firm, he advises and represents employers on a wide range of issues including employment discrimination, harassment, wrongful discharge, wage and hour compliance, and traditional labor law.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#wayne-w-williams-esq" class="faculty-link">Read Wayne's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4 - Dawn R. Kubik, Esq. -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebe98d665980cb05f7.svg" alt="Dawn R. Kubik, Esq.">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">Dawn R. Kubik, Esq.</h3>
+                            <p class="faculty-title">Of Counsel, Kubik Workplace & Investigative Services</p>
+                            <p class="faculty-bio">Dawn Kubik is an employment attorney and founder of Kubik Workplace and Investigative Services and Dawn R. Kubik, P.C. With a legal career spanning since 1997, she has represented both plaintiffs and defendants in employment, personal injury, contract, and insurance disputes, earning a reputation as a strategic, well-prepared, and highly communicative advocate.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#dawn-r-kubik-esq" class="faculty-link">Read Dawn's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5 - Patrick Scully -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebd086b27752e18e31.svg" alt="Patrick Scully">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">Patrick Scully, Esq.</h3>
+                            <p class="faculty-title">Partner at Foley Hoag</p>
+                            <p class="faculty-bio">Patrick Scully primarily focuses on labor law issues and helps clients successfully navigate complex and persistent claims from international and local labor unions. Patrick's work includes unfair labor practice charges and representation cases as well as federal and state court litigation. He frequently advises employers in collective bargaining negotiations and handles labor arbitration.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#patrick-scully" class="faculty-link">Read Patrick's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 6 - Ashley Gillihan, Esq. -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebd086b239c1e18e30.svg" alt="Ashley Gillihan, Esq.">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">Ashley Gillihan, Esq.</h3>
+                            <p class="faculty-title">Partner at Alston & Bird LLP</p>
+                            <p class="faculty-bio">Ashley Gillihan is a partner in Alston & Bird's Atlanta office and a member of the Employee Benefits & Executive Compensation and ERISA Litigation Groups. He focuses exclusively on health and welfare plan compliance and litigation, advising employers, plan administrators, and service providers, as well as financial institutions and insurers serving as HSA trustees or custodians.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#ashley-gillihan-esq" class="faculty-link">Read Ashley's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 7 - John Hickman, Esq. -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667eb6947d83db0edcc6b.svg" alt="John Hickman, Esq.">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">John Hickman, Esq.</h3>
+                            <p class="faculty-title">Partner at Alston & Bird LLP</p>
+                            <p class="faculty-bio">John Hickman leads Alston & Bird's Health Benefits Practice, guiding clients through ACA compliance, HIPAA privacy, HSAs, consumer-driven health care, and flexible benefit plans. He works closely with health plans, employers, and federal agencies to solve complex benefits challenges.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#john-hickman-esq" class="faculty-link">Read John's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 8 - Di Ann Sanchez -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667eb6947d88a87edcc70.svg" alt="Di Ann Sanchez">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">Di Ann Sanchez</h3>
+                            <p class="faculty-title">Human Resources Chief Exceptional Officer at DAS HR Consulting & Sanchez Associates</p>
+                            <p class="faculty-bio">Dr. Di Ann Sanchez, SHRM-SCP, SPHR is a nationally recognized HR strategist and founder of DAS HR Consulting, LLC, a firm specializing in creative, non-traditional HR programs and diversity solutions. A leading expert on LatinX Millennials and Gen Z, she helps organizations align their people strategies with business growth, productivity, and performance.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#di-ann-sanchez" class="faculty-link">Read Di Ann's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 9 - Dominic DeMatties, Esq. -->
+                <article class="faculty-card">
+                    <div class="faculty-card-inner">
+                        <div class="faculty-image">
+                            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebe98d66862dcb05f6.svg" alt="Dominic DeMatties, Esq.">
+                        </div>
+                        <div class="faculty-content">
+                            <h3 class="faculty-name">Dominic DeMatties, Esq.</h3>
+                            <p class="faculty-title">Partner at Thompson Hine LLP</p>
+                            <p class="faculty-bio">Dominic is a leading employee benefits attorney with deep expertise in ESOPs, 401(k) and other defined contribution plans, MEPs/PEPs, multi-employer plans, and innovative defined benefit designs like cash balance and variable annuity plans. He frequently represents clients before the DOL, IRS, and PBGC on audits, investigations, compliance programs, and policy matters.</p>
+                            <a href="https://crm.re-vitalized.com/v2/preview/tsCH77tyXdISzhZMCnT5?notrack=true#dominic-dematties-esq" class="faculty-link">Read Dominic's full bio →</a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
     <!-- Final CTA Section -->
     <section id="iaml-cta" class="theme-light py-5xl">
       <div class="container container-lg mx-auto text-center">
