@@ -32,6 +32,15 @@
   <!-- Main CSS -->
   <link rel="stylesheet" href="../css/main.css">
 
+  <!-- Environment Configuration (Load BEFORE any code that uses API keys) -->
+  <script src="../js/env-config.local.js"></script>
+  <!-- Fallback to template if local config doesn't exist (production) -->
+  <script>
+    if (typeof ENV_CONFIG === 'undefined') {
+      document.write('<script src="../js/env-config.js"><\/script>');
+    }
+  </script>
+
   <!-- Google Analytics (Replace with your GA4 ID) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
@@ -2725,9 +2734,9 @@ button#prev-btn {
        =========================== */
     const CONFIG = {
       AIRTABLE: {
-        API_KEY: 'patPjrprLGRYRMGUQ.690b32ecac076c293c013addf5dabb64b44055348132d8dce1abccfea3622836',
-        BASE_ID: 'applWPVmMkgMWoZIC',
-        PROGRAMS_TABLE: 'tblFaya3JyTzyAdjJ',
+        API_KEY: ENV_CONFIG.AIRTABLE_PROGRAMS_API_KEY,
+        BASE_ID: ENV_CONFIG.AIRTABLE_BASE_ID,
+        PROGRAMS_TABLE: ENV_CONFIG.AIRTABLE_PROGRAMS_TABLE,
         INSTRUCTORS_TABLE: 'Instructors',
         get PROGRAMS_ENDPOINT(){ return `https://api.airtable.com/v0/${this.BASE_ID}/${this.PROGRAMS_TABLE}`; },
         get INSTRUCTORS_ENDPOINT(){ return `https://api.airtable.com/v0/${this.BASE_ID}/${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
@@ -4337,11 +4346,11 @@ button#prev-btn {
       ];
 
       // API Configuration
-      const AIRTABLE_BASE_ID = 'applWPVmMkgMWoZIC';
-      const AIRTABLE_API_KEY = 'patlBhocGyiLc8ft9.87683fc724f184695853f45a953d0d56e24fb0a3a1e9272966aad2a43d911281';
+      const AIRTABLE_BASE_ID = ENV_CONFIG.AIRTABLE_BASE_ID;
+      const AIRTABLE_API_KEY = ENV_CONFIG.AIRTABLE_REGISTRATION_API_KEY;
       const TABLE_SESSIONS = 'Program Sessions';
-      const TABLE_COUPONS = 'tblBaUQKmYuIMsVQm'; // Coupon Codes (table id)
-      const GHL_WEBHOOK_URL = 'https://services.leadconnectorhq.com/hooks/MjGEy0pobNT9su2YJqFI/webhook-trigger/8a0aa0b8-52c0-4810-8475-c0e1b82adb70';
+      const TABLE_COUPONS = ENV_CONFIG.AIRTABLE_COUPONS_TABLE; // Coupon Codes (table id)
+      const GHL_WEBHOOK_URL = ENV_CONFIG.GHL_REGISTRATION_WEBHOOK;
 
       // DOM elements
       const qs = (sel) => document.querySelector(sel);
@@ -7829,10 +7838,10 @@ button#prev-btn {
 
     // Configuration
     const NEXT_PROGRAM_CONFIG = {
-      baseId: 'applWPVmMkgMWoZIC',
-      tableId: 'tblFaya3JyTzyAdjJ',
-      viewId: 'viwGwK0DuZyjMzsZI',
-      apiKey: 'pat07EXbOrhdAPRO5.84330ef1cb8c7cc21f476e777cff12eb57bbc441e2db1a7a0c2817525e588b24'
+      baseId: ENV_CONFIG.AIRTABLE_BASE_ID,
+      tableId: ENV_CONFIG.AIRTABLE_PROGRAMS_TABLE,
+      viewId: ENV_CONFIG.AIRTABLE_VIEW_ID,
+      apiKey: ENV_CONFIG.AIRTABLE_NEXT_PROGRAM_API_KEY
     };
 
     // Timezone-neutral date parsing to avoid date shifting issues

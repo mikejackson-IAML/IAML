@@ -2,7 +2,7 @@
 // Handles all modal functionality across the site
 
 // ===== CONTACT MODAL (Connect Popup) =====
-const GHL_WEBHOOK = 'https://services.leadconnectorhq.com/hooks/MjGEy0pobNT9su2YJqFI/webhook-trigger/f11dd475-e8a8-442d-a71e-862b25d34937';
+const GHL_WEBHOOK = ENV_CONFIG?.GHL_CONTACT_WEBHOOK || 'YOUR_CONTACT_WEBHOOK_URL_HERE';
 const CONNECT_TIMEOUT_MS = 20000;
 
 let connectTimeoutHandle = null;

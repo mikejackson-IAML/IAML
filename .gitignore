@@ -1,6 +1,10 @@
 # Environment variables with secrets
 .env.local
 .env
+env-config.local.js
+
+# Backup/concatenated files with secrets
+code
 
 # OS generated files
 .DS_Store
