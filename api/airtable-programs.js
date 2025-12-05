@@ -26,10 +26,14 @@ module.exports = async function handler(req, res) {
     const BASE_ID = process.env.AIRTABLE_BASE_ID;
     const API_KEY = process.env.AIRTABLE_PROGRAMS_API_KEY;
 
+    // Debug logging
+    console.log('BASE_ID:', BASE_ID ? 'SET' : 'MISSING');
+    console.log('API_KEY:', API_KEY ? 'SET' : 'MISSING');
+
     // Validate environment variables
     if (!BASE_ID || !API_KEY) {
-      console.error('Missing Airtable configuration');
-      return res.status(500).json({ error: 'Server configuration error' });
+      console.error('Missing Airtable configuration - BASE_ID:', BASE_ID, 'API_KEY:', API_KEY);
+      return res.status(500).json({ error: 'Server configuration error', debug: { BASE_ID: !!BASE_ID, API_KEY: !!API_KEY } });
     }
 
     // Build Airtable API URL
