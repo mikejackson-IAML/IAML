@@ -1,7 +1,7 @@
 // Serverless function to proxy GoHighLevel webhook submissions
 // Accepts POST requests with type (registration or contact) and data payload
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');

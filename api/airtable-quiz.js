@@ -1,7 +1,7 @@
 // Serverless function to handle all quiz operations
 // Supports GET, POST, and PATCH methods for quiz questions, answers, and sessions
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, OPTIONS');
