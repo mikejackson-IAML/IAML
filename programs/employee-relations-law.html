@@ -32,15 +32,6 @@
   <!-- Main CSS -->
   <link rel="stylesheet" href="../css/main.css">
 
-  <!-- Environment Configuration (Load BEFORE any code that uses API keys) -->
-  <script src="../js/env-config.local.js"></script>
-  <!-- Fallback to template if local config doesn't exist (production) -->
-  <script>
-    if (typeof ENV_CONFIG === 'undefined') {
-      document.write('<script src="../js/env-config.js"><\/script>');
-    }
-  </script>
-
   <!-- Google Analytics (Replace with your GA4 ID) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
@@ -4343,9 +4334,7 @@ button#prev-btn {
         'Certificate in Workplace Investigations',
       ];
 
-      // API Configuration
-      const AIRTABLE_BASE_ID = ENV_CONFIG.AIRTABLE_BASE_ID;
-      const AIRTABLE_API_KEY = ENV_CONFIG.AIRTABLE_REGISTRATION_API_KEY;
+      // API Configuration (API calls now use serverless proxies)
       const TABLE_SESSIONS = 'Program Sessions';
       const TABLE_COUPONS = ENV_CONFIG.AIRTABLE_COUPONS_TABLE; // Coupon Codes (table id)
       const GHL_WEBHOOK_URL = ENV_CONFIG.GHL_REGISTRATION_WEBHOOK;
@@ -6707,8 +6696,12 @@ button#prev-btn {
         try {
           showGlobalMessage('Loading session details...');
           globalSpinner.classList.remove('hidden');
-          const url = `https://api.airtable.com/v0/${encodeURIComponent(AIRTABLE_BASE_ID)}/${encodeURIComponent(TABLE_SESSIONS)}/${encodeURIComponent(state.sessionId)}`;
-          const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` } });
+          // Use serverless proxy to fetch session details
+          const params = new URLSearchParams();
+          params.set('table', TABLE_SESSIONS);
+          params.set('recordId', state.sessionId);
+          const url = `/api/airtable-quiz?${params.toString()}`;
+          const res = await fetch(url);
           if (!res.ok) throw new Error('Failed to load session details');
           const rec = await res.json();
           state.sessionRecord = rec;
@@ -7822,14 +7815,14 @@ button#prev-btn {
   <!-- ===== JAVASCRIPT ===== -->
 
   <!-- External Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" defer></script>
 
   <!-- Environment Configuration (must load first) -->
-  <script src="../js/env-config.js"></script>
+  <script src="../js/env-config.js" defer></script>
 
   <!-- Your JavaScript Files -->
-  <script src="../js/modals.js"></script>
-  <script src="../js/main.js"></script>
+  <script src="../js/modals.js" defer></script>
+  <script src="../js/main.js" defer></script>
 
   <!-- Next Program Card Component -->
   <script>
@@ -8086,7 +8079,7 @@ button#prev-btn {
   </script>
 
   <!-- Curriculum Section JavaScript -->
-  <script src="../js/curriculum.js"></script>
+  <script src="../js/curriculum.js" defer></script>
 
 </body>
 </html>

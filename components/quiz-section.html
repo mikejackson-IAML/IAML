@@ -781,12 +781,8 @@
 
   <!-- 2) APP -->
   <script>
-    // ===== Airtable config (uses environment variables) =====
+    // ===== Airtable table config (API calls now use serverless proxies) =====
     const AIRTABLE_CONFIG = {
-      apiUrl: 'https://api.airtable.com/v0',
-      apiKey: ENV_CONFIG.AIRTABLE_QUIZ_API_KEY,
-      baseId: ENV_CONFIG.AIRTABLE_QUIZ_BASE_ID,
-      // Table IDs:
       tablesById: {
         quizQuestions: 'tblKESCDfq65dWWHy',
         answers: 'tbly6vzYhjPbroIIy',
@@ -878,8 +874,6 @@
       sessionStartTime = new Date();
       sessionRecordId = null; // reset
 
-      const endpoint = `${AIRTABLE_CONFIG.apiUrl}/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tablesById.sessions}`;
-
       const payload = {
         fields: {
           'Session ID': sessionId,
@@ -891,9 +885,12 @@
       };
 
       try{
+        const params = new URLSearchParams();
+        params.set('table', AIRTABLE_CONFIG.tablesById.sessions);
+        const endpoint = `/api/airtable-quiz?${params.toString()}`;
         const resp = await fetch(endpoint, {
           method:'POST',
-          headers:{ 'Authorization':`Bearer ${AIRTABLE_CONFIG.apiKey}`, 'Content-Type':'application/json' },
+          headers:{ 'Content-Type':'application/json' },
           body: JSON.stringify(payload)
         });
         if(!resp.ok) throw new Error(`Airtable sessions error ${resp.status}`);
@@ -909,11 +906,14 @@
     async function trackAbandonedSession(){
       try{
         if(!sessionRecordId || quizCompleted) return;
-        const endpoint = `${AIRTABLE_CONFIG.apiUrl}/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tablesById.sessions}/${sessionRecordId}`;
+        const params = new URLSearchParams();
+        params.set('table', AIRTABLE_CONFIG.tablesById.sessions);
+        params.set('recordId', sessionRecordId);
+        const endpoint = `/api/airtable-quiz?${params.toString()}`;
         const payload = { fields: { 'Completion Status':'Abandoned', 'Completion Time': new Date().toISOString() } };
         await fetch(endpoint, {
           method:'PATCH',
-          headers:{ 'Authorization':`Bearer ${AIRTABLE_CONFIG.apiKey}`, 'Content-Type':'application/json' },
+          headers:{ 'Content-Type':'application/json' },
           body: JSON.stringify(payload),
           keepalive: true
         });
@@ -926,7 +926,10 @@
     async function updateSessionCompletion(action = 'None', recommendedProgram = null){
       if(!sessionRecordId) return;
       try{
-        const endpoint = `${AIRTABLE_CONFIG.apiUrl}/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tablesById.sessions}/${sessionRecordId}`;
+        const params = new URLSearchParams();
+        params.set('table', AIRTABLE_CONFIG.tablesById.sessions);
+        params.set('recordId', sessionRecordId);
+        const endpoint = `/api/airtable-quiz?${params.toString()}`;
         const completionTime = new Date();
         const timeSpent = Math.round((completionTime - sessionStartTime)/1000);
         const payload = {
@@ -940,7 +943,7 @@
         };
         await fetch(endpoint, {
           method:'PATCH',
-          headers:{ 'Authorization':`Bearer ${AIRTABLE_CONFIG.apiKey}`, 'Content-Type':'application/json' },
+          headers:{ 'Content-Type':'application/json' },
           body: JSON.stringify(payload)
         });
         console.log('[AT] Session updated:', action);
@@ -954,8 +957,12 @@
       try{
         const tableId = AIRTABLE_CONFIG.tablesById.quizQuestions;
         if(!tableId) return null;
-        const url = `${AIRTABLE_CONFIG.apiUrl}/${AIRTABLE_CONFIG.baseId}/${tableId}?sort[0][field]=Question Number&sort[1][field]=Option Order`;
-        const resp = await fetch(url, { headers:{ 'Authorization':`Bearer ${AIRTABLE_CONFIG.apiKey}` }});
+        const params = new URLSearchParams();
+        params.set('table', tableId);
+        params.set('sort[0][field]', 'Question Number');
+        params.set('sort[1][field]', 'Option Order');
+        const url = `/api/airtable-quiz?${params.toString()}`;
+        const resp = await fetch(url);
         if(!resp.ok) throw new Error(`Airtable quiz questions error ${resp.status}`);
         const data = await resp.json();
 
@@ -1001,7 +1008,9 @@
       try{
         if(!AIRTABLE_CONFIG.tablesById.answers) return;
         if(!sessionRecordId) { console.warn('[AT] No session to link; skipping answer track'); return; }
-        const endpoint = `${AIRTABLE_CONFIG.apiUrl}/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tablesById.answers}`;
+        const params = new URLSearchParams();
+        params.set('table', AIRTABLE_CONFIG.tablesById.answers);
+        const endpoint = `/api/airtable-quiz?${params.toString()}`;
         const payload = {
           fields: {
             'Session ID': [sessionRecordId], // linked record to Quiz Sessions
@@ -1015,7 +1024,7 @@
         };
         const resp = await fetch(endpoint, {
           method:'POST',
-          headers:{ 'Authorization':`Bearer ${AIRTABLE_CONFIG.apiKey}`, 'Content-Type':'application/json' },
+          headers:{ 'Content-Type':'application/json' },
           body: JSON.stringify(payload)
         });
         if(!resp.ok) throw new Error(`answers ${resp.status}`);
@@ -1029,7 +1038,9 @@
       try{
         if(!AIRTABLE_CONFIG.tablesById.recommendations) return;
         if(!sessionRecordId) { console.warn('[AT] No session to link; skipping recommendation track'); return; }
-        const endpoint = `${AIRTABLE_CONFIG.apiUrl}/${AIRTABLE_CONFIG.baseId}/${AIRTABLE_CONFIG.tablesById.recommendations}`;
+        const params = new URLSearchParams();
+        params.set('table', AIRTABLE_CONFIG.tablesById.recommendations);
+        const endpoint = `/api/airtable-quiz?${params.toString()}`;
         const payload = {
           fields: {
             'Session ID': [sessionRecordId],
@@ -1044,7 +1055,7 @@
         if(matchScore!==null && !isNaN(matchScore)) payload.fields['Match Score'] = parseFloat(matchScore);
         const resp = await fetch(endpoint, {
           method:'POST',
-          headers:{ 'Authorization':`Bearer ${AIRTABLE_CONFIG.apiKey}`, 'Content-Type':'application/json' },
+          headers:{ 'Content-Type':'application/json' },
           body: JSON.stringify(payload)
         });
         if(!resp.ok) throw new Error(`recommendations ${resp.status}`);

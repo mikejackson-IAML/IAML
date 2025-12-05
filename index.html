@@ -32,15 +32,6 @@
   <!-- Main CSS -->
   <link rel="stylesheet" href="css/main.css">
 
-  <!-- Environment Configuration (Load BEFORE any code that uses API keys) -->
-  <script src="js/env-config.local.js"></script>
-  <!-- Fallback to template if local config doesn't exist (production) -->
-  <script>
-    if (typeof ENV_CONFIG === 'undefined') {
-      document.write('<script src="js/env-config.js"><\/script>');
-    }
-  </script>
-
   <!-- Google Analytics (Replace with your GA4 ID) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
   <script>
@@ -754,19 +745,19 @@
   <!-- ===== JAVASCRIPT ===== -->
 
   <!-- External Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js" defer></script>
 
   <!-- Environment Configuration (must load first) -->
-  <script src="js/env-config.js"></script>
+  <script src="js/env-config.js" defer></script>
 
   <!-- Your JavaScript Files -->
-  <script src="js/carousel.js"></script>
-  <script src="js/testimonials.js"></script>
-  <script src="js/quiz.js"></script>
-  <script src="js/modals.js"></script>
-  <script src="js/faq.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/carousel.js" defer></script>
+  <script src="js/testimonials.js" defer></script>
+  <script src="js/quiz.js" defer></script>
+  <script src="js/modals.js" defer></script>
+  <script src="js/faq.js" defer></script>
+  <script src="js/animations.js" defer></script>
+  <script src="js/main.js" defer></script>
 
   <!-- Header Scroll Behavior -->
   <script>

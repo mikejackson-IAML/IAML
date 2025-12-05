@@ -1107,8 +1107,7 @@
 
   <script>
     (function() {
-      const AIRTABLE_BASE_ID = ENV_CONFIG.AIRTABLE_REGISTRATION_BASE_ID;
-      const AIRTABLE_API_KEY = ENV_CONFIG.AIRTABLE_REGISTRATION_API_KEY;
+      // API calls now use serverless proxies - no API keys needed in frontend
       const TABLE_SESSIONS = 'Program Sessions';
       const TABLE_COUPONS = 'tblBaUQKmYuIMsVQm'; // Coupon Codes (table id)
       const GHL_WEBHOOK_URL = ENV_CONFIG.GHL_WEBHOOK_URL;
@@ -1982,15 +1981,18 @@
 
       async function airtableList(tableName, opts = {}) {
         const { filterByFormula, sort = [], maxRecords } = opts;
-        const url = new URL(`https://api.airtable.com/v0/${encodeURIComponent(AIRTABLE_BASE_ID)}/${encodeURIComponent(tableName)}`);
-        if (filterByFormula) url.searchParams.set('filterByFormula', filterByFormula);
-        if (maxRecords) url.searchParams.set('maxRecords', String(maxRecords));
+        // Use serverless proxy instead of direct Airtable API call
+        const params = new URLSearchParams();
+        params.set('table', tableName);
+        if (filterByFormula) params.set('filterByFormula', filterByFormula);
+        if (maxRecords) params.set('maxRecords', String(maxRecords));
         (Array.isArray(sort) ? sort : []).forEach((s, i) => {
           if (!s) return;
-          if (s.field) url.searchParams.set(`sort[${i}][field]`, s.field);
-          if (s.direction) url.searchParams.set(`sort[${i}][direction]`, s.direction);
+          if (s.field) params.set(`sort[${i}][field]`, s.field);
+          if (s.direction) params.set(`sort[${i}][direction]`, s.direction);
         });
-        const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }});
+        const url = `/api/airtable-quiz?${params.toString()}`;
+        const res = await fetch(url);
         if (!res.ok) {
           let detail = '';
           try { detail = await res.text(); } catch {}
@@ -2100,8 +2102,12 @@
       } catch {}
 
       async function airtablePatch(tableName, recordId, fields) {
-        const url = `https://api.airtable.com/v0/${encodeURIComponent(AIRTABLE_BASE_ID)}/${encodeURIComponent(tableName)}/${encodeURIComponent(recordId)}`;
-        const res = await fetch(url, { method: 'PATCH', headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ fields }) });
+        // Use serverless proxy for PATCH requests
+        const params = new URLSearchParams();
+        params.set('table', tableName);
+        params.set('recordId', recordId);
+        const url = `/api/airtable-quiz?${params.toString()}`;
+        const res = await fetch(url, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields }) });
         if (!res.ok) {
           throw new Error(`Airtable PATCH error ${res.status}`);
         }
@@ -3291,8 +3297,12 @@
         try {
           showGlobalMessage('Loading session details...');
           globalSpinner.classList.remove('hidden');
-          const url = `https://api.airtable.com/v0/${encodeURIComponent(AIRTABLE_BASE_ID)}/${encodeURIComponent(TABLE_SESSIONS)}/${encodeURIComponent(state.sessionId)}`;
-          const res = await fetch(url, { headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` } });
+          // Use serverless proxy to fetch session details
+          const params = new URLSearchParams();
+          params.set('table', TABLE_SESSIONS);
+          params.set('recordId', state.sessionId);
+          const url = `/api/airtable-quiz?${params.toString()}`;
+          const res = await fetch(url);
           if (!res.ok) throw new Error('Failed to load session details');
           const rec = await res.json();
           state.sessionRecord = rec;
