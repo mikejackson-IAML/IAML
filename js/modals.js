@@ -2,7 +2,7 @@
 // Handles all modal functionality across the site
 
 // ===== CONTACT MODAL (Connect Popup) =====
-const GHL_WEBHOOK = ENV_CONFIG?.GHL_CONTACT_WEBHOOK || 'YOUR_CONTACT_WEBHOOK_URL_HERE';
+const GHL_WEBHOOK = '/api/ghl-webhook';
 const CONNECT_TIMEOUT_MS = 20000;
 
 let connectTimeoutHandle = null;
@@ -186,11 +186,14 @@ async function connectPopup_submit(e) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        firstName,
-        phone,
-        tags: 'contact_button_initiated',
-        source: 'Website Contact Form',
-        contactType: 'lead'
+        type: 'contact',
+        data: {
+          firstName,
+          phone,
+          tags: 'contact_button_initiated',
+          source: 'Website Contact Form',
+          contactType: 'lead'
+        }
       })
     });
     
@@ -234,12 +237,15 @@ async function connectPopup_submitEmailFallback(e) {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        firstName: lastSubmission.firstName,
-        phone: lastSubmission.phone,
-        email,
-        tags: 'contact_button_email_fallback',
-        source: 'Website Contact Form',
-        contactType: 'lead'
+        type: 'contact',
+        data: {
+          firstName: lastSubmission.firstName,
+          phone: lastSubmission.phone,
+          email,
+          tags: 'contact_button_email_fallback',
+          source: 'Website Contact Form',
+          contactType: 'lead'
+        }
       })
     });
     

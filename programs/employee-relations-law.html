@@ -2734,12 +2734,10 @@ button#prev-btn {
        =========================== */
     const CONFIG = {
       AIRTABLE: {
-        API_KEY: ENV_CONFIG.AIRTABLE_PROGRAMS_API_KEY,
-        BASE_ID: ENV_CONFIG.AIRTABLE_BASE_ID,
         PROGRAMS_TABLE: ENV_CONFIG.AIRTABLE_PROGRAMS_TABLE,
         INSTRUCTORS_TABLE: 'Instructors',
-        get PROGRAMS_ENDPOINT(){ return `https://api.airtable.com/v0/${this.BASE_ID}/${this.PROGRAMS_TABLE}`; },
-        get INSTRUCTORS_ENDPOINT(){ return `https://api.airtable.com/v0/${this.BASE_ID}/${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
+        get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}`; },
+        get INSTRUCTORS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
       },
       PROGRAMS_DATA: [],
       INSTRUCTORS_DATA: { byName:{}, byId:{} },
@@ -5198,7 +5196,8 @@ button#prev-btn {
 
       async function airtableList(tableName, opts = {}) {
         const { filterByFormula, sort = [], maxRecords } = opts;
-        const url = new URL(`https://api.airtable.com/v0/${encodeURIComponent(AIRTABLE_BASE_ID)}/${encodeURIComponent(tableName)}`);
+        const url = new URL(`/api/airtable-programs`);
+        url.searchParams.set('table', tableName);
         if (filterByFormula) url.searchParams.set('filterByFormula', filterByFormula);
         if (maxRecords) url.searchParams.set('maxRecords', String(maxRecords));
         (Array.isArray(sort) ? sort : []).forEach((s, i) => {
@@ -5206,7 +5205,7 @@ button#prev-btn {
           if (s.field) url.searchParams.set(`sort[${i}][field]`, s.field);
           if (s.direction) url.searchParams.set(`sort[${i}][direction]`, s.direction);
         });
-        const res = await fetch(url.toString(), { headers: { Authorization: `Bearer ${AIRTABLE_API_KEY}` }});
+        const res = await fetch(url.toString());
         if (!res.ok) {
           let detail = '';
           try { detail = await res.text(); } catch {}
@@ -5529,8 +5528,8 @@ button#prev-btn {
       } catch {}
 
       async function airtablePatch(tableName, recordId, fields) {
-        const url = `https://api.airtable.com/v0/${encodeURIComponent(AIRTABLE_BASE_ID)}/${encodeURIComponent(tableName)}/${encodeURIComponent(recordId)}`;
-        const res = await fetch(url, { method: 'PATCH', headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}`, 'Content-Type': 'application/json' }, body: JSON.stringify({ fields }) });
+        const url = `/api/airtable-quiz?table=${encodeURIComponent(tableName)}&recordId=${encodeURIComponent(recordId)}`;
+        const res = await fetch(url, { method: 'PATCH', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ fields }) });
         if (!res.ok) {
           throw new Error(`Airtable PATCH error ${res.status}`);
         }
@@ -6616,7 +6615,7 @@ button#prev-btn {
           tags: ['new_registration'],
         };
         try {
-          const res = await fetch(GHL_WEBHOOK_URL, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+          const res = await fetch('/api/ghl-webhook', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ type: 'registration', data: payload }) });
           
           // Get the response text to see what GHL sends back
           const responseText = await res.text();
@@ -7838,10 +7837,8 @@ button#prev-btn {
 
     // Configuration
     const NEXT_PROGRAM_CONFIG = {
-      baseId: ENV_CONFIG.AIRTABLE_BASE_ID,
       tableId: ENV_CONFIG.AIRTABLE_PROGRAMS_TABLE,
-      viewId: ENV_CONFIG.AIRTABLE_VIEW_ID,
-      apiKey: ENV_CONFIG.AIRTABLE_NEXT_PROGRAM_API_KEY
+      viewId: ENV_CONFIG.AIRTABLE_VIEW_ID
     };
 
     // Timezone-neutral date parsing to avoid date shifting issues
@@ -7858,15 +7855,14 @@ button#prev-btn {
       return date;
     }
 
-    // Fetch next program from Airtable
+    // Fetch next program from Airtable via proxy
     async function fetchNextProgram() {
       try {
-        const url = `https://api.airtable.com/v0/${NEXT_PROGRAM_CONFIG.baseId}/${NEXT_PROGRAM_CONFIG.tableId}?view=${NEXT_PROGRAM_CONFIG.viewId}`;
+        const url = `/api/airtable-programs?table=${encodeURIComponent(NEXT_PROGRAM_CONFIG.tableId)}&view=${encodeURIComponent(NEXT_PROGRAM_CONFIG.viewId)}&maxRecords=1`;
 
         const response = await fetch(url, {
           method: 'GET',
           headers: {
-            'Authorization': `Bearer ${NEXT_PROGRAM_CONFIG.apiKey}`,
             'Content-Type': 'application/json'
           }
         });
