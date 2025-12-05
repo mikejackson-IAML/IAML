@@ -1,6 +1,26 @@
 // Serverless function to proxy Airtable programs/sessions/instructors requests
 // This keeps API keys server-side and never exposes them to browsers
 
+// Load environment variables from .env.local if not already set (for local development)
+if (!process.env.AIRTABLE_BASE_ID && process.env.NODE_ENV !== 'production') {
+  try {
+    const fs = require('fs');
+    const path = require('path');
+    const envPath = path.join(__dirname, '..', '.env.local');
+    if (fs.existsSync(envPath)) {
+      const envContent = fs.readFileSync(envPath, 'utf-8');
+      envContent.split('\n').forEach(line => {
+        const [key, value] = line.split('=');
+        if (key && value) {
+          process.env[key.trim()] = value.trim();
+        }
+      });
+    }
+  } catch (e) {
+    // Silently fail if .env.local can't be loaded
+  }
+}
+
 module.exports = async function handler(req, res) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -26,14 +46,10 @@ module.exports = async function handler(req, res) {
     const BASE_ID = process.env.AIRTABLE_BASE_ID;
     const API_KEY = process.env.AIRTABLE_PROGRAMS_API_KEY;
 
-    // Debug logging
-    console.log('BASE_ID:', BASE_ID ? 'SET' : 'MISSING');
-    console.log('API_KEY:', API_KEY ? 'SET' : 'MISSING');
-
     // Validate environment variables
     if (!BASE_ID || !API_KEY) {
-      console.error('Missing Airtable configuration - BASE_ID:', BASE_ID, 'API_KEY:', API_KEY);
-      return res.status(500).json({ error: 'Server configuration error', debug: { BASE_ID: !!BASE_ID, API_KEY: !!API_KEY } });
+      console.error('Missing Airtable configuration');
+      return res.status(500).json({ error: 'Server configuration error' });
     }
 
     // Build Airtable API URL
