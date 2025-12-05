@@ -1,12 +1,3 @@
 {
-  "version": 2,
-  "env": {
-    "AIRTABLE_BASE_ID": "@airtable_base_id",
-    "AIRTABLE_PROGRAMS_API_KEY": "@airtable_programs_api_key",
-    "AIRTABLE_REGISTRATION_API_KEY": "@airtable_registration_api_key",
-    "AIRTABLE_NEXT_PROGRAM_API_KEY": "@airtable_next_program_api_key",
-    "AIRTABLE_QUIZ_API_KEY": "@airtable_quiz_api_key",
-    "GHL_REGISTRATION_WEBHOOK": "@ghl_registration_webhook",
-    "GHL_CONTACT_WEBHOOK": "@ghl_contact_webhook"
-  }
+  "version": 2
 }
