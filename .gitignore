@@ -1,7 +1,10 @@
 # Environment variables with secrets
 .env.local
 .env
+.env.production
+.env.*.local
 env-config.local.js
+js/env-config.js
 
 # Backup/concatenated files with secrets
 code
@@ -25,3 +28,4 @@ Thumbs.db
 # Vercel
 .vercel/
 .vercel
+.env*.local
