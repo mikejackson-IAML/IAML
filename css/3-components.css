@@ -1722,13 +1722,13 @@ hr.separator {
 /* Support Panels */
 .support-panel {
   position: fixed;           /* Anchored to viewport */
-  right: 40px;               /* Reduced from 60px to move panel closer */
-  width: 850px;              /* Increased from 700px to use more space */
+  right: 20px;               /* Reduced from 40px to extend image space left */
+  width: 1100px;             /* Increased from 850px to utilize available gap */
   max-width: 90%;            /* Responsive constraint for smaller screens */
   overflow: visible;
   background: transparent;
   opacity: 0;
-  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0, 0.2, 1);
   pointer-events: none;
   z-index: 5;
 }
