@@ -265,7 +265,6 @@
   margin-top: var(--space-4xl);
   position: sticky;
   top: 0;
-  height: 100vh;
   z-index: 5;
 }
 

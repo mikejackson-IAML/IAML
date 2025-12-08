@@ -146,20 +146,6 @@ class SupportContinuum {
       console.log('[SupportContinuum] Scroll progress:', scrollProgress.toFixed(2), '-> Phase:', phase);
       this.updateActivePhase(phase, true);
 
-      // NEW: Dynamically position panels to align with timeline navigation
-      const panelHeight = 800; // Match CSS height
-      const panelsContainerRect = panelsContainer.getBoundingClientRect();
-      const timelineNavRect = this.timelineNav.getBoundingClientRect();
-
-      // Position panels to align with timeline navigation's actual viewport position
-      // This works whether timeline is in natural position or sticky at 120px
-      const targetTop = timelineNavRect.top - panelsContainerRect.top;
-
-      // Update all panel positions
-      this.panels.forEach(panel => {
-        panel.style.top = `${targetTop}px`;
-      });
-
       // Control panel visibility based on section viewport position
       const sectionTop = sectionRect.top;
       const sectionBottom = sectionRect.bottom;
