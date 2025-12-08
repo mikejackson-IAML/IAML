@@ -354,14 +354,13 @@ class SupportContinuum {
     if (!this.timelineNav) return;
 
     const sectionTop = this.section.offsetTop;
-    const navHeight = this.timelineNav.offsetHeight;
     const stickyTop = 120; // Match CSS top: 120px
     let isFixed = false;
 
     const updatePosition = () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       const sectionBottom = this.section.offsetTop + this.section.offsetHeight;
-      const shouldBeFixed = scrollTop >= (sectionTop - stickyTop) && scrollTop < (sectionBottom - navHeight - stickyTop);
+      const shouldBeFixed = scrollTop >= (sectionTop - stickyTop) && scrollTop < (sectionBottom - stickyTop);
 
       if (shouldBeFixed && !isFixed) {
         // Switch to fixed
