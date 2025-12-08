@@ -1711,9 +1711,9 @@ hr.separator {
 
 /* Support Panels */
 .support-panel {
-  position: sticky;          /* Fixed in viewport as user scrolls */
-  top: 120px;                /* Align with timeline sticky position */
-  right: 0;                  /* Align to right side of container */
+  position: fixed;           /* Anchored to viewport */
+  top: 120px;                /* Fixed distance from top of viewport */
+  right: 60px;               /* Distance from right edge, prevent overlap */
   width: 700px;              /* Fixed width for consistent sizing */
   max-width: 90%;            /* Responsive constraint for smaller screens */
   height: 800px;             /* Increased from 600px to take up more space */
