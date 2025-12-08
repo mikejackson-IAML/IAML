@@ -1714,11 +1714,10 @@ hr.separator {
 .support-panel {
   position: absolute;        /* Constrained to .support-panels-container */
   top: 0;                    /* Will be updated via JavaScript */
-  left: 0;
-  right: 0;
+  right: 0;                  /* Align to right side of container */
   transform: scale(0.95);
-  width: 100%;
-  max-width: 100%;
+  width: 700px;              /* Fixed width for consistent sizing */
+  max-width: 90%;            /* Responsive constraint for smaller screens */
   height: 600px;
   border-radius: var(--radius-xl);
   overflow: hidden;
