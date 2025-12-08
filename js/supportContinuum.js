@@ -76,6 +76,9 @@ class SupportContinuum {
     this.setupScrollObserver();
     this.setupKeyboardNavigation();
 
+    // NEW: Setup sticky behavior via JavaScript (fallback for CSS position: sticky)
+    this.setupStickyBehavior();
+
     // Initialize first phase
     console.log('[SupportContinuum] Setup complete, activating phase 1');
     this.updateActivePhase(1, false);
@@ -270,6 +273,62 @@ class SupportContinuum {
         }
       });
     });
+  }
+
+  /**
+   * Setup sticky behavior via JavaScript
+   * Handles cases where CSS position: sticky doesn't work reliably
+   */
+  setupStickyBehavior() {
+    if (window.innerWidth < 768) return; // Skip on mobile
+    if (!this.timelineNav) return;
+
+    const sectionTop = this.section.offsetTop;
+    const navHeight = this.timelineNav.offsetHeight;
+    const stickyTop = 120; // Match CSS top: 120px
+    let isFixed = false;
+
+    const updatePosition = () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const sectionBottom = this.section.offsetTop + this.section.offsetHeight;
+      const shouldBeFixed = scrollTop >= (sectionTop - stickyTop) && scrollTop < (sectionBottom - navHeight - stickyTop);
+
+      if (shouldBeFixed && !isFixed) {
+        // Switch to fixed
+        this.timelineNav.style.position = 'fixed';
+        this.timelineNav.style.top = `${stickyTop}px`;
+        this.timelineNav.style.width = '400px';
+        this.timelineNav.style.zIndex = '10';
+        isFixed = true;
+        console.log('[SupportContinuum] Timeline nav switched to FIXED');
+      } else if (!shouldBeFixed && isFixed) {
+        // Switch back to relative
+        this.timelineNav.style.position = 'relative';
+        this.timelineNav.style.top = 'auto';
+        this.timelineNav.style.width = 'auto';
+        isFixed = false;
+        console.log('[SupportContinuum] Timeline nav switched to RELATIVE');
+      }
+    };
+
+    // Listen for scroll events
+    window.addEventListener('scroll', updatePosition, { passive: true });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      if (window.innerWidth < 768) {
+        // Reset on mobile
+        this.timelineNav.style.position = 'relative';
+        this.timelineNav.style.top = 'auto';
+        this.timelineNav.style.width = 'auto';
+        isFixed = false;
+      } else {
+        updatePosition();
+      }
+    }, { passive: true });
+
+    // Initial call
+    updatePosition();
   }
 
   /**
