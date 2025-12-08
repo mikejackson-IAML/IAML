@@ -182,8 +182,8 @@ class SupportContinuum {
       // Show panels ONLY when section is in viewport and actively being viewed
       // Must be in viewport: section top is above viewport bottom, section bottom is below viewport top
       const sectionInViewport = sectionRect.top < viewportHeight && sectionRect.bottom > 0;
-      // Must be actively viewing: scrolled into position (top ≤ 100px) and section still has significant content below viewport (bottom > 50%)
-      const isActivelyViewing = sectionRect.top <= 100 && sectionRect.bottom > viewportHeight * 0.5;
+      // Must be actively viewing: scrolled into position (top ≤ 100px) and section still has significant content below viewport (bottom > 20%)
+      const isActivelyViewing = sectionRect.top <= 100 && sectionRect.bottom > viewportHeight * 0.2;
       const shouldShow = sectionInViewport && isActivelyViewing;
 
       if (shouldShow) {
