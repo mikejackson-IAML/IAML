@@ -244,32 +244,6 @@ class SupportContinuum {
       const panelPhase = parseInt(panel.getAttribute('data-phase'));
       panel.classList.toggle('active', panelPhase === phase);
     });
-
-    // Handle Phase 5 special positioning - switch from fixed to absolute
-    const panelsContainer = document.querySelector('.support-panels-container');
-    if (panelsContainer) {
-      if (phase === 5) {
-        panelsContainer.classList.add('final-phase');
-
-        // Calculate Phase 5 panel position to align with Phase 5 timeline item
-        const phase5Panel = document.querySelector('.support-panel[data-phase="5"]');
-        const phase5Item = document.querySelector('.timeline-item[data-phase="5"]');
-
-        if (phase5Panel && phase5Item && this.section) {
-          // Get the Phase 5 item's position relative to the section
-          const sectionRect = this.section.getBoundingClientRect();
-          const phase5ItemRect = phase5Item.getBoundingClientRect();
-
-          // Calculate the offset within the section
-          const offsetFromSectionTop = phase5ItemRect.top - sectionRect.top + window.pageYOffset - this.section.offsetTop;
-
-          // Apply the calculated position
-          phase5Panel.style.top = `${offsetFromSectionTop}px`;
-        }
-      } else {
-        panelsContainer.classList.remove('final-phase');
-      }
-    }
   }
 
   /**
