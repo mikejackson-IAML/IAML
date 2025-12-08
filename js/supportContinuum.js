@@ -156,23 +156,16 @@ class SupportContinuum {
       console.log('[SupportContinuum] Scroll progress:', scrollProgress.toFixed(2), '-> Phase:', phase);
       this.updateActivePhase(phase, true);
 
-      // NEW: Dynamically position panels to stay centered in viewport
-      // Calculate the scroll offset within the container needed to center panel in viewport
-      const viewportHeight = window.innerHeight;
-      const panelHeight = 800; // Match updated CSS height
+      // NEW: Dynamically position panels to align with timeline navigation
+      const panelHeight = 800; // Match CSS height
       const panelsContainerRect = panelsContainer.getBoundingClientRect();
+      const timelineNavTop = 120; // Match timeline navigation sticky position
 
-      // Calculate where panels should be positioned within their container
-      // to appear centered in the viewport
-      const viewportCenter = viewportHeight / 2;
-      const panelCenterOffset = viewportCenter - panelHeight / 2;
+      // Position panels to align with timeline navigation's top position
+      // When section is sticky, panels should appear at same vertical level as timeline
+      const targetTop = timelineNavTop - panelsContainerRect.top;
 
-      // Account for the container's position relative to viewport
-      // If container top is at 100px in viewport, and we want panel centered at 400px,
-      // then panel top within container should be: 400 - 100 = 300px
-      const targetTop = panelCenterOffset - panelsContainerRect.top;
-
-      // Update all panel positions (don't clamp to 0, allow negative briefly)
+      // Update all panel positions
       this.panels.forEach(panel => {
         panel.style.top = `${targetTop}px`;
       });
