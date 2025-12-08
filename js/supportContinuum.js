@@ -72,6 +72,9 @@ class SupportContinuum {
     // NEW: Setup sticky behavior via JavaScript (fallback for CSS position: sticky)
     this.setupStickyBehavior();
 
+    // NEW: Position panels to align with first timeline title
+    this.alignPanelsWithTimeline();
+
     // Initialize first phase
     console.log('[SupportContinuum] Setup complete, activating phase 1');
     this.updateActivePhase(1, false);
@@ -171,25 +174,46 @@ class SupportContinuum {
     const panelsContainer = document.querySelector('.support-panels-container');
     if (!panelsContainer) return;
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Section in view - show panels
-          panelsContainer.classList.add('panels-visible');
-          console.log('[SupportContinuum] Panels visible - section in view');
-        } else {
-          // Section out of view - hide panels
-          panelsContainer.classList.remove('panels-visible');
-          console.log('[SupportContinuum] Panels hidden - section out of view');
-        }
-      });
-    }, {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    });
+    // Single source of truth for panel visibility
+    const checkPanelVisibility = () => {
+      const sectionRect = this.section.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
 
-    observer.observe(this.section);
+      // Show panels ONLY when section is in viewport and actively being viewed
+      // Must be in viewport: section top is above viewport bottom, section bottom is below viewport top
+      const sectionInViewport = sectionRect.top < viewportHeight && sectionRect.bottom > 0;
+      // Must be actively viewing: scrolled past top (200px threshold) and significant content remains
+      const isActivelyViewing = sectionRect.top <= 200 && sectionRect.bottom > viewportHeight * 0.5;
+      const shouldShow = sectionInViewport && isActivelyViewing;
+
+      if (shouldShow) {
+        if (!panelsContainer.classList.contains('panels-visible')) {
+          panelsContainer.classList.add('panels-visible');
+          console.log('[SupportContinuum] ✅ Panels shown - section in active view', {
+            sectionTop: sectionRect.top.toFixed(2),
+            sectionBottom: sectionRect.bottom.toFixed(2),
+            sectionInViewport,
+            isActivelyViewing
+          });
+        }
+      } else {
+        if (panelsContainer.classList.contains('panels-visible')) {
+          panelsContainer.classList.remove('panels-visible');
+          console.log('[SupportContinuum] ❌ Panels hidden - section not in active view', {
+            sectionTop: sectionRect.top.toFixed(2),
+            sectionBottom: sectionRect.bottom.toFixed(2),
+            sectionInViewport,
+            isActivelyViewing
+          });
+        }
+      }
+    };
+
+    // Check visibility on scroll
+    window.addEventListener('scroll', checkPanelVisibility, { passive: true });
+
+    // Initial check on page load
+    checkPanelVisibility();
   }
 
   /**
@@ -380,6 +404,68 @@ class SupportContinuum {
 
     // Initial call
     updatePosition();
+  }
+
+  /**
+   * Align image panels with the first timeline title text
+   * Calculates the position based on timeline nav sticky position and title offset
+   */
+  alignPanelsWithTimeline() {
+    if (!this.section || this.panels.length === 0) return;
+
+    // Find the first timeline title element
+    const firstTimelineItem = this.timelineItems[0];
+    if (!firstTimelineItem) return;
+
+    const firstTitle = firstTimelineItem.querySelector('.timeline-title');
+    if (!firstTitle) return;
+
+    const calculateAlignment = () => {
+      // Timeline nav is sticky at top: 120px
+      const stickyTop = 120;
+
+      // Get nav's current position and height
+      const navRect = this.timelineNav.getBoundingClientRect();
+      const navHeight = this.timelineNav.offsetHeight;
+
+      // Find the bullet (not the title) to align with
+      const firstBullet = firstTimelineItem.querySelector('.timeline-bullet');
+      if (!firstBullet) return;
+
+      const bulletRect = firstBullet.getBoundingClientRect();
+
+      // Calculate bullet's offset WITHIN the timeline nav container
+      const bulletOffsetInNav = bulletRect.top - navRect.top;
+
+      // Final panel position = sticky position + bullet offset within nav
+      const panelTopValue = Math.round(stickyTop + bulletOffsetInNav);
+
+      console.log('[SupportContinuum] Aligning panels:', {
+        stickyTop,
+        navTop: navRect.top,
+        navHeight,
+        bulletTop: bulletRect.top,
+        bulletOffsetInNav,
+        panelTopValue
+      });
+
+      // Apply top position and height to all panels
+      this.panels.forEach(panel => {
+        panel.style.top = `${panelTopValue}px`;
+        panel.style.height = `${navHeight}px`;
+      });
+    };
+
+    // Delay initial calculation until layout is fully rendered
+    // This ensures CSS sticky positioning is applied and bullets are at their final positions
+    requestAnimationFrame(() => {
+      setTimeout(() => {
+        calculateAlignment();
+      }, 100);
+    });
+
+    // Recalculate on window resize
+    window.addEventListener('resize', calculateAlignment, { passive: true });
   }
 
 }
