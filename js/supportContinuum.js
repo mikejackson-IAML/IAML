@@ -76,6 +76,7 @@ class SupportContinuum {
     // Initialize first phase
     console.log('[SupportContinuum] Setup complete, activating phase 1');
     this.updateActivePhase(1, false);
+    this.updateProgressLine(0); // Initialize with 0 progress
   }
 
   /**
@@ -170,8 +171,8 @@ class SupportContinuum {
         section.classList.remove('section-active');
       }
 
-      // Update progress line
-      this.updateProgressLine();
+      // Update progress line with smooth scroll progress
+      this.updateProgressLine(scrollProgress);
     }, { passive: true });
   }
 
@@ -228,38 +229,62 @@ class SupportContinuum {
       const panelPhase = parseInt(panel.getAttribute('data-phase'));
       panel.classList.toggle('active', panelPhase === phase);
     });
-
-    // Update progress line
-    this.updateProgressLine();
   }
 
   /**
-   * Update progress line height based on active item position
+   * Update progress line height based on smooth scroll progress
+   * @param {number} scrollProgress - Scroll progress through section (0 to 1)
    */
-  updateProgressLine() {
+  updateProgressLine(scrollProgress = 0) {
     if (!this.progressLine || !this.timelineNav) return;
+    if (this.timelineItems.length === 0) return;
 
     const navRect = this.timelineNav.getBoundingClientRect();
-    const firstItem = this.timelineItems[0];
-    const activeItem = document.querySelector('.timeline-item.active');
+    const firstBullet = this.timelineItems[0].querySelector('.timeline-bullet');
+    if (!firstBullet) return;
 
-    if (!firstItem || !activeItem) return;
+    // Calculate fractional phase (0.0 to 5.0)
+    const fractionalPhase = Math.max(0, Math.min(5, scrollProgress * 5));
 
-    // Calculate progress based on active item position
-    const firstBullet = firstItem.querySelector('.timeline-bullet');
-    const activeBullet = activeItem.querySelector('.timeline-bullet');
+    // Determine which two bullets we're between
+    const currentPhaseIndex = Math.floor(fractionalPhase);
+    const nextPhaseIndex = Math.min(currentPhaseIndex + 1, 4);
 
-    if (!firstBullet || !activeBullet) return;
+    // Calculate fraction between these two bullets (0 to 1)
+    const fraction = fractionalPhase - currentPhaseIndex;
 
-    const firstBulletRect = firstBullet.getBoundingClientRect();
-    const activeBulletRect = activeBullet.getBoundingClientRect();
+    // Get bullet positions
+    const currentBullet = this.timelineItems[currentPhaseIndex]?.querySelector('.timeline-bullet');
+    const nextBullet = this.timelineItems[nextPhaseIndex]?.querySelector('.timeline-bullet');
 
-    // Calculate relative positions within the nav container
-    const startY = firstBulletRect.top - navRect.top + (firstBulletRect.height / 2);
-    const currentY = activeBulletRect.top - navRect.top + (activeBulletRect.height / 2);
-    const progressHeight = currentY - startY;
+    if (!currentBullet || !nextBullet) {
+      // Fallback: extend to last available bullet
+      const lastBullet = this.timelineItems[this.timelineItems.length - 1]?.querySelector('.timeline-bullet');
+      if (!lastBullet) return;
 
-    // Update progress line height
+      const lastBulletRect = lastBullet.getBoundingClientRect();
+      const startY = firstBullet.getBoundingClientRect().top - navRect.top + (firstBullet.offsetHeight / 2);
+      const endY = lastBulletRect.top - navRect.top + (lastBulletRect.height / 2);
+
+      this.progressLine.style.height = `${Math.max(0, endY - startY)}px`;
+      return;
+    }
+
+    // Calculate positions
+    const currentBulletRect = currentBullet.getBoundingClientRect();
+    const nextBulletRect = nextBullet.getBoundingClientRect();
+
+    const startY = firstBullet.getBoundingClientRect().top - navRect.top + (firstBullet.offsetHeight / 2);
+    const currentY = currentBulletRect.top - navRect.top + (currentBulletRect.height / 2);
+    const nextY = nextBulletRect.top - navRect.top + (nextBulletRect.height / 2);
+
+    // Interpolate between current and next bullet based on fraction
+    const distanceBetweenBullets = nextY - currentY;
+    const interpolatedY = currentY + (fraction * distanceBetweenBullets);
+
+    // Calculate final progress line height from start to interpolated position
+    const progressHeight = interpolatedY - startY;
+
     this.progressLine.style.height = `${Math.max(0, progressHeight)}px`;
   }
 

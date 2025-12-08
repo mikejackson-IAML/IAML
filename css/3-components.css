@@ -1594,7 +1594,6 @@ hr.separator {
   bottom: 0;
   width: 2px;
   background: var(--gray-200);
-  display: none; /* Hide vertical line */
 }
 
 /* Timeline Progress (animated line) */
@@ -1607,7 +1606,6 @@ hr.separator {
   background: linear-gradient(180deg, var(--blue-primary) 0%, var(--blue-dark) 100%);
   transition: height 300ms cubic-bezier(0.4, 0, 0.2, 1);
   will-change: height;
-  display: none; /* Hide vertical line */
 }
 
 /* Timeline Item (button) */
