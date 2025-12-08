@@ -1712,7 +1712,7 @@ hr.separator {
 /* Support Panels */
 .support-panel {
   position: fixed;           /* Anchored to viewport */
-  top: 120px;                /* Fixed distance from top of viewport */
+  top: 150px;                /* Align with first phase title */
   right: 60px;               /* Distance from right edge, prevent overlap */
   width: 700px;              /* Fixed width for consistent sizing */
   max-width: 90%;            /* Responsive constraint for smaller screens */
