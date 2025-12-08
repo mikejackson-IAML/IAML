@@ -276,6 +276,7 @@
   /* Hide scrollbar but keep functionality */
   scrollbar-width: none;
   -ms-overflow-style: none;
+  z-index: 10;
 }
 
 .support-timeline-nav::-webkit-scrollbar {
