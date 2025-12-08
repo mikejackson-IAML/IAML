@@ -263,6 +263,10 @@
   gap: var(--space-4xl);
   align-items: start;
   margin-top: var(--space-4xl);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 5;
 }
 
 /* Sticky positioning for timeline nav */
@@ -283,7 +287,7 @@
 .support-panels-container {
   flex: 1 1 auto;
   position: relative;
-  min-height: 2000px;
+  height: 100%;
 }
 
 .support-timeline-nav::-webkit-scrollbar {

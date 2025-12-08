@@ -79,9 +79,6 @@ class SupportContinuum {
     // NEW: Setup sticky behavior via JavaScript (fallback for CSS position: sticky)
     this.setupStickyBehavior();
 
-    // NEW: Setup section visibility observer to hide panels when section is out of view
-    this.setupSectionVisibilityObserver();
-
     // Initialize first phase
     console.log('[SupportContinuum] Setup complete, activating phase 1');
     this.updateActivePhase(1, false);
@@ -130,34 +127,29 @@ class SupportContinuum {
   }
 
   /**
-   * Set up IntersectionObserver for panels
+   * Set up scroll-based phase detection for sticky section
    */
   setupScrollObserver() {
-    const observerOptions = {
-      root: null,
-      rootMargin: '-40% 0px -40% 0px', // Trigger when panel is centered
-      threshold: 0
-    };
+    const panelsContainer = document.querySelector('.support-panels-container');
+    if (!panelsContainer) return;
 
-    const observer = new IntersectionObserver((entries) => {
-      // Only process if not scrolling from click
+    window.addEventListener('scroll', () => {
       if (this.isScrollingFromClick) return;
 
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const phase = parseInt(entry.target.getAttribute('data-phase'));
-          console.log('[SupportContinuum] Panel', phase, 'intersecting');
-          this.updateActivePhase(phase, true);
-        }
-      });
-    }, observerOptions);
+      const containerRect = panelsContainer.getBoundingClientRect();
+      // Calculate progress through the container (0 to 1)
+      const scrollProgress = (window.innerHeight / 2 - containerRect.top) / containerRect.height;
 
-    // Observe all panels
-    console.log('[SupportContinuum] Observing', this.panels.length, 'panels with options:', observerOptions);
-    this.panels.forEach(panel => observer.observe(panel));
+      // Map scroll progress to phases (0-1 → phases 1-5)
+      // Clamp between 1 and 5
+      const phase = Math.min(5, Math.max(1, Math.ceil(scrollProgress * 5)));
 
-    // Also track scroll for progress line
-    window.addEventListener('scroll', () => this.updateProgressLine(), { passive: true });
+      console.log('[SupportContinuum] Scroll progress:', scrollProgress.toFixed(2), '-> Phase:', phase);
+      this.updateActivePhase(phase, true);
+
+      // Also update progress line
+      this.updateProgressLine();
+    }, { passive: true });
   }
 
   /**
@@ -337,35 +329,6 @@ class SupportContinuum {
 
     // Initial call
     updatePosition();
-  }
-
-  /**
-   * Setup observer to hide panels when section is out of view
-   */
-  setupSectionVisibilityObserver() {
-    if (!this.section) return;
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          // Section in view - show active panel
-          this.panels.forEach(panel => {
-            panel.classList.remove('hidden');
-          });
-        } else {
-          // Section out of view - hide all panels
-          this.panels.forEach(panel => {
-            panel.classList.add('hidden');
-          });
-        }
-      });
-    }, {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0
-    });
-
-    observer.observe(this.section);
   }
 
   /**
