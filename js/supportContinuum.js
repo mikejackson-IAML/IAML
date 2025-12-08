@@ -184,7 +184,9 @@ class SupportContinuum {
       const sectionInViewport = sectionRect.top < viewportHeight && sectionRect.bottom > 0;
       // Must be actively viewing: scrolled into position (top ≤ 100px) and section still has significant content below viewport (bottom > 20%)
       const isActivelyViewing = sectionRect.top <= 100 && sectionRect.bottom > viewportHeight * 0.2;
-      const shouldShow = sectionInViewport && isActivelyViewing;
+      // Hide panels when Phase 5 is reached and user has scrolled past 70% of viewport with section content
+      const isPhase5AndPastEnd = this.activePhase === 5 && sectionRect.bottom < viewportHeight * 0.7;
+      const shouldShow = sectionInViewport && isActivelyViewing && !isPhase5AndPastEnd;
 
       if (shouldShow) {
         if (!panelsContainer.classList.contains('panels-visible')) {
@@ -193,7 +195,9 @@ class SupportContinuum {
             sectionTop: sectionRect.top.toFixed(2),
             sectionBottom: sectionRect.bottom.toFixed(2),
             sectionInViewport,
-            isActivelyViewing
+            isActivelyViewing,
+            activePhase: this.activePhase,
+            isPhase5AndPastEnd
           });
         }
       } else {
@@ -203,7 +207,9 @@ class SupportContinuum {
             sectionTop: sectionRect.top.toFixed(2),
             sectionBottom: sectionRect.bottom.toFixed(2),
             sectionInViewport,
-            isActivelyViewing
+            isActivelyViewing,
+            activePhase: this.activePhase,
+            isPhase5AndPastEnd
           });
         }
       }
