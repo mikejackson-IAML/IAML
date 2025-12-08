@@ -1710,13 +1710,12 @@ hr.separator {
 
 /* Support Panels */
 .support-panel {
-  position: fixed;
-  top: 120px;
-  right: var(--space-xl);
-  width: calc(100% - 520px);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: calc(100% - 450px);
   max-width: 900px;
-  height: calc(100vh - 240px);
-  max-height: 600px;
+  height: 600px;
   border-radius: var(--radius-xl);
   overflow: hidden;
   background: var(--gray-100);
@@ -1733,6 +1732,11 @@ hr.separator {
   transform: scale(1);
   box-shadow: var(--shadow-2xl);
   pointer-events: auto;
+}
+
+.support-panel.hidden {
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .support-panel img {

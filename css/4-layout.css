@@ -255,6 +255,7 @@
 .support-continuum-section {
   background: var(--white);
   position: relative;
+  overflow: hidden;
 }
 
 .support-continuum-grid {
@@ -282,7 +283,7 @@
 .support-panels-container {
   flex: 1 1 auto;
   position: relative;
-  min-height: 800px;
+  min-height: 2000px;
 }
 
 .support-timeline-nav::-webkit-scrollbar {

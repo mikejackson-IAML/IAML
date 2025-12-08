@@ -79,6 +79,9 @@ class SupportContinuum {
     // NEW: Setup sticky behavior via JavaScript (fallback for CSS position: sticky)
     this.setupStickyBehavior();
 
+    // NEW: Setup section visibility observer to hide panels when section is out of view
+    this.setupSectionVisibilityObserver();
+
     // Initialize first phase
     console.log('[SupportContinuum] Setup complete, activating phase 1');
     this.updateActivePhase(1, false);
@@ -334,6 +337,35 @@ class SupportContinuum {
 
     // Initial call
     updatePosition();
+  }
+
+  /**
+   * Setup observer to hide panels when section is out of view
+   */
+  setupSectionVisibilityObserver() {
+    if (!this.section) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Section in view - show active panel
+          this.panels.forEach(panel => {
+            panel.classList.remove('hidden');
+          });
+        } else {
+          // Section out of view - hide all panels
+          this.panels.forEach(panel => {
+            panel.classList.add('hidden');
+          });
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0
+    });
+
+    observer.observe(this.section);
   }
 
   /**
