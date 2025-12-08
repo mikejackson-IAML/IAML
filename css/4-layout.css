@@ -282,14 +282,11 @@
 .support-panels-container {
   flex: 1 1 auto;
   position: relative;
+  min-height: 800px;
 }
 
 .support-timeline-nav::-webkit-scrollbar {
   display: none;
-}
-
-.support-panels-container {
-  position: relative;
 }
 
 /* Responsive Breakpoints */

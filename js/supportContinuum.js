@@ -302,12 +302,6 @@ class SupportContinuum {
         this.timelineNav.style.width = '400px';
         this.timelineNav.style.zIndex = '10';
 
-        // Add margin-left to panels container to compensate for fixed nav
-        this.panelsContainer = this.panelsContainer || document.querySelector('.support-panels-container');
-        if (this.panelsContainer) {
-          this.panelsContainer.style.marginLeft = '400px';
-        }
-
         isFixed = true;
         console.log('[SupportContinuum] Timeline nav switched to FIXED');
       } else if (!shouldBeFixed && isFixed) {
@@ -316,11 +310,6 @@ class SupportContinuum {
         this.timelineNav.style.top = 'auto';
         this.timelineNav.style.left = 'auto';
         this.timelineNav.style.width = 'auto';
-
-        // Remove margin from panels container
-        if (this.panelsContainer) {
-          this.panelsContainer.style.marginLeft = '0';
-        }
 
         isFixed = false;
         console.log('[SupportContinuum] Timeline nav switched to RELATIVE');
