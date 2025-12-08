@@ -244,6 +244,16 @@ class SupportContinuum {
       const panelPhase = parseInt(panel.getAttribute('data-phase'));
       panel.classList.toggle('active', panelPhase === phase);
     });
+
+    // Handle Phase 5 special positioning - switch from fixed to relative
+    const panelsContainer = document.querySelector('.support-panels-container');
+    if (panelsContainer) {
+      if (phase === 5) {
+        panelsContainer.classList.add('final-phase');
+      } else {
+        panelsContainer.classList.remove('final-phase');
+      }
+    }
   }
 
   /**
