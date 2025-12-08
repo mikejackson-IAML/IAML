@@ -1242,7 +1242,7 @@ hr.separator {
 }
 
 .competency-header {
-  background: var(--gray-50);
+  background: var(--blue-darker);
   border-bottom: 1px solid var(--gray-200);
   padding: var(--space-xl);
   cursor: pointer;
@@ -1255,20 +1255,20 @@ hr.separator {
 }
 
 .competency-header:hover {
-  background: var(--gray-100);
+  background: #2a324a;
 }
 
 .competency-header h3 {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--gray-900);
+  color: var(--white);
   margin: 0;
   flex: 1;
 }
 
 .competency-header p {
   font-size: 0.95rem;
-  color: var(--gray-600);
+  color: rgba(255, 255, 255, 0.85);
   margin: 0;
   flex: 1;
   line-height: 1.5;
@@ -1282,7 +1282,7 @@ hr.separator {
   height: 24px;
   flex-shrink: 0;
   transition: transform var(--transition-base);
-  color: var(--blue-primary);
+  color: var(--white);
 }
 
 .competency-group.active .competency-toggle {
@@ -1331,6 +1331,7 @@ hr.separator {
 }
 
 .competency-text h4 {
+  font-family: var(--font-body);
   font-size: 1rem;
   font-weight: 700;
   color: var(--gray-900);
