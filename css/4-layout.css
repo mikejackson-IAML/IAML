@@ -258,8 +258,7 @@
 }
 
 .support-continuum-grid {
-  display: grid;
-  grid-template-columns: 400px 1fr;
+  display: flex;
   gap: var(--space-4xl);
   align-items: start;
   margin-top: var(--space-4xl);
@@ -267,9 +266,9 @@
 
 /* Sticky positioning for timeline nav */
 .support-timeline-nav {
+  flex: 0 0 400px; /* Fixed width, don't grow or shrink */
   position: sticky;
   top: 120px;
-  align-self: start;
   max-height: calc(100vh - 160px);
   overflow-y: auto;
   overflow-x: visible;
@@ -277,6 +276,12 @@
   scrollbar-width: none;
   -ms-overflow-style: none;
   z-index: 10;
+}
+
+/* Allow panels to grow and fill remaining space */
+.support-panels-container {
+  flex: 1 1 auto;
+  position: relative;
 }
 
 .support-timeline-nav::-webkit-scrollbar {
@@ -289,24 +294,25 @@
 
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
-  .support-continuum-grid {
-    grid-template-columns: 350px 1fr;
-    gap: var(--space-3xl);
+  .support-timeline-nav {
+    flex: 0 0 350px; /* Narrower timeline on tablet */
+    top: 100px;
   }
 
-  .support-timeline-nav {
-    top: 100px;
+  .support-continuum-grid {
+    gap: var(--space-3xl);
   }
 }
 
 @media (max-width: 768px) {
   .support-continuum-grid {
-    grid-template-columns: 1fr;
+    flex-direction: column; /* Stack vertically on mobile */
     gap: var(--space-2xl);
   }
 
-  /* Stack vertically on mobile */
+  /* Timeline becomes full-width on mobile */
   .support-timeline-nav {
+    flex: 1 1 auto; /* Full width */
     position: relative;
     top: 0;
     max-height: none;
@@ -314,6 +320,11 @@
     border-bottom: 2px solid var(--gray-200);
     margin-bottom: var(--space-xl);
     padding-left: 40px;
+  }
+
+  /* Panels also full-width */
+  .support-panels-container {
+    flex: 1 1 auto;
   }
 
   /* Hide progress line on mobile (not needed without sticky) */
