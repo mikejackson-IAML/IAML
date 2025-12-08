@@ -1712,7 +1712,7 @@ hr.separator {
 /* Support Panels */
 .support-panel {
   position: absolute;        /* Constrained to .support-panels-container */
-  top: 0;                    /* Align with top of timeline */
+  top: 28px;                 /* Align with timeline bullet position */
   right: 0;                  /* Align to right side of container */
   width: 700px;              /* Fixed width for consistent sizing */
   max-width: 90%;            /* Responsive constraint for smaller screens */
