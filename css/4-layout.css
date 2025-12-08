@@ -255,7 +255,6 @@
 .support-continuum-section {
   background: var(--white);
   position: relative;
-  overflow: hidden;
 }
 
 .support-continuum-grid {
