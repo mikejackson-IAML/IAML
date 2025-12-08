@@ -1712,13 +1712,13 @@ hr.separator {
 
 /* Support Panels */
 .support-panel {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
+  position: fixed;           /* Fixed to viewport, not container */
+  top: 50vh;                 /* Center vertically in viewport */
+  left: 450px;               /* After 400px timeline + 50px gap */
+  right: 50px;               /* 50px margin from right */
   transform: translateY(-50%) scale(0.95);
-  width: 100%;
-  max-width: 100%;
+  width: auto;               /* Let left/right control width */
+  max-width: 900px;
   height: 600px;
   border-radius: var(--radius-xl);
   overflow: hidden;
@@ -1743,6 +1743,12 @@ hr.separator {
   opacity: 1;
   transform: translateY(-50%) scale(1);
   z-index: 6;
+}
+
+/* Hide panels when section is out of viewport */
+.support-continuum-section:not(.section-active) .support-panel {
+  opacity: 0 !important;
+  pointer-events: none !important;
 }
 
 .support-panel img {

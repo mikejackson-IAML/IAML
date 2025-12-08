@@ -135,24 +135,38 @@ class SupportContinuum {
    * Set up scroll-based phase detection for sticky section
    */
   setupScrollObserver() {
-    const panelsContainer = document.querySelector('.support-panels-container');
-    if (!panelsContainer) return;
+    const section = this.section;
+    if (!section) return;
 
     window.addEventListener('scroll', () => {
       if (this.isScrollingFromClick) return;
 
-      const containerRect = panelsContainer.getBoundingClientRect();
-      // Calculate progress through the container (0 to 1)
-      const scrollProgress = (window.innerHeight / 2 - containerRect.top) / containerRect.height;
+      const sectionRect = section.getBoundingClientRect();
+      const sectionHeight = section.offsetHeight;
+
+      // Calculate how far we've scrolled through the section (0 to 1)
+      // When section.top = 0, we're at the start (progress = 0)
+      // When section.top = -sectionHeight, we've scrolled through (progress = 1)
+      const scrollProgress = Math.max(0, Math.min(1, -sectionRect.top / sectionHeight));
 
       // Map scroll progress to phases (0-1 → phases 1-5)
-      // Clamp between 1 and 5
       const phase = Math.min(5, Math.max(1, Math.ceil(scrollProgress * 5)));
 
       console.log('[SupportContinuum] Scroll progress:', scrollProgress.toFixed(2), '-> Phase:', phase);
       this.updateActivePhase(phase, true);
 
-      // Also update progress line
+      // Control panel visibility based on section viewport position
+      const sectionTop = sectionRect.top;
+      const sectionBottom = sectionRect.bottom;
+      const isInView = sectionTop < window.innerHeight && sectionBottom > 0;
+
+      if (isInView) {
+        section.classList.add('section-active');
+      } else {
+        section.classList.remove('section-active');
+      }
+
+      // Update progress line
       this.updateProgressLine();
     }, { passive: true });
   }
