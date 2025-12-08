@@ -284,8 +284,7 @@
 .support-panels-container {
   flex: 1 1 auto;
   position: relative;
-  height: 100%;
-  min-height: 500vh; /* 5 phases × 100vh each for scroll height */
+  height: 100vh; /* Fixed viewport height for sticky panel positioning */
 }
 
 .support-timeline-nav::-webkit-scrollbar {
