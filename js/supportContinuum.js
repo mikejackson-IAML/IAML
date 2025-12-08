@@ -158,17 +158,23 @@ class SupportContinuum {
 
       // NEW: Dynamically position panels to stay centered in viewport
       // Calculate the scroll offset within the container needed to center panel in viewport
-      const viewportCenter = window.innerHeight / 2;
-      const panelHeight = 600; // Match CSS height
-      const sectionTopOffset = sectionRect.top;
+      const viewportHeight = window.innerHeight;
+      const panelHeight = 800; // Match updated CSS height
+      const panelsContainerRect = panelsContainer.getBoundingClientRect();
 
-      // Calculate the top position for panels to appear centered in viewport
-      // When section is at viewport top, panels should be at viewportCenter - panelHeight/2
-      const targetTop = viewportCenter - panelHeight / 2 - sectionTopOffset;
+      // Calculate where panels should be positioned within their container
+      // to appear centered in the viewport
+      const viewportCenter = viewportHeight / 2;
+      const panelCenterOffset = viewportCenter - panelHeight / 2;
 
-      // Update all panel positions
+      // Account for the container's position relative to viewport
+      // If container top is at 100px in viewport, and we want panel centered at 400px,
+      // then panel top within container should be: 400 - 100 = 300px
+      const targetTop = panelCenterOffset - panelsContainerRect.top;
+
+      // Update all panel positions (don't clamp to 0, allow negative briefly)
       this.panels.forEach(panel => {
-        panel.style.top = `${Math.max(0, targetTop)}px`;
+        panel.style.top = `${targetTop}px`;
       });
 
       // Control panel visibility based on section viewport position

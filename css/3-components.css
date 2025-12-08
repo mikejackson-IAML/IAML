@@ -1718,7 +1718,7 @@ hr.separator {
   transform: scale(0.95);
   width: 700px;              /* Fixed width for consistent sizing */
   max-width: 90%;            /* Responsive constraint for smaller screens */
-  height: 600px;
+  height: 800px;             /* Increased from 600px to take up more space */
   border-radius: var(--radius-xl);
   overflow: hidden;
   background: var(--gray-100);
