@@ -1712,9 +1712,8 @@ hr.separator {
 /* Support Panels */
 .support-panel {
   position: absolute;        /* Constrained to .support-panels-container */
-  top: 120px;                /* Aligned with timeline sticky position */
+  top: 0;                    /* Align with top of timeline */
   right: 0;                  /* Align to right side of container */
-  transform: scale(0.95);
   width: 700px;              /* Fixed width for consistent sizing */
   max-width: 90%;            /* Responsive constraint for smaller screens */
   height: 800px;             /* Increased from 600px to take up more space */
@@ -1723,15 +1722,13 @@ hr.separator {
   background: var(--gray-100);
   box-shadow: var(--shadow-lg);
   opacity: 0;
-  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1),
-              transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: opacity 300ms cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: none;
   z-index: 5;
 }
 
 .support-panel.active {
   opacity: 1;
-  transform: scale(1);
   box-shadow: var(--shadow-2xl);
   pointer-events: auto;
 }
