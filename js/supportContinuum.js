@@ -77,7 +77,9 @@ class SupportContinuum {
     this.setupKeyboardNavigation();
 
     // NEW: Setup section boundary detection (hide panels when section out of view)
-    this.setupSectionBoundaries();
+    // DISABLED: This was causing panels to be hidden due to !important override
+    // The sticky positioning naturally handles section visibility
+    // this.setupSectionBoundaries();
 
     // NEW: Setup sticky behavior via JavaScript (fallback for CSS position: sticky)
     this.setupStickyBehavior();

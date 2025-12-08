@@ -1781,12 +1781,6 @@ hr.separator {
   }
 }
 
-/* Hide panels when section is out of view */
-.support-continuum-section.section-out-of-view .support-panel {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
 /* ===== CTA LOCK OVERLAY ===== */
 .cta-lock-overlay {
   position: absolute;
