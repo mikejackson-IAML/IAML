@@ -136,7 +136,8 @@ class SupportContinuum {
    */
   setupScrollObserver() {
     const section = this.section;
-    if (!section) return;
+    const panelsContainer = document.querySelector('.support-panels-container');
+    if (!section || !panelsContainer) return;
 
     window.addEventListener('scroll', () => {
       if (this.isScrollingFromClick) return;
@@ -154,6 +155,21 @@ class SupportContinuum {
 
       console.log('[SupportContinuum] Scroll progress:', scrollProgress.toFixed(2), '-> Phase:', phase);
       this.updateActivePhase(phase, true);
+
+      // NEW: Dynamically position panels to stay centered in viewport
+      // Calculate the scroll offset within the container needed to center panel in viewport
+      const viewportCenter = window.innerHeight / 2;
+      const panelHeight = 600; // Match CSS height
+      const sectionTopOffset = sectionRect.top;
+
+      // Calculate the top position for panels to appear centered in viewport
+      // When section is at viewport top, panels should be at viewportCenter - panelHeight/2
+      const targetTop = viewportCenter - panelHeight / 2 - sectionTopOffset;
+
+      // Update all panel positions
+      this.panels.forEach(panel => {
+        panel.style.top = `${Math.max(0, targetTop)}px`;
+      });
 
       // Control panel visibility based on section viewport position
       const sectionTop = sectionRect.top;
