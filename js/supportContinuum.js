@@ -428,24 +428,24 @@ class SupportContinuum {
       const navRect = this.timelineNav.getBoundingClientRect();
       const navHeight = this.timelineNav.offsetHeight;
 
-      // Find the bullet (not the title) to align with
-      const firstBullet = firstTimelineItem.querySelector('.timeline-bullet');
-      if (!firstBullet) return;
+      // Find the title to align with (not the bullet)
+      const firstTitle = firstTimelineItem.querySelector('.timeline-title');
+      if (!firstTitle) return;
 
-      const bulletRect = firstBullet.getBoundingClientRect();
+      const titleRect = firstTitle.getBoundingClientRect();
 
-      // Calculate bullet's offset WITHIN the timeline nav container
-      const bulletOffsetInNav = bulletRect.top - navRect.top;
+      // Calculate title's offset WITHIN the timeline nav container
+      const titleOffsetInNav = titleRect.top - navRect.top;
 
-      // Final panel position = sticky position + bullet offset within nav
-      const panelTopValue = Math.round(stickyTop + bulletOffsetInNav);
+      // Final panel position = sticky position + title offset within nav
+      const panelTopValue = Math.round(stickyTop + titleOffsetInNav);
 
       console.log('[SupportContinuum] Aligning panels:', {
         stickyTop,
         navTop: navRect.top,
         navHeight,
-        bulletTop: bulletRect.top,
-        bulletOffsetInNav,
+        titleTop: titleRect.top,
+        titleOffsetInNav,
         panelTopValue
       });
 
