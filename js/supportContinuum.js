@@ -76,6 +76,9 @@ class SupportContinuum {
     this.setupScrollObserver();
     this.setupKeyboardNavigation();
 
+    // NEW: Setup section boundary detection (hide panels when section out of view)
+    this.setupSectionBoundaries();
+
     // NEW: Setup sticky behavior via JavaScript (fallback for CSS position: sticky)
     this.setupStickyBehavior();
 
@@ -150,6 +153,31 @@ class SupportContinuum {
       // Also update progress line
       this.updateProgressLine();
     }, { passive: true });
+  }
+
+  /**
+   * Hide panels when section scrolls completely out of view
+   */
+  setupSectionBoundaries() {
+    if (!this.section) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Section in view - panels can be visible
+          this.section.classList.remove('section-out-of-view');
+        } else {
+          // Section out of view - force hide all panels
+          this.section.classList.add('section-out-of-view');
+        }
+      });
+    }, {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0
+    });
+
+    observer.observe(this.section);
   }
 
   /**

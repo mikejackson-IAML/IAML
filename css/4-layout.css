@@ -288,6 +288,7 @@
   flex: 1 1 auto;
   position: relative;
   height: 100%;
+  min-height: 500vh; /* 5 phases × 100vh each for scroll height */
 }
 
 .support-timeline-nav::-webkit-scrollbar {
