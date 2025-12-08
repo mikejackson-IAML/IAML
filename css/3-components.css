@@ -1660,6 +1660,15 @@ hr.separator {
   box-shadow: 0 0 0 4px rgba(24, 139, 246, 0.1);
 }
 
+/* Fix alignment for items 2-5 (which have padding-top) */
+.timeline-item:not(:first-child) .timeline-bullet {
+  top: 60px;  /* 32px (padding) + 28px (alignment) */
+}
+
+.timeline-item:not(:first-child).active .timeline-bullet {
+  top: 58px;  /* 32px (padding) + 26px (alignment) */
+}
+
 /* Timeline Content */
 .timeline-content {
   flex: 1;
