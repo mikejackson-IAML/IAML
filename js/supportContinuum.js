@@ -183,7 +183,7 @@ class SupportContinuum {
       // Must be in viewport: section top is above viewport bottom, section bottom is below viewport top
       const sectionInViewport = sectionRect.top < viewportHeight && sectionRect.bottom > 0;
       // Must be actively viewing: scrolled past top (200px threshold) and significant content remains
-      const isActivelyViewing = sectionRect.top <= 200 && sectionRect.bottom > viewportHeight * 0.5;
+      const isActivelyViewing = sectionRect.top <= 200 && sectionRect.bottom > viewportHeight * 0.8;
       const shouldShow = sectionInViewport && isActivelyViewing;
 
       if (shouldShow) {
