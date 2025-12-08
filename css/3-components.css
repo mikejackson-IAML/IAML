@@ -1740,15 +1740,13 @@ hr.separator {
   pointer-events: auto;
 }
 
-/* Phase 5: Switch panel to relative positioning for normal scrolling */
+/* Phase 5: Switch panel to absolute positioning to show at correct location */
 .final-phase .support-panel[data-phase="5"].active {
-  position: relative;
-  top: auto;
-  right: auto;
-  left: auto;
-  width: 100%;
-  max-width: 100%;
-  margin-bottom: var(--space-3xl);
+  position: absolute;
+  right: 40px;
+  width: 850px;
+  max-width: 90%;
+  /* Top position is calculated by JavaScript */
 }
 
 .support-panel img {
