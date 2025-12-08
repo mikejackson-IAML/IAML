@@ -19,6 +19,12 @@ class SupportContinuum {
     this.isScrollingFromClick = false;
     this.scrollTimeout = null;
 
+    // NEW: Phase completion tracking
+    this.viewedPhases = new Set([1]); // Start with phase 1 as viewed
+    this.allPhasesViewed = false;
+    this.ctaSection = document.getElementById('iaml-cta');
+    this.ctaOverlay = null;
+
     // Check if elements exist
     if (!this.section || !this.timelineNav) {
       console.warn('[SupportContinuum] Required elements not found');
@@ -57,8 +63,13 @@ class SupportContinuum {
         panel.style.opacity = '1';
         panel.style.transform = 'scale(1)';
       });
+      // NEW: Skip lock overlay for reduced motion
+      this.allPhasesViewed = true;
       return;
     }
+
+    // NEW: Create CTA lock overlay
+    this.createCtaOverlay();
 
     // Set up event listeners
     this.setupClickHandlers();
@@ -154,6 +165,16 @@ class SupportContinuum {
     console.log('[SupportContinuum] Updating active phase to:', phase);
     this.activePhase = phase;
 
+    // NEW: Track this phase as viewed
+    this.viewedPhases.add(phase);
+    console.log('[SupportContinuum] Viewed phases:', Array.from(this.viewedPhases));
+
+    // NEW: Check if all phases viewed
+    if (this.viewedPhases.size === 5 && !this.allPhasesViewed) {
+      this.allPhasesViewed = true;
+      this.unlockNextSection();
+    }
+
     // Update timeline items
     this.timelineItems.forEach(item => {
       const itemPhase = parseInt(item.getAttribute('data-phase'));
@@ -171,6 +192,9 @@ class SupportContinuum {
       const panelPhase = parseInt(panel.getAttribute('data-phase'));
       panel.classList.toggle('active', panelPhase === phase);
     });
+
+    // NEW: Update overlay progress
+    this.updateProgressIndicator();
 
     // Update progress line
     this.updateProgressLine();
@@ -246,6 +270,96 @@ class SupportContinuum {
         }
       });
     });
+  }
+
+  /**
+   * Create overlay on CTA section
+   */
+  createCtaOverlay() {
+    if (!this.ctaSection || this.ctaOverlay) return;
+
+    this.ctaOverlay = document.createElement('div');
+    this.ctaOverlay.className = 'cta-lock-overlay';
+    this.ctaOverlay.setAttribute('role', 'status');
+    this.ctaOverlay.setAttribute('aria-live', 'polite');
+    this.ctaOverlay.innerHTML = `
+      <div class="lock-content">
+        <div class="lock-icon" aria-hidden="true">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+          </svg>
+        </div>
+        <p class="lock-message">
+          <strong>Explore all 5 support phases to continue</strong><br>
+          <span class="lock-progress">1 of 5 phases explored</span>
+        </p>
+        <button class="btn-skip-lock" aria-label="Skip to CTA section">
+          Skip to Register
+        </button>
+      </div>
+    `;
+
+    this.ctaSection.style.position = 'relative';
+    this.ctaSection.appendChild(this.ctaOverlay);
+
+    // Handle skip button
+    const skipBtn = this.ctaOverlay.querySelector('.btn-skip-lock');
+    if (skipBtn) {
+      skipBtn.addEventListener('click', () => {
+        if (typeof gtag === 'function') {
+          gtag('event', 'support_continuum_skipped', {
+            phases_viewed: this.viewedPhases.size
+          });
+        }
+        this.allPhasesViewed = true;
+        this.unlockNextSection();
+      });
+    }
+  }
+
+  /**
+   * Unlock CTA section after all phases viewed
+   */
+  unlockNextSection() {
+    console.log('[SupportContinuum] All phases viewed! Unlocking CTA.');
+
+    if (this.ctaOverlay) {
+      this.ctaOverlay.classList.add('unlocking');
+      setTimeout(() => {
+        this.ctaOverlay.remove();
+        this.ctaOverlay = null;
+      }, 600);
+    }
+
+    if (this.section) {
+      this.section.classList.add('all-phases-viewed');
+    }
+
+    // Analytics event
+    if (typeof gtag === 'function') {
+      gtag('event', 'support_continuum_completed', {
+        event_category: 'Engagement',
+        phases_viewed: this.viewedPhases.size
+      });
+    }
+
+    // Dispatch custom event
+    document.dispatchEvent(new CustomEvent('supportContinuumComplete', {
+      detail: { viewedPhases: Array.from(this.viewedPhases) }
+    }));
+  }
+
+  /**
+   * Update progress text in overlay
+   */
+  updateProgressIndicator() {
+    if (!this.ctaOverlay) return;
+
+    const progressText = this.ctaOverlay.querySelector('.lock-progress');
+    if (progressText) {
+      progressText.textContent = `${this.viewedPhases.size} of 5 phases explored`;
+    }
   }
 }
 
