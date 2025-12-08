@@ -66,9 +66,8 @@ class SupportContinuum {
     this.setupKeyboardNavigation();
 
     // NEW: Setup section boundary detection (hide panels when section out of view)
-    // DISABLED: This was causing panels to be hidden due to !important override
-    // The sticky positioning naturally handles section visibility
-    // this.setupSectionBoundaries();
+    // This ensures fixed panels only show when support continuum section is visible
+    this.setupPanelVisibility();
 
     // NEW: Setup sticky behavior via JavaScript (fallback for CSS position: sticky)
     this.setupStickyBehavior();
@@ -163,25 +162,31 @@ class SupportContinuum {
   }
 
   /**
-   * Hide panels when section scrolls completely out of view
+   * Show/hide panels based on section visibility
+   * Ensures fixed panels only appear when support continuum section is in view
    */
-  setupSectionBoundaries() {
+  setupPanelVisibility() {
     if (!this.section) return;
+
+    const panelsContainer = document.querySelector('.support-panels-container');
+    if (!panelsContainer) return;
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Section in view - panels can be visible
-          this.section.classList.remove('section-out-of-view');
+          // Section in view - show panels
+          panelsContainer.classList.add('panels-visible');
+          console.log('[SupportContinuum] Panels visible - section in view');
         } else {
-          // Section out of view - force hide all panels
-          this.section.classList.add('section-out-of-view');
+          // Section out of view - hide panels
+          panelsContainer.classList.remove('panels-visible');
+          console.log('[SupportContinuum] Panels hidden - section out of view');
         }
       });
     }, {
       root: null,
       rootMargin: '0px',
-      threshold: 0
+      threshold: 0.1
     });
 
     observer.observe(this.section);
