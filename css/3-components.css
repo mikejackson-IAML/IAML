@@ -1712,11 +1712,9 @@ hr.separator {
 /* Support Panels */
 .support-panel {
   position: fixed;           /* Anchored to viewport */
-  top: 500px;                /* Align with first phase title */
-  right: 60px;               /* Distance from right edge, prevent overlap */
-  width: 700px;              /* Fixed width for consistent sizing */
+  right: 40px;               /* Reduced from 60px to move panel closer */
+  width: 850px;              /* Increased from 700px to use more space */
   max-width: 90%;            /* Responsive constraint for smaller screens */
-  height: 800px;             /* Increased from 600px to take up more space */
   border-radius: var(--radius-xl);
   overflow: hidden;
   background: var(--gray-100);
@@ -1736,7 +1734,8 @@ hr.separator {
 .support-panel img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
   display: block;
 }
 
