@@ -1616,7 +1616,7 @@ hr.separator {
   display: flex;
   align-items: flex-start;
   gap: var(--space-lg);
-  padding: var(--space-xl) 0;
+  padding: var(--space-lg) 0;
   background: none;
   border: none;
   cursor: pointer;
