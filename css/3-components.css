@@ -88,8 +88,34 @@
 
   .glass-btn-blue:hover {
     background: linear-gradient(135deg, rgba(40, 82, 140, 1) 0%, rgba(30, 58, 95, 1) 100%);
+    border-color: rgba(40, 82, 140, 0.8);
+    box-shadow:
+      0 12px 32px rgba(40, 82, 140, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
-  
+
+  .glass-btn-red {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 0.9) 0%, rgba(220, 0, 0, 0.95) 100%);
+    color: var(--white);
+    border-color: rgba(255, 0, 0, 0.6);
+  }
+
+  .glass-btn-red:hover {
+    background: linear-gradient(135deg, rgba(255, 0, 0, 1) 0%, rgba(220, 0, 0, 1) 100%);
+    border-color: rgba(255, 0, 0, 0.8);
+    box-shadow:
+      0 12px 32px rgba(255, 0, 0, 0.3),
+      0 4px 12px rgba(0, 0, 0, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  .glass-btn-lg {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+    border-radius: 14px;
+  }
+
   /* ===== CARDS ===== */
   .card {
     background: var(--white);
