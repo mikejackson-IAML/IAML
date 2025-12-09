@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Meta Tags -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="IAML Corporate Training - Customized workplace law training for your organization. Same expert instructors, tailored to your team's specific needs.">
+  <meta name="keywords" content="corporate training, HR training, employment law training, workplace law, team training, IAML">
+  <meta name="author" content="Institute for Applied Management & Law">
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="Corporate Training - IAML">
+  <meta property="og:description" content="Train your entire team at once. The same workplace law training your peers attend at our public seminars, customized to your team's specific needs.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://iaml.com/corporate-training">
+  <meta property="og:image" content="https://iaml.com/images/og-corporate-training.jpg">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+
+  <title>Corporate Training - IAML</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <!-- CDN & External Service Preconnects -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="preconnect" href="https://storage.googleapis.com">
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+  <link rel="preconnect" href="https://api.airtable.com">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="../css/main.css">
+
+  <!-- Google Analytics (Replace with your GA4 ID) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX');
+  </script>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="header">
+    <!-- Logo -->
+    <a href="/" class="header-logo">
+      <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML Logo">
+    </a>
+
+    <!-- Right side: Nav + Button -->
+    <div class="header-right">
+      <!-- Desktop Navigation -->
+      <nav>
+        <ul class="header-nav">
+          <li><a href="https://iaml.com/featured-programs">Featured Programs</a></li>
+          <li><a href="https://iaml.com/corporate-training">Corporate Training</a></li>
+          <li><a href="https://iaml.com/about-us">Why IAML</a></li>
+        </ul>
+      </nav>
+
+      <!-- Desktop CTA Button -->
+      <a href="#" class="header-cta" onclick="connectPopup_open(); return false;">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+        </svg>
+        CONNECT WITH US
+      </a>
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-backdrop" id="mobileBackdrop"></div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="https://iaml.com/featured-programs">Featured Programs</a>
+    <a href="https://iaml.com/corporate-training">Corporate Training</a>
+    <a href="https://iaml.com/about-us">Why IAML</a>
+    <a href="#" class="header-cta" onclick="connectPopup_open(); closeMobileMenu(); return false;">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02-.37-1.11-.56-2.3-.56-3.53 0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99 3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
+      </svg>
+      CONNECT WITH US
+    </a>
+  </nav>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main>
+
+    <!-- Hero Section -->
+    <section class="ct-hero-wrapper">
+      <div class="ct-hero">
+        <p class="ct-trusted-text">
+          REAL ATTORNEYS, REAL CASES, REAL RESULTS SINCE 1979
+        </p>
+
+        <h1 class="ct-headline">
+          Train Your Entire Team at Once.<br>We'll Come to You.
+        </h1>
+
+        <p class="ct-description">
+          The same workplace law training your peers attend at our public seminars, delivered at your location or virtually and customized to your team's specific needs, policies, and hot-button issues.
+        </p>
+
+        <div class="ct-button-container">
+          <a href="#" class="ct-glass-btn ct-glass-btn-blue ct-glass-btn-lg" onclick="connectPopup_open(); return false;">Schedule a Consultation</a>
+          <a href="#" class="ct-glass-btn ct-glass-btn-red ct-glass-btn-lg">Download Training Guide</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Corporate Benefits Section -->
+    <section class="ct-benefits-section">
+      <h2 class="ct-benefits-headline">What You Get With Corporate Training</h2>
+      <p class="ct-benefits-subheadline">1,000+ customized programs delivered to organizations nationwide. The same expertise, tailored to your team.</p>
+
+      <div class="ct-benefits-grid">
+
+        <!-- Card 1: The Same Expertise -->
+        <article class="ct-benefit-card">
+          <div class="ct-card-header">
+            <i class="fas fa-award" aria-hidden="true"></i>
+            <h3 class="ct-card-headline">The Same Expertise</h3>
+          </div>
+          <p class="ct-card-body">Same instructors who train at our public seminars, practicing attorneys and senior HR professionals with decades of experience. No junior trainers, no generic content.</p>
+        </article>
+
+        <!-- Card 2: Customized to Your Reality -->
+        <article class="ct-benefit-card">
+          <div class="ct-card-header">
+            <i class="fas fa-cog" aria-hidden="true"></i>
+            <h3 class="ct-card-headline">Customized to Your Reality</h3>
+          </div>
+          <p class="ct-card-body">We incorporate your policies, your procedures, and your actual challenges into every program. Your team practices with scenarios they'll face Monday morning.</p>
+        </article>
+
+        <!-- Card 3: Everyone Learns Together -->
+        <article class="ct-benefit-card">
+          <div class="ct-card-header">
+            <i class="fas fa-users" aria-hidden="true"></i>
+            <h3 class="ct-card-headline">Everyone Learns Together</h3>
+          </div>
+          <p class="ct-card-body">Train 10, 50, or 100+ employees at once. No knowledge gaps, consistent messaging, and your team builds shared language around compliance issues.</p>
+        </article>
+
+        <!-- Card 4: Delivered Your Way -->
+        <article class="ct-benefit-card">
+          <div class="ct-card-header">
+            <i class="fas fa-desktop" aria-hidden="true"></i>
+            <h3 class="ct-card-headline">Delivered Your Way</h3>
+          </div>
+          <p class="ct-card-body">On-site at your office or live virtual, your choice. Same interactive format, same practical approach, maximum convenience for your team.</p>
+        </article>
+
+        <!-- Card 5: Safe to Ask Hard Questions -->
+        <article class="ct-benefit-card">
+          <div class="ct-card-header">
+            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+            <h3 class="ct-card-headline">Safe to Ask Hard Questions</h3>
+          </div>
+          <p class="ct-card-body">Confidential environment with only your employees. Discuss the gray areas, the difficult situations, the real concerns—without worrying about competitors listening.</p>
+        </article>
+
+        <!-- Card 6: Better ROI Than Public Seminars -->
+        <article class="ct-benefit-card">
+          <div class="ct-card-header">
+            <i class="fas fa-chart-line" aria-hidden="true"></i>
+            <h3 class="ct-card-headline">Better ROI Than Public Seminars</h3>
+          </div>
+          <p class="ct-card-body">More economical per person when training groups. Plus zero travel costs, no time away from the office, and content tailored to your exact needs.</p>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="ct-how-it-works">
+
+      <!-- Section Header -->
+      <div class="ct-hiw-headline-section">
+        <div class="container">
+          <h2 class="ct-hiw-title">How It Works</h2>
+          <p class="ct-hiw-subtitle">Four straightforward steps from first conversation to program delivery.</p>
+
+          <!-- CTA Button -->
+          <div class="ct-hiw-cta-container">
+            <a href="#" class="ct-hiw-cta-button" onclick="connectPopup_open(); return false;">
+              Schedule Your Discovery Call
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Horizontal Layout Section -->
+      <div class="ct-horizontal-wrapper">
+        <div class="container">
+          <div class="ct-horizontal-layout">
+
+            <!-- Left Side Navigation -->
+            <nav class="ct-side-navigation" role="navigation" aria-label="Process steps">
+              <button class="ct-nav-item active" data-step="1" role="tab" aria-selected="true" aria-controls="ct-step-1-content">
+                <div class="ct-nav-step-number" aria-hidden="true">1</div>
+                <div class="ct-nav-step-title">Discovery Call</div>
+              </button>
+
+              <button class="ct-nav-item" data-step="2" role="tab" aria-selected="false" aria-controls="ct-step-2-content">
+                <div class="ct-nav-step-number" aria-hidden="true">2</div>
+                <div class="ct-nav-step-title">Custom Proposal</div>
+              </button>
+
+              <button class="ct-nav-item" data-step="3" role="tab" aria-selected="false" aria-controls="ct-step-3-content">
+                <div class="ct-nav-step-number" aria-hidden="true">3</div>
+                <div class="ct-nav-step-title">Content Customization</div>
+              </button>
+
+              <button class="ct-nav-item" data-step="4" role="tab" aria-selected="false" aria-controls="ct-step-4-content">
+                <div class="ct-nav-step-number" aria-hidden="true">4</div>
+                <div class="ct-nav-step-title">Delivery & Follow-Up</div>
+              </button>
+            </nav>
+
+            <!-- Right Content Area -->
+            <div class="ct-content-area" role="tabpanel">
+
+              <!-- Step 1 Content -->
+              <article class="ct-step-content-panel active" id="ct-step-1-content" data-step="1">
+                <div class="ct-content-card">
+                  <div class="ct-content-header">
+                    <div class="ct-content-step-number" aria-hidden="true">1</div>
+                    <h3 class="ct-content-step-title">Discovery Call (15-20 Minutes)</h3>
+                  </div>
+                  <div class="ct-content-body">
+                    <div class="ct-content-section">
+                      <div class="ct-content-label">What happens:</div>
+                      <p class="ct-content-text">We get on the phone to understand what you need. What challenges is your team facing? What skills do they need to develop? How many people are we training?</p>
+                    </div>
+
+                    <div class="ct-content-section">
+                      <div class="ct-content-label">What we'll ask:</div>
+                      <ul class="ct-content-list">
+                        <li>What specific topics or compliance issues are top of mind?</li>
+                        <li>Who's attending (job titles, experience levels)?</li>
+                        <li>Any company-specific situations we should address?</li>
+                        <li>Preferred delivery format: on-site or virtual?</li>
+                      </ul>
+                    </div>
+
+                    <div class="ct-content-section">
+                      <div class="ct-content-label">What you'll learn:</div>
+                      <p class="ct-content-text">Whether corporate training makes sense for your situation, or if sending individuals to our public seminars is a better fit.</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Step 2 Content -->
+              <article class="ct-step-content-panel" id="ct-step-2-content" data-step="2">
+                <div class="ct-content-card">
+                  <div class="ct-content-header">
+                    <div class="ct-content-step-number" aria-hidden="true">2</div>
+                    <h3 class="ct-content-step-title">Custom Proposal (Within 48 Hours)</h3>
+                  </div>
+                  <div class="ct-content-body">
+                    <div class="ct-content-section">
+                      <div class="ct-content-label">What you'll receive:</div>
+                      <ul class="ct-content-list">
+                        <li>Recommended program(s) based on your needs</li>
+                        <li>Detailed agenda and learning outcomes</li>
+                        <li>Delivery format options (on-site or live virtual)</li>
+                        <li>Transparent pricing</li>
+                        <li>Sample materials</li>
+                      </ul>
+                    </div>
+
+                    <div class="ct-content-section">
+                      <div class="ct-content-label">What happens next:</div>
+                      <p class="ct-content-text">Review the proposal. We adjust based on your feedback. No pressure, no sales tactics—just a straightforward recommendation based on what we heard in the discovery call.</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Step 3 Content -->
+              <article class="ct-step-content-panel" id="ct-step-3-content" data-step="3">
+                <div class="ct-content-card">
+                  <div class="ct-content-header">
+                    <div class="ct-content-step-number" aria-hidden="true">3</div>
+                    <h3 class="ct-content-step-title">Content Customization (Collaborative Process)</h3>
+                  </div>
+                  <div class="ct-content-body">
+                    <div class="ct-content-section">
+                      <p class="ct-content-text" style="font-weight: 500; color: #1f2937;">This is where we make it yours:</p>
+                      <ul class="ct-content-list">
+                        <li>We incorporate your policies and procedures into the training</li>
+                        <li>Add your real scenarios and case studies</li>
+                        <li>Include your company's specific compliance concerns</li>
+                        <li>Customize examples to your industry</li>
+                        <li>Review draft materials with you before delivery</li>
+                      </ul>
+                    </div>
+
+                    <div class="ct-content-section">
+                      <div class="ct-content-label">Timeline:</div>
+                      <p class="ct-content-text">Typically 2-4 weeks from approval to delivery, depending on customization depth. Need it faster? We can usually accommodate rush requests.</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+              <!-- Step 4 Content -->
+              <article class="ct-step-content-panel" id="ct-step-4-content" data-step="4">
+                <div class="ct-content-card">
+                  <div class="ct-content-header">
+                    <div class="ct-content-step-number" aria-hidden="true">4</div>
+                    <h3 class="ct-content-step-title">Delivery & Follow-Up</h3>
+                  </div>
+                  <div class="ct-content-body">
+                    <div class="ct-content-section">
+                      <p class="ct-content-text" style="font-weight: 500; margin-bottom: 24px;">Two delivery options—your choice:</p>
+
+                      <div class="ct-delivery-option">
+                        <div class="ct-delivery-title">On-Site Delivery</div>
+                        <p class="ct-content-text" style="margin-bottom: 12px;">We come to your office (anywhere in the U.S.). Same interactive format as our public seminars. Materials provided for all participants. Maximum team interaction and networking.</p>
+                        <div class="ct-best-for">Best for larger groups (20+ participants)</div>
+                      </div>
+
+                      <div class="ct-delivery-option">
+                        <div class="ct-delivery-title">Live Virtual Delivery</div>
+                        <p class="ct-content-text" style="margin-bottom: 12px;">Interactive online training via Zoom or Teams. Same expert instructors, same practical content. Digital materials and resources included. Breakout rooms, polls, live Q&A—fully interactive.</p>
+                        <div class="ct-best-for">Best for distributed teams or 10-30 participants</div>
+                      </div>
+                    </div>
+
+                    <div class="ct-content-section">
+                      <div class="ct-content-label">Both formats include:</div>
+                      <ul class="ct-content-list">
+                        <li>Experienced instructors (no junior trainers)</li>
+                        <li>Interactive exercises and real-world scenarios</li>
+                        <li>Comprehensive participant materials</li>
+                        <li>Post-training consultation (30 days)</li>
+                        <li>Certificate of completion for all participants</li>
+                      </ul>
+                    </div>
+
+                    <div class="ct-content-section">
+                      <div class="ct-content-label">After the program:</div>
+                      <p class="ct-content-text">We follow up to answer any lingering questions and provide additional resources. You'll have access to us for 30 days post-training if issues come up.</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="iaml-cta" class="theme-light py-5xl">
+      <div class="container container-lg mx-auto text-center">
+        <div class="mx-auto">
+          <h2 class="font-body text-display-lg text-primary font-light tracking-tight">
+            Ready to
+            <span class="cta-cascade font-display text-hero text-brand">Train Your Team?</span>
+          </h2>
+
+          <p class="font-body text-large text-secondary my-lg">
+            Same expertise. Customized for you. Let's talk about what your team needs.
+          </p>
+
+          <div class="cta-button-group">
+            <button class="btn btn-primary hover-lift" id="openContactModal" onclick="connectPopup_open()">
+              SCHEDULE A CONSULTATION
+            </button>
+            <a href="https://iaml.com/featured-programs" class="btn btn-register hover-lift">
+              VIEW PROGRAMS
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer" role="contentinfo">
+    <div class="wrap">
+      <nav class="grid" aria-label="Footer">
+        <!-- Brand -->
+        <section class="brand" aria-label="Organization">
+          <div class="logo">
+            <img data-src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E">
+          </div>
+        </section>
+
+        <!-- Programs -->
+        <section class="col">
+          <h3>Programs</h3>
+          <ul class="list" aria-label="Programs">
+            <li><a href="https://iaml.com/programs/employee-relations-law">Certificate in Employee Relations Law</a></li>
+            <li><a href="https://iaml.com/programs/strategic-hr-leadership">Advanced Certificate in Strategic Employment Law</a></li>
+            <li><a href="https://iaml.com/programs/workplace-investigations">Certificate in Workplace Investigations</a></li>
+            <li><a href="https://iaml.com/programs/strategic-hr-management">Certificate in Strategic HR Management</a></li>
+            <li><a href="https://iaml.com/programs/employee-benefits-law">Certificate in Employee Benefits Law</a></li>
+            <li><a href="https://iaml.com/programs/employee-benefits-law-advanced">Advanced Certificate in Employee Benefits Law</a></li>
+          </ul>
+        </section>
+
+        <!-- Resources -->
+        <section class="col">
+          <h3>Resources</h3>
+          <ul class="list" aria-label="Resources">
+            <li><a href="https://iaml.com/why-iaml">Why IAML</a></li>
+            <li><a href="https://iaml.com/faculty">Faculty</a></li>
+            <li><a href="https://iaml.com/alumni-benefits">Alumni Benefits</a></li>
+            <li><a href="https://iaml.com/corporate-training">Corporate Training</a></li>
+            <li><a href="https://iaml.com/program-schedule">Schedule &amp; Locations</a></li>
+          </ul>
+        </section>
+
+        <!-- Support -->
+        <section class="col">
+          <h3>Support</h3>
+          <ul class="list" aria-label="Support">
+            <li><a href="https://iaml.com/faq">FAQ</a></li>
+            <li><a href="https://iaml.com/contact-us">Contact</a></li>
+          </ul>
+        </section>
+      </nav>
+
+      <div class="bottom">
+        <div>© 2025 Institute for Applied Management &amp; Law, Inc. All rights reserved.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== MODALS ===== -->
+
+  <!-- Connect Modal -->
+  <div class="connectPopup-overlay" id="connectPopup_Modal" onclick="connectPopup_closeOnOverlay(event)">
+    <div class="connectPopup-modal" onclick="event.stopPropagation();">
+      <div class="connectPopup-header">
+        <h3>Connect with Us in 20 Seconds or Less</h3>
+        <button class="connectPopup-closeBtn" onclick="connectPopup_close()" aria-label="Close">&times;</button>
+      </div>
+      <div class="connectPopup-body" id="connectPopup_Content">
+        <!-- Dynamic content -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== JAVASCRIPT ===== -->
+
+  <!-- Your JavaScript Files -->
+  <script src="../js/modals.js" defer></script>
+  <script src="../js/main.js" defer></script>
+
+  <!-- Header Scroll Behavior -->
+  <script>
+    // ============================================================================
+    // OPTIMIZED HEADER SCROLL BEHAVIOR
+    // ============================================================================
+
+    const header = document.getElementById('header');
+
+    // Scroll state tracking
+    let lastScrollTop = 0;
+    let scrollDirection = 'none';
+    let ticking = false;
+
+    // Thresholds
+    const GLASS_EFFECT_THRESHOLD = 50;
+    const HIDE_THRESHOLD = 70;
+    const SCROLL_DELTA_MIN = 1;
+
+    // Direction change detection
+    let scrollDeltaAccumulator = 0;
+    const DIRECTION_CHANGE_THRESHOLD = 5;
+
+    function updateHeader(scrollTop) {
+      const scrollDelta = scrollTop - lastScrollTop;
+
+      if (Math.abs(scrollDelta) < SCROLL_DELTA_MIN) {
+        ticking = false;
+        return;
+      }
+
+      scrollDeltaAccumulator += scrollDelta;
+
+      let newDirection = scrollDirection;
+
+      if (scrollDeltaAccumulator > DIRECTION_CHANGE_THRESHOLD) {
+        newDirection = 'down';
+        scrollDeltaAccumulator = 0;
+      } else if (scrollDeltaAccumulator < -DIRECTION_CHANGE_THRESHOLD) {
+        newDirection = 'up';
+        scrollDeltaAccumulator = 0;
+      }
+
+      if (scrollTop <= GLASS_EFFECT_THRESHOLD) {
+        header.classList.remove('hidden');
+        header.classList.remove('scrolled');
+      } else if (newDirection === 'down' && scrollTop > HIDE_THRESHOLD) {
+        header.classList.add('hidden');
+        header.classList.add('scrolled');
+      } else if (newDirection === 'up' && scrollTop > GLASS_EFFECT_THRESHOLD) {
+        header.classList.remove('hidden');
+        header.classList.add('scrolled');
+      } else if (scrollTop > GLASS_EFFECT_THRESHOLD && scrollTop <= HIDE_THRESHOLD) {
+        header.classList.remove('hidden');
+        header.classList.add('scrolled');
+      }
+
+      scrollDirection = newDirection;
+      lastScrollTop = scrollTop;
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateHeader(window.pageYOffset);
+        });
+        ticking = true;
+      }
+    }
+
+    window.addEventListener('scroll', requestTick, { passive: true });
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialScrollTop = window.pageYOffset;
+
+      if (initialScrollTop <= GLASS_EFFECT_THRESHOLD) {
+        header.classList.remove('hidden');
+        header.classList.remove('scrolled');
+      } else {
+        header.classList.remove('hidden');
+        header.classList.add('scrolled');
+      }
+
+      lastScrollTop = initialScrollTop;
+    });
+  </script>
+
+  <!-- Mobile Menu Toggle -->
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileBackdrop = document.getElementById('mobileBackdrop');
+
+    function toggleMobileMenu() {
+      hamburger.classList.toggle('active');
+      mobileMenu.classList.toggle('active');
+      mobileBackdrop.classList.toggle('active');
+      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+    }
+
+    function closeMobileMenu() {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      mobileBackdrop.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', toggleMobileMenu);
+    mobileBackdrop.addEventListener('click', closeMobileMenu);
+  </script>
+
+  <!-- How It Works Side Navigation -->
+  <script>
+    // Side Navigation functionality for How It Works section
+    class CTSideNavigation {
+      constructor() {
+        this.navItems = document.querySelectorAll('.ct-nav-item');
+        this.contentPanels = document.querySelectorAll('.ct-step-content-panel');
+        this.currentStep = 1;
+        this.isMobile = window.innerWidth < 768;
+
+        this.init();
+        this.handleResize();
+      }
+
+      init() {
+        // Navigation item click handlers
+        this.navItems.forEach(item => {
+          item.addEventListener('click', (e) => {
+            const step = parseInt(item.getAttribute('data-step'));
+            this.switchToStep(step);
+
+            // Remove focus after clicking
+            setTimeout(() => {
+              e.currentTarget.blur();
+            }, 100);
+          });
+
+          // Keyboard support
+          item.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              const step = parseInt(item.getAttribute('data-step'));
+              this.switchToStep(step);
+            }
+          });
+        });
+
+        // Mobile accordion click handlers
+        if (this.isMobile) {
+          this.contentPanels.forEach(panel => {
+            const header = panel.querySelector('.ct-content-header');
+            header.addEventListener('click', () => {
+              const step = parseInt(panel.getAttribute('data-step'));
+              this.toggleMobileStep(step);
+            });
+          });
+        }
+      }
+
+      switchToStep(step) {
+        if (step === this.currentStep && !this.isMobile) return;
+
+        this.currentStep = step;
+
+        // Update navigation items
+        this.navItems.forEach(item => {
+          const itemStep = parseInt(item.getAttribute('data-step'));
+          if (itemStep === step) {
+            item.classList.add('active');
+            item.setAttribute('aria-selected', 'true');
+          } else {
+            item.classList.remove('active');
+            item.setAttribute('aria-selected', 'false');
+          }
+        });
+
+        // Update content panels
+        this.contentPanels.forEach(panel => {
+          const panelStep = parseInt(panel.getAttribute('data-step'));
+          if (panelStep === step) {
+            panel.classList.add('active');
+          } else {
+            panel.classList.remove('active');
+          }
+        });
+
+        // Scroll to top of content area on desktop
+        if (!this.isMobile) {
+          setTimeout(() => {
+            const horizontalLayout = document.querySelector('.ct-horizontal-layout');
+            if (horizontalLayout) {
+              const offsetTop = horizontalLayout.getBoundingClientRect().top + window.pageYOffset;
+              window.scrollTo({ top: offsetTop - 20, behavior: 'smooth' });
+            }
+          }, 50);
+        }
+      }
+
+      toggleMobileStep(step) {
+        // On mobile, toggle the clicked step
+        this.contentPanels.forEach(panel => {
+          const panelStep = parseInt(panel.getAttribute('data-step'));
+          if (panelStep === step) {
+            panel.classList.toggle('active');
+          } else {
+            panel.classList.remove('active');
+          }
+        });
+
+        this.currentStep = step;
+      }
+
+      handleResize() {
+        window.addEventListener('resize', () => {
+          const wasMobile = this.isMobile;
+          this.isMobile = window.innerWidth < 768;
+
+          // Re-initialize if switching between mobile/desktop
+          if (wasMobile !== this.isMobile) {
+            if (!this.isMobile) {
+              // Switching to desktop: ensure one step is active
+              this.switchToStep(this.currentStep);
+            } else {
+              // Switching to mobile: collapse all except first
+              this.contentPanels.forEach((panel, index) => {
+                if (index === 0) {
+                  panel.classList.add('active');
+                } else {
+                  panel.classList.remove('active');
+                }
+              });
+            }
+          }
+        });
+      }
+    }
+
+    // Initialize when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => new CTSideNavigation());
+    } else {
+      new CTSideNavigation();
+    }
+  </script>
+
+  <!-- Lazy Load Footer Images -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const lazyImages = document.querySelectorAll('img[data-src]');
+
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const img = entry.target;
+            img.src = img.dataset.src;
+            img.removeAttribute('data-src');
+            observer.unobserve(img);
+          }
+        });
+      });
+
+      lazyImages.forEach(img => imageObserver.observe(img));
+    });
+  </script>
+
+</body>
+</html>
