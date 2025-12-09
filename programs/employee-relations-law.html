@@ -695,7 +695,7 @@
 
         <!-- CTA Buttons -->
         <div class="curriculum-cta">
-          <a href="#register" class="btn btn-primary">REGISTER NOW</a>
+          <a href="/register.html?program=employee-relations-law" class="btn btn-primary">REGISTER NOW</a>
           <button onclick="connectPopup_open()" class="btn btn-outline">CONNECT WITH US</button>
         </div>
 
@@ -6854,45 +6854,39 @@ button#prev-btn {
 
       // Event listeners
       
-      // Handle all registration buttons using data attributes (new flexible approach)
+      // Handle all registration buttons - redirect to new registration page
       document.querySelectorAll('.register-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-          e.preventDefault(); // Prevent default link behavior
-          
+          e.preventDefault();
+
           // Read data attributes from the clicked button
-          const section = e.target.dataset.section || 'general';
-          const program = e.target.dataset.program || null;
           const format = e.target.dataset.format || null;
-          const tracking = e.target.dataset.tracking || 'unknown';
           const sessionId = e.target.dataset.sessionId || null;
-          const autoAdvance = e.target.dataset.autoAdvance === 'true';
-          
-          // Store in state for tracking and pre-filling
-          state.sourceSection = section;
-          state.sourceTracking = tracking;
-          
-          // Pre-fill format if provided
-          if (format) {
-            state.format = format;
-            subTitle.textContent = `${format} registration`;
-            // If autoAdvance is true, we'll skip format selection step
-            if (autoAdvance) {
-              state.skipFormatStep = true;
-            }
+
+          // Build registration URL with parameters
+          const params = new URLSearchParams();
+
+          // Map format to slug
+          const formatSlugs = {
+            'In-Person': 'in-person',
+            'Virtual': 'virtual',
+            'On-Demand': 'on-demand'
+          };
+
+          if (format && formatSlugs[format]) {
+            params.set('format', formatSlugs[format]);
           }
-          
-          // Pre-select program if provided
-          if (program) {
-            state.program = program;
-          }
-          
-          // Pre-select session if provided
+
+          // This page is for Employee Relations Law
+          params.set('program', 'employee-relations-law');
+
+          // Add session if provided
           if (sessionId) {
-            state.selectedSession = sessionId;
+            params.set('session', sessionId);
           }
-          
-          // Open the modal
-          openModal();
+
+          // Redirect to new registration page
+          window.location.href = '/register.html?' + params.toString();
         });
       });
       
