@@ -55,6 +55,54 @@ const initCurriculum = () => {
     });
   }
 
+  // Initialize step tabs footer navigation
+  const stepTabs = document.querySelectorAll('.curriculum-step-tab');
+
+  if (stepTabs.length > 0) {
+    stepTabs.forEach(tab => {
+      // Click handler
+      tab.addEventListener('click', () => {
+        handleTabSwitch(tab, stepTabs, contentBlocks);
+      });
+
+      // Keyboard support: Enter and Space
+      tab.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          handleTabSwitch(tab, stepTabs, contentBlocks);
+        }
+      });
+    });
+
+    // Arrow key navigation between step tabs
+    stepTabs.forEach((tab) => {
+      tab.addEventListener('keydown', (e) => {
+        let targetTab = null;
+        const currentIndex = Array.from(stepTabs).indexOf(tab);
+
+        if (e.key === 'ArrowRight') {
+          e.preventDefault();
+          targetTab = stepTabs[Math.min(currentIndex + 1, stepTabs.length - 1)];
+        } else if (e.key === 'ArrowLeft') {
+          e.preventDefault();
+          targetTab = stepTabs[Math.max(currentIndex - 1, 0)];
+        }
+
+        if (targetTab) {
+          targetTab.focus();
+          handleTabSwitch(targetTab, stepTabs, contentBlocks);
+
+          // Scroll tab into view on mobile
+          targetTab.scrollIntoView({
+            behavior: 'smooth',
+            block: 'nearest',
+            inline: 'center'
+          });
+        }
+      });
+    });
+  }
+
   // Initialize accordion
   if (competencyHeaders.length > 0) {
     competencyHeaders.forEach(header => {
@@ -111,6 +159,21 @@ const handleTabSwitch = (clickedCard, allCards, allBlocks) => {
     // Announce change to screen readers
     announceToScreenReader(`${clickedCard.textContent} tab activated`);
   }
+
+  // Sync state across step tabs (footer navigation)
+  const allStepTabs = document.querySelectorAll('.curriculum-step-tab');
+  allStepTabs.forEach(stepTab => {
+    const stepTarget = stepTab.getAttribute('data-target');
+    if (stepTarget === targetBlockId) {
+      stepTab.classList.add('active');
+      stepTab.setAttribute('tabindex', '0');
+      stepTab.setAttribute('aria-selected', 'true');
+    } else {
+      stepTab.classList.remove('active');
+      stepTab.setAttribute('tabindex', '-1');
+      stepTab.setAttribute('aria-selected', 'false');
+    }
+  });
 };
 
 /**
@@ -155,5 +218,36 @@ const announceToScreenReader = (message) => {
   liveRegion.textContent = message;
 };
 
+/**
+ * Initialize "Next Block" CTA buttons
+ */
+const initNextBlockButtons = () => {
+  const nextBlockButtons = document.querySelectorAll('.curriculum-next-block-btn');
+
+  nextBlockButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const nextBlockId = button.getAttribute('data-next-block');
+      const targetCard = document.querySelector(`[data-target="${nextBlockId}"]`);
+
+      if (targetCard) {
+        const allCards = document.querySelectorAll('.curriculum-nav-card');
+        const allBlocks = document.querySelectorAll('.curriculum-block');
+
+        // Use existing handleTabSwitch function
+        handleTabSwitch(targetCard, allCards, allBlocks);
+
+        // Scroll to top of curriculum section smoothly
+        const curriculumSection = document.querySelector('.curriculum-section');
+        if (curriculumSection) {
+          curriculumSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }
+    });
+  });
+};
+
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', initCurriculum);
+document.addEventListener('DOMContentLoaded', () => {
+  initCurriculum();
+  initNextBlockButtons();
+});
