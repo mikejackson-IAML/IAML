@@ -183,13 +183,14 @@
               The Certificate in Employee Relations Law is <span style="color: #FF6A00; font-weight: 700;">4.5 intensive days</span> where you'll build practical employment law expertise with experienced attorneys - working through real workplace scenarios, not theoretical lectures.
             </p>
             <hr class="separator"/>
-            <div class="benefits-section">
+            <div class="benefits-section benefits-section--gradient benefits-section--card">
               <h3 class="font-display">What Sets This Program Apart</h3>
               <ul class="benefits-list">
                 <li><strong>Comprehensive employment law coverage</strong> – Hiring, discipline, accommodations, leaves, terminations, and investigations</li>
                 <li><strong>Real-world application</strong> – Work actual cases and scenarios you'll face Monday morning</li>
                 <li><strong>Expert attorney-led instruction</strong> – Learn from practicing employment law specialists</li>
                 <li><strong>Professional certification</strong> – Earn your certificate plus <span style="color: #FF6A00; font-weight: 600;">29.75 SHRM/HRCI</span> continuing education credits</li>
+                <li><strong>Benefits beyond the classroom</strong> – Your investment includes quarterly legal updates, faculty access, and alumni resources that keep you current year-round. <a href="#benefitSteps" style="text-decoration: underline;">View participant benefits →</a></li>
               </ul>
               <a href="#all-programs" class="btn btn-primary">VIEW UPCOMING PROGRAMS</a>
             </div>
@@ -366,7 +367,7 @@
             <div class="block-label">Block III</div>
             <h3>Special Issues & Advanced Topics</h3>
             <p>Deep dive into complex employment law issues including executive employment agreements, trade secrets, non-competes, and remote work considerations that shape modern HR strategy.</p>
-            <div class="curriculum-price">$1,375</div>
+            <div class="curriculum-price">$575</div>
             <div class="curriculum-availability">Available individually</div>
           </div>
 
@@ -695,12 +696,19 @@
 
         </div>
 
-        <!-- CTA Buttons -->
-        <div class="curriculum-cta">
-          <a href="#register" class="btn btn-primary">REGISTER NOW</a>
-          <button onclick="connectPopup_open()" class="btn btn-outline">CONNECT WITH US</button>
-        </div>
+      </div>
+    </section>
 
+    <!-- CTA Section -->
+    <section id="transform-cta" class="theme-light py-5xl">
+      <div class="container container-lg mx-auto text-center">
+        <h2 class="font-body text-display-lg text-primary font-light tracking-tight">
+          Ready to Transform Your Workplace?
+        </h2>
+        <div class="cta-button-group">
+          <a href="#register" class="btn btn-register hover-lift">REGISTER NOW</a>
+          <a href="#" class="btn btn-primary hover-lift">DOWNLOAD FULL PROGRAM PACKAGE</a>
+        </div>
       </div>
     </section>
 
@@ -2431,32 +2439,54 @@ button#prev-btn {
     }
 
     .benefit-steps__visual {
-      background: linear-gradient(135deg, #e9f1ff 0%, #f7fbff 100%);
-      border-radius: 20px;
-      padding: 32px;
       min-height: 320px;
       display: grid;
       place-items: center;
-      border: 1px solid #e2e9f5;
+    }
+
+    .benefit-steps__mobile-summary {
+      display: none;
+      background: linear-gradient(135deg, #f8fafc 0%, #e8f0fe 100%);
+      border-radius: 16px;
+      padding: 28px 24px;
+      text-align: center;
+      border: 1px solid rgba(59, 89, 152, 0.1);
+    }
+
+    .benefit-steps__mobile-summary h4 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1f2c4d;
+      margin: 0 0 12px;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .benefit-steps__mobile-summary p {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #4b5875;
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .benefit-steps__mobile-summary .highlight {
+      color: #3B5998;
+      font-weight: 600;
     }
 
     .benefit-steps__visual-img {
       width: 100%;
-      max-width: 520px;
+      max-width: 800px;
       height: auto;
-      border-radius: 14px;
-      object-fit: cover;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      object-fit: contain;
       transition: opacity 0.2s ease;
     }
 
     .benefit-steps__visual img {
       width: 100%;
-      max-width: 520px;
+      max-width: 800px;
       height: auto;
-      border-radius: 14px;
-      object-fit: cover;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      object-fit: contain;
     }
 
     .benefit-steps__placeholder {
@@ -2486,7 +2516,11 @@ button#prev-btn {
       }
 
       .benefit-steps__visual {
-        min-height: 240px;
+        display: none;
+      }
+
+      .benefit-steps__mobile-summary {
+        display: block;
       }
     }
 
@@ -2504,9 +2538,16 @@ button#prev-btn {
         font-size: 13px;
       }
 
-      .benefit-steps__visual {
-        padding: 24px;
-        min-height: 200px;
+      .benefit-steps__mobile-summary {
+        padding: 20px 16px;
+      }
+
+      .benefit-steps__mobile-summary h4 {
+        font-size: 16px;
+      }
+
+      .benefit-steps__mobile-summary p {
+        font-size: 14px;
       }
     }
 
@@ -2565,7 +2606,7 @@ button#prev-btn {
     <div class="program-sessions-widget">
       <section class="program-sessions-section" id="all-programs">
         <div class="container-fuild">
-          <h2 style="font-family: var(--font-heading); font-size: 2.5rem; text-align: center; margin-bottom: 1rem; color: #ffffff;">Choose Your Format. Not Your Quality.</h2>
+          <h2 style="font-family: var(--font-heading); font-size: 48px; text-align: center; margin-bottom: 1rem; color: #ffffff;">Choose Your Format. Not Your Quality.</h2>
           <p class="section-subtitle" style="text-align: center; color: #e5e5e5; margin-bottom: 1.5rem;">In-person, virtual, or on-demand - every program features the same practicing attorneys, current content, and professional credits you need.</p>
 
           <div class="pagin-wrapper">
@@ -7724,6 +7765,7 @@ button#prev-btn {
             display: flex;
             flex-direction: column;
             flex: 1;
+            text-align: left;
         }
 
         .faculty-name {
@@ -7823,8 +7865,8 @@ button#prev-btn {
     <!-- Hero Headline Section -->
     <section class="hero-headline-section-attroneys">
         <div class="headline-content">
-            <h1 class="section-title">The Attorneys and HR Leaders Behind These Results</h1>
-            <p class="section-subtitle">Those success stories you just read? They happen because our faculty aren't career academics, they're practicing employment attorneys and seasoned HR executives teaching what actually works. Every case study, every strategy, every solution comes from decades of courtroom victories and HR crises successfully navigated.</p>
+            <h1 class="section-title">Practicing Attorneys, Not Academics</h1>
+            <p class="section-subtitle">Learn from employment law attorneys who practice what they teach. Your instructors actively handle union campaigns, defend discrimination charges, and win employment law cases - then share exactly what works in real courtrooms and workplaces.</p>
         </div>
     </section>
 
@@ -8004,7 +8046,7 @@ button#prev-btn {
                 </li>
                 <li class="benefit-steps__item">
                   <span class="benefit-steps__dot" aria-hidden="true"></span>
-                  <h3 class="benefit-steps__title">Living Resources</h3>
+                  <h3 class="benefit-steps__title">Partner Discounts</h3>
                   <p class="benefit-steps__text">
                     Access updated templates, checklists, and references to apply learning faster.
                   </p>
@@ -8012,7 +8054,12 @@ button#prev-btn {
               </ul>
 
               <div class="benefit-steps__visual" aria-hidden="true">
-                <img class="benefit-steps__visual-img" src="https://images.pexels.com/photos/3183173/pexels-photo-3183173.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Program visual">
+                <img class="benefit-steps__visual-img" src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6936fc3d169a420a91ae1a70.svg" alt="Program visual">
+              </div>
+
+              <div class="benefit-steps__mobile-summary">
+                <h4>Pre-Program Consultation</h4>
+                <p>Align seminar content with your organization's priorities before you arrive.</p>
               </div>
             </div>
           </section>
@@ -8021,6 +8068,143 @@ button#prev-btn {
 
     <!-- Load Support Continuum JavaScript -->
     <script src="../js/supportContinuum.js"></script>
+
+    <!-- FAQ Section -->
+    <section class="faq-section full-width-section">
+      <div class="faq-container">
+        <div class="faq-grid">
+          <div class="faq-header">
+            <h2 class="faq-title">Quick Answers</h2>
+            <p class="faq-subtitle">We know you're busy. Here's what you actually need to know.</p>
+          </div>
+
+          <div class="faq-list">
+                <!-- FAQ 1 -->
+                <div class="faq-item active">
+                    <button class="faq-question">
+                        Where and when do programs run?
+                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            We hold in-person programs in cities worth visiting throughout the year. Think Denver, Scottsdale, Newport Beach, Atlanta, Washington, D.C. Places with great restaurants, interesting neighborhoods, and things to do after training wraps for the day. Most programs run 2-3 days, structured so you can fly in, get trained, and actually enjoy where you are. We pick cities with convenient airports and quality venues, but we also pick places you'd want to spend a few days. You're investing in professional development, but that doesn't mean it has to feel like punishment.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 2 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What if I can't travel? Do you offer virtual options?
+                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes. We run virtual programs for people who can't make it in person. Same faculty, same content, delivered live online with real-time Q&A. You lose the networking and hallway conversations, but you get the training without the travel. It's a solid option if your budget or schedule won't allow for an in-person event. Recordings are available if you get pulled into a meeting.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 3 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can you bring the training to our company?
+                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Absolutely. We do private, on-site training for organizations all the time. If you've got a team that needs training, we'll come to you and customize the content for your industry, your policies, your actual situations. No traveling, no public settings, no worrying about confidential questions. It's often the best option for companies training 8+ people. Contact us to discuss your specific needs and timeline.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 4 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How much time will this take?
+                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Our in-person certificate programs run 2-4.5 days depending on the program. Think intensive workshop, not week-long conference. We pack a lot into those days because we respect your time. Virtual programs follow a similar structure, though sometimes spread across slightly more days with shorter sessions. On-site corporate training is flexible. We work around your schedule. Either way, you're not disappearing for weeks.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 5 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Do I get continuing education credits?
+                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes. We're accredited for CLE, SHRM, and HRCI credits. Doesn't matter if you attend in-person, virtually, or through corporate training—you get your credits. We handle the paperwork automatically. Our programs qualify because they're taught by practicing attorneys and HR professionals, not academics. Check your specific state bar or certification requirements, but we've got most jurisdictions covered.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 6 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        What's included?
+                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            All course materials, policy templates, decision trees, and ongoing access to resources—regardless of format. In-person events include meals and networking time with faculty and peers. Virtual programs include downloadable materials and access to recordings. Corporate on-site training is customized to your needs. No surprise fees, no "premium tier" nonsense. You get the tools you need to handle this stuff when it comes up six months from now.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 7 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        Can I bring my team?
+                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Yes, and it usually makes sense. For in-person events, we offer group rates when you register multiple people. For virtual programs, everyone can join from their own desk. For corporate training, we come to you and train your entire team at once. When everyone learns the same system, you don't waste time later translating concepts or debating approaches. Plus, your team can handle routine issues while you focus on complex problems.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FAQ 8 -->
+                <div class="faq-item">
+                    <button class="faq-question">
+                        How quickly can I start?
+                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+                        </svg>
+                    </button>
+                    <div class="faq-answer">
+                        <div class="faq-answer-content">
+                            Check our schedule for the next in-person event in your region, or we can set up virtual training faster. Public programs (in-person and virtual) run throughout the year. Need something sooner or want it customized? We can schedule private corporate training within a few weeks, depending on availability. Either way, you're not waiting months to solve problems you're dealing with today.
+                        </div>
+                    </div>
+                </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Load FAQ JavaScript -->
+    <script src="../js/faq.js"></script>
 
     <!-- Final CTA Section -->
     <section id="iaml-cta" class="theme-light py-5xl">
@@ -8383,7 +8567,7 @@ button#prev-btn {
   <script>
     (function() {
       const FRAME_MS = 40; // ~25fps
-      const DURATION = 12000; // ms for full vertical sweep
+      const DURATION = 24000; // ms for full vertical sweep (6 seconds per tab)
 
       function initBenefitSteps() {
         const benefitStepsSection = document.getElementById("benefitSteps");
@@ -8401,13 +8585,23 @@ button#prev-btn {
           return;
         }
 
-      // Image set for each tab (from Pexels)
+      // Image set for each tab
       const visualImages = [
-        "https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "https://images.pexels.com/photos/3184302/pexels-photo-3184302.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1200",
-        "https://images.pexels.com/photos/3183198/pexels-photo-3183198.jpeg?auto=compress&cs=tinysrgb&w=1200"
+        "https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6936fc3d169a420a91ae1a70.svg",
+        "https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6939a2e5169a42e8991d2a4d.svg",
+        "https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6937a7881855f9954d649e9a.svg",
+        "https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6939ab34f6cae9275be1552e.svg"
       ];
+
+      // Mobile summary content for each tab
+      const mobileSummaries = [
+        { title: "Pre-Program Consultation", text: "Align seminar content with your organization's priorities before you arrive." },
+        { title: "Professional Credits", text: "Earn <span class=\"highlight\">SHRM & HRCI credits</span> • $1,588 professional value • 12 months of quarterly updates included" },
+        { title: "Ongoing Development", text: "Post-program resources and expert guidance to continue building skills." },
+        { title: "Partner Discounts", text: "Access templates, checklists, and references to apply learning faster." }
+      ];
+
+      const mobileSummary = benefitStepsSection.querySelector(".benefit-steps__mobile-summary");
 
         let currentActiveIndex = 0;
         let isPaused = false;
@@ -8472,6 +8666,14 @@ button#prev-btn {
           });
         }
 
+        // Update mobile summary
+        if (mobileSummary && mobileSummaries[index]) {
+          const h4 = mobileSummary.querySelector("h4");
+          const p = mobileSummary.querySelector("p");
+          if (h4) h4.textContent = mobileSummaries[index].title;
+          if (p) p.innerHTML = mobileSummaries[index].text;
+        }
+
           // Update progress bar
           if (updateProgress && railProgress && bulletCenters.length && railHeight > 0) {
             const h = bulletCenters[index] || 0;
@@ -8493,8 +8695,9 @@ button#prev-btn {
           desktopStep++;
 
           if (desktopStep > desktopStepsTotal) {
-            resetAnimation();
-            setActiveItem(0, false);
+            // Stop at the last item instead of looping
+            isPaused = true;
+            setActiveItem(items.length - 1, false);
             return;
           }
 
@@ -8511,18 +8714,11 @@ button#prev-btn {
           }
         }
 
-        // Add click handlers to each item
+        // Add click handlers to each item - pauses indefinitely on click
         items.forEach((item, index) => {
           item.addEventListener("click", () => {
             isPaused = true;
             setActiveItem(index, true);
-
-            // Resume auto-cycling after 10 seconds
-            clearTimeout(window.benefitStepsPauseTimeout);
-            window.benefitStepsPauseTimeout = setTimeout(() => {
-              isPaused = false;
-              resetAnimation();
-            }, 10000);
           });
 
           // Add keyboard support
@@ -8533,12 +8729,6 @@ button#prev-btn {
               e.preventDefault();
               isPaused = true;
               setActiveItem(index, true);
-
-              clearTimeout(window.benefitStepsPauseTimeout);
-              window.benefitStepsPauseTimeout = setTimeout(() => {
-                isPaused = false;
-                resetAnimation();
-              }, 10000);
             }
           });
         });
@@ -8563,6 +8753,7 @@ button#prev-btn {
             setActiveItem(currentActiveIndex, true);
           }, 250);
         });
+
       }
 
       // Initialize when DOM is ready
