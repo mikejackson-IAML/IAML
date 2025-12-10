@@ -7975,6 +7975,335 @@
 }
 
 /* ============================================
+   CORPORATE TRAINING - PROGRAMS CAROUSEL
+   ============================================ */
+
+/* Section Wrapper */
+.ct-programs-section {
+  width: 100%;
+  padding: 96px 32px;
+  background: var(--black);
+  overflow: hidden;
+}
+
+.ct-programs-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Section Header */
+.ct-programs-headline {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--white);
+  text-align: center;
+  line-height: 1.2;
+  margin: 0 auto 16px auto;
+}
+
+.ct-programs-subheadline {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 2vw, 1.25rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: center;
+  line-height: 1.6;
+  max-width: 900px;
+  margin: 0 auto 64px auto;
+}
+
+/* Splide Carousel Container */
+#ct-programs-splide {
+  padding: 30px 0 80px 0;
+  overflow: visible;
+}
+
+#ct-programs-splide .splide__track {
+  overflow: visible;
+}
+
+#ct-programs-splide .splide__list {
+  overflow: visible;
+}
+
+/* Slide Styling - Blur Effect */
+#ct-programs-splide .splide__slide {
+  opacity: 0.5;
+  filter: blur(4px);
+  transform: scale(0.9);
+  transition: opacity 0.5s ease, filter 0.5s ease, transform 0.5s ease;
+  padding: 0 1rem;
+}
+
+#ct-programs-splide .splide__slide.is-active {
+  opacity: 1;
+  filter: blur(0);
+  transform: scale(1);
+  z-index: 10;
+}
+
+/* Program Cards */
+.ct-program-card {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 24px;
+  padding: 48px 40px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5),
+              inset 0 1px 1px rgba(255, 255, 255, 0.06);
+  transition: all 0.3s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 520px;
+}
+
+.ct-program-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.6),
+              inset 0 1px 1px rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+/* Program Icon */
+.ct-program-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+  font-size: 48px;
+}
+
+.ct-program-icon.blue {
+  color: #188bf6;
+}
+
+.ct-program-icon.red {
+  color: #dc2626;
+}
+
+/* Program Typography */
+.ct-program-title {
+  font-family: var(--font-body);
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+  color: var(--white);
+}
+
+.ct-program-duration {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 16px;
+}
+
+.ct-program-description {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 24px;
+  flex-grow: 1;
+}
+
+.ct-program-audience {
+  font-family: var(--font-body);
+  font-size: 0.9375rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.ct-program-audience-label {
+  font-weight: 600;
+  font-style: normal;
+  display: block;
+  margin-bottom: 8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* Program Button */
+.ct-program-btn {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 28px;
+  border-radius: 9999px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  background: #188bf6;
+  color: var(--white);
+}
+
+.ct-program-btn:hover {
+  background: #1570d1;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(24, 139, 246, 0.3);
+}
+
+/* Carousel Navigation Arrows */
+#ct-programs-splide .splide__arrow {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  opacity: 0.9;
+  transition: all 0.3s ease;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+}
+
+#ct-programs-splide .splide__arrow:hover {
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+  transform: translateY(-50%) scale(1.05);
+}
+
+#ct-programs-splide .splide__arrow svg {
+  fill: white;
+  width: 24px;
+  height: 24px;
+}
+
+#ct-programs-splide .splide__arrow--prev {
+  left: 20px;
+}
+
+#ct-programs-splide .splide__arrow--next {
+  right: 20px;
+}
+
+/* Responsive - Tablet */
+@media (max-width: 1024px) {
+  .ct-programs-section {
+    padding: 64px 24px;
+  }
+
+  #ct-programs-splide .splide__arrow--prev {
+    left: 10px;
+  }
+
+  #ct-programs-splide .splide__arrow--next {
+    right: 10px;
+  }
+}
+
+/* Responsive - Mobile */
+@media (max-width: 767px) {
+  .ct-programs-section {
+    padding: 48px 16px;
+  }
+
+  .ct-programs-headline {
+    margin-bottom: 12px;
+  }
+
+  .ct-programs-subheadline {
+    margin-bottom: 40px;
+  }
+
+  #ct-programs-splide {
+    padding: 20px 0 60px 0;
+  }
+
+  /* Mobile: No blur effect */
+  #ct-programs-splide .splide__slide {
+    opacity: 1;
+    filter: none;
+    transform: none;
+  }
+
+  .ct-program-card {
+    padding: 32px 24px;
+    min-height: 450px;
+  }
+
+  .ct-program-title {
+    font-size: 1.25rem;
+  }
+
+  .ct-program-description {
+    font-size: 0.9375rem;
+  }
+
+  #ct-programs-splide .splide__arrow {
+    width: 48px;
+    height: 48px;
+  }
+
+  #ct-programs-splide .splide__arrow svg {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .ct-program-card {
+    padding: 24px 20px;
+    min-height: 420px;
+  }
+
+  .ct-program-title {
+    font-size: 1.125rem;
+  }
+
+  .ct-program-icon {
+    font-size: 40px;
+    margin-bottom: 20px;
+  }
+
+  #ct-programs-splide .splide__arrow {
+    width: 40px;
+    height: 40px;
+  }
+
+  #ct-programs-splide .splide__arrow svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .ct-program-btn {
+    padding: 12px 20px;
+    font-size: 0.9375rem;
+  }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  #ct-programs-splide .splide__slide {
+    opacity: 1;
+    filter: none;
+    transform: none;
+    transition: none;
+  }
+
+  .ct-program-card {
+    transition: none;
+  }
+
+  .ct-program-card:hover {
+    transform: none;
+  }
+}
+
+/* ============================================
    PRE-PROGRAM CONSULTATION PAGE
    ============================================ */
 

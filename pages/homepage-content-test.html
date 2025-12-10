@@ -1,21 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homepage Content Test</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Lato:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Splide CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="../css/main.css">
+</head>
+<body>
+
 <!-- Hero Section -->
 
 <div class="hero-section">
     <div class="trusted-text">
         Trusted by 15,000+ HR Professionals Since 1979
     </div>
-    
+
     <h1 class="main-headline">
         Master Workplace Law with Practicing<br>
         Attorneys, Not Academics
     </h1>
-    
+
     <p class="description">
-        Get the proven strategies that protect your organization and advance your career. Learn from 
-        practicing attorneys and experienced professionals who handle these challenges every day, 
+        Get the proven strategies that protect your organization and advance your career. Learn from
+        practicing attorneys and experienced professionals who handle these challenges every day,
         not corporate trainers reading from textbooks.
     </p>
-    
+
     <div class="button-container group-buttons">
         <a href="https://iaml.com/program-schedule" class="glass-btn glass-btn-blue glass-btn-lg">Program Schedule</a>
         <a id="openModalBtn" class="glass-btn glass-btn-red glass-btn-lg">Reserve Your Spot</a>
@@ -41,17 +61,17 @@
       </div>
     </div>
   </div>
-  
+
   <!-- Journey Timeline Section -->
   <section class="journey-timeline-section">
     <!-- Copy the entire timeline structure -->
   </section>
-  
+
   <!-- Quiz Section -->
   <div class="quiz-section">
     <!-- Copy the quiz container structure -->
   </div>
-  
+
   <!-- Modal -->
   <div id="recommendationModal" class="modal" aria-hidden="true">
     <!-- Copy the entire modal structure -->
@@ -76,7 +96,7 @@
       </div>
     </div>
   </section>
-  
+
   <!-- Testimonials Carousel -->
 
   <section id="tst-testimonials" class="section-testimonials bg-black">
@@ -108,7 +128,7 @@
       </div>
     </div>
   </section>
-  
+
   <!-- Faculty Grid -->
   <section class="faculty-section">
     <div class="faculty-container">
@@ -117,7 +137,7 @@
       </div>
     </div>
   </section>
-  
+
   <!-- FAQ Section -->
   <section class="faq-section">
     <div class="faq-container">
@@ -128,39 +148,42 @@
   </section>
 
   <!-- Final CTA Section -->
-   
+
 <section id="iaml-cta" class="theme-light py-5xl">
     <div class="container container-lg mx-auto text-center">
       <div class="mx-auto">
         <!-- Headline -->
         <h2 class="font-body text-display-lg text-primary font-light tracking-tight">
-          Experience the 
+          Experience the
           <span class="cta-cascade font-display text-hero text-brand">Professional's Choice in Training</span>
         </h2>
-  
+
         <!-- Subheadline -->
         <p class="font-body text-large text-secondary my-lg">Real-world expertise. Guaranteed results. Trusted since 1979.</p>
-  
+
         <!-- CTA Buttons -->
         <div class="cta-button-group">
-          <button class="cta-button hover-lift" id="openContactModal" aria-label="Open contact form" onclick="connectPopup_open()">
+          <button class="cta-button hover-lift" id="openContactModal" aria-label="Open contact form">
             Let's Talk
           </button>
-          <a id="registerNowBtn-relations-law" class="cta-button cta-red hover-lift relations-law-trigger" aria-label="Register now" data-modal-target="employee-relations-law" onclick="if(window.IAMLRelationsLawModal && window.IAMLRelationsLawModal.openModal) { window.IAMLRelationsLawModal.openModal(); } else { console.error('Modal function not available'); }">
+          <a id="registerNowBtn-relations-law" class="cta-button cta-red hover-lift relations-law-trigger" aria-label="Register now">
             Register Now
           </a>
         </div>
       </div>
     </div>
   </section>
-  
+
   <!-- Connect Modal -->
-  <div class="connectPopup-overlay" id="connectPopup_Modal" onclick="connectPopup_closeOnOverlay(event)">
-    <div class="connectPopup-modal" onclick="event.stopPropagation();">
+  <div class="connectPopup-overlay" id="connectPopup_Modal">
+    <div class="connectPopup-modal">
       <div class="connectPopup-header">
         <h3>Connect with Us in 20 Seconds or Less</h3>
-        <button class="connectPopup-closeBtn" onclick="connectPopup_close()" aria-label="Close">&times;</button>
+        <button class="connectPopup-closeBtn" aria-label="Close">&times;</button>
       </div>
       <div class="connectPopup-body" id="connectPopup_Content"><!-- dynamic --></div>
     </div>
   </div>
+
+</body>
+</html>
