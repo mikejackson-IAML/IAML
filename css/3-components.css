@@ -844,7 +844,7 @@
 }
 
 .testimonial-track {
-  max-height: 1200px;
+  max-height: 1125px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0.5rem;
@@ -1035,6 +1035,59 @@
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
 }
 
+/* Option 1: Gradient background */
+.benefits-section--gradient {
+  background: linear-gradient(135deg, #ffffff 0%, #e8f0fe 50%, #dbeafe 100%);
+}
+
+/* Option 2: Left accent border */
+.benefits-section--accent {
+  border-left: 4px solid #1e3a8a;
+  border-radius: 2px var(--radius-lg) var(--radius-lg) 6px;
+}
+
+/* Option 3: Decorative icon */
+.benefits-section--icon {
+  position: relative;
+  overflow: hidden;
+}
+
+.benefits-section--icon::before {
+  content: '';
+  position: absolute;
+  top: -20px;
+  right: -20px;
+  width: 120px;
+  height: 120px;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231e3a8a' opacity='0.06'%3E%3Cpath d='M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z'/%3E%3C/svg%3E") no-repeat center;
+  background-size: contain;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+/* Option 4: Match testimonial cards */
+.benefits-section--card {
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
+
+.benefits-section--card:hover {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14);
+}
+
+/* Option 5: Enhanced combo (recommended) */
+.benefits-section--enhanced {
+  border-left: 3px solid;
+  border-image: linear-gradient(180deg, #1e3a8a 0%, #3b82f6 100%) 1;
+  border-radius: 0 var(--radius-lg) var(--radius-lg) 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(180deg, rgba(248, 250, 252, 0.8) 0%, #ffffff 15%);
+}
+
+.benefits-section--enhanced:hover {
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14);
+}
+
 .benefits-section h3 {
   font-size: 1.75rem;
   font-weight: 600;
@@ -1152,8 +1205,8 @@ hr.separator {
 .curriculum-header h2 {
   color: var(--gray-900);
   margin-bottom: var(--space-lg);
-  font-size: 2.25rem;
-  font-weight: 700;
+  font-size: 48px;
+  font-weight: 600;
 }
 
 .curriculum-header p {
@@ -1265,7 +1318,7 @@ hr.separator {
 }
 
 .competency-header {
-  background: var(--gray-50);
+  background: #dbeafe;
   border-bottom: 1px solid var(--gray-200);
   padding: var(--space-xl);
   cursor: pointer;
@@ -1278,11 +1331,12 @@ hr.separator {
 }
 
 .competency-header:hover {
-  background: var(--gray-100);
+  background: #bfdbfe;
 }
 
 .competency-header h3 {
-  font-size: 1.125rem;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
   font-weight: 700;
   color: var(--gray-900);
   margin: 0;
@@ -1290,6 +1344,7 @@ hr.separator {
 }
 
 .competency-header p {
+  font-family: 'Lato', sans-serif;
   font-size: 0.95rem;
   color: var(--gray-600);
   margin: 0;
@@ -1354,6 +1409,7 @@ hr.separator {
 }
 
 .competency-text h4 {
+  font-family: 'Lato', sans-serif;
   font-size: 1rem;
   font-weight: 700;
   color: var(--gray-900);
@@ -1362,6 +1418,7 @@ hr.separator {
 }
 
 .competency-text p {
+  font-family: 'Lato', sans-serif;
   font-size: 0.95rem;
   color: var(--gray-600);
   margin: 0;
