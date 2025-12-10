@@ -334,7 +334,7 @@
 
         <!-- Section Header -->
         <header class="curriculum-header">
-          <h2 class="section-title" style="font-size: 48px;">What You'll Master in 4½ Days</h2>
+          <h2>What You'll Master in 4½ Days</h2>
           <p>Master the sophisticated labor relations, discrimination defense, and employment law strategies that set your organization apart. Each block delivers specialized expertise you can immediately apply to your most pressing challenges.</p>
         </header>
 
@@ -364,7 +364,7 @@
             <div class="block-label">Block III</div>
             <h3>Special Issues & Advanced Topics</h3>
             <p>Deep dive into complex employment law issues including executive employment agreements, trade secrets, non-competes, and remote work considerations that shape modern HR strategy.</p>
-            <div class="curriculum-price">$575</div>
+            <div class="curriculum-price">$1,375</div>
             <div class="curriculum-availability">Available individually</div>
           </div>
 
@@ -695,7 +695,7 @@
 
         <!-- CTA Buttons -->
         <div class="curriculum-cta">
-          <a href="/register.html?program=employee-relations-law" class="btn btn-primary">REGISTER NOW</a>
+          <a href="#register" class="btn btn-primary">REGISTER NOW</a>
           <button onclick="connectPopup_open()" class="btn btn-outline">CONNECT WITH US</button>
         </div>
 
@@ -2318,13 +2318,70 @@ button#prev-btn {
         text-align: center;
       }
     }
+    .timeline-track {
+    position: absolute;
+    left: 20px;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background: linear-gradient(180deg, var(--gray-300) 0%, #004eba 100%);
+    transform: translateX(-50%);
+    z-index: 0;
+}
 
+    /* ========================================== */
+    /* TESTIMONIAL CARD SPACING FIX */
+    /* ========================================== */
+    article.testimonial-card,
+    .testimonial-card {
+      display: flex !important;
+      flex-direction: column !important;
+      height: 100% !important;
+      position: relative;
+      gap: 30px !important;
+      min-height: 0 !important;
+    }
+
+    .testimonial-card .star-wrapper {
+      flex-shrink: 0;
+      margin-bottom: 0 !important;
+      margin-top: 0 !important;
+    }
+
+    .testimonial-card blockquote {
+      flex: 1 1 auto !important;
+      margin: 0 !important;
+      padding: 0 !important;
+      min-height: 0;
+      display: block;
+    }
+
+    .testimonial-card footer {
+      flex-shrink: 0;
+      margin-top: 0 !important;
+      padding-top: 0 !important;
+      margin-bottom: 0 !important;
+    }
+
+    .testimonial-card .author-name {
+      margin-bottom: 4px !important;
+      margin-top: 0 !important;
+    }
+
+    .testimonial-card .author-details {
+      margin-bottom: 2px !important;
+      margin-top: 0 !important;
+    }
+
+    .testimonial-card .author-details:last-child {
+      margin-bottom: 0 !important;
+    }
     </style>
     <!-- HTML -->
     <div class="program-sessions-widget">
       <section class="program-sessions-section" id="all-programs">
         <div class="container-fuild">
-          <h2 class="section-title" style="color: #ffffff;">Choose Your Format. Not Your Quality.</h2>
+          <h2 style="font-family: var(--font-heading); font-size: 2.5rem; text-align: center; margin-bottom: 1rem; color: #ffffff;">Choose Your Format. Not Your Quality.</h2>
           <p class="section-subtitle" style="text-align: center; color: #e5e5e5; margin-bottom: 1.5rem;">In-person, virtual, or on-demand - every program features the same practicing attorneys, current content, and professional credits you need.</p>
 
           <div class="pagin-wrapper">
@@ -6854,39 +6911,45 @@ button#prev-btn {
 
       // Event listeners
 
-      // Handle all registration buttons - redirect to new registration page
+      // Handle all registration buttons using data attributes (new flexible approach)
       document.querySelectorAll('.register-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-          e.preventDefault();
+          e.preventDefault(); // Prevent default link behavior
 
           // Read data attributes from the clicked button
+          const section = e.target.dataset.section || 'general';
+          const program = e.target.dataset.program || null;
           const format = e.target.dataset.format || null;
+          const tracking = e.target.dataset.tracking || 'unknown';
           const sessionId = e.target.dataset.sessionId || null;
+          const autoAdvance = e.target.dataset.autoAdvance === 'true';
 
-          // Build registration URL with parameters
-          const params = new URLSearchParams();
+          // Store in state for tracking and pre-filling
+          state.sourceSection = section;
+          state.sourceTracking = tracking;
 
-          // Map format to slug
-          const formatSlugs = {
-            'In-Person': 'in-person',
-            'Virtual': 'virtual',
-            'On-Demand': 'on-demand'
-          };
-
-          if (format && formatSlugs[format]) {
-            params.set('format', formatSlugs[format]);
+          // Pre-fill format if provided
+          if (format) {
+            state.format = format;
+            subTitle.textContent = `${format} registration`;
+            // If autoAdvance is true, we'll skip format selection step
+            if (autoAdvance) {
+              state.skipFormatStep = true;
+            }
           }
 
-          // This page is for Employee Relations Law
-          params.set('program', 'employee-relations-law');
+          // Pre-select program if provided
+          if (program) {
+            state.program = program;
+          }
 
-          // Add session if provided
+          // Pre-select session if provided
           if (sessionId) {
-            params.set('session', sessionId);
+            state.selectedSession = sessionId;
           }
 
-          // Redirect to new registration page
-          window.location.href = '/register.html?' + params.toString();
+          // Open the modal
+          openModal();
         });
       });
 
@@ -7571,13 +7634,26 @@ button#prev-btn {
                 margin-right: calc(-50vw + 50%);
             }
         }
+
+        .support-timeline-nav {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+@media (max-width: 1024px) {
+  .support-timeline-nav {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+}
+
     </style>
 
     <!-- Hero Headline Section -->
     <section class="hero-headline-section-attroneys">
         <div class="headline-content">
-            <h1 class="section-title">Practicing Attorneys, Not Academics</h1>
-            <p class="section-subtitle">Learn from employment law attorneys who practice what they teach. Your instructors actively handle union campaigns, defend discrimination charges, and win employment law cases - then share exactly what works in real courtrooms and workplaces.</p>
+            <h1 class="section-title">The Attorneys and HR Leaders Behind These Results</h1>
+            <p class="section-subtitle">Those success stories you just read? They happen because our faculty aren't career academics, they're practicing employment attorneys and seasoned HR executives teaching what actually works. Every case study, every strategy, every solution comes from decades of courtroom victories and HR crises successfully navigated.</p>
         </div>
     </section>
 
@@ -7728,8 +7804,9 @@ button#prev-btn {
       <div class="container">
 
         <!-- Section Header -->
-        <div class="section-header">
-          <h2 class="section-title">Before, During & Long After<br>Your Success Has Our Full Support</h2>
+        <div class="section-header reveal">
+          <div class="support-eyebrow">End-to-end support</div>
+          <h2 class="section-title">Before, During & Long After: Complete Employment Law Support</h2>
           <p class="section-subtitle">Strategic consultation prepares you. Expert instruction educates you. Ongoing updates and evolving resources keep you confident for years.</p>
         </div>
 
@@ -8237,6 +8314,15 @@ button#prev-btn {
 
   <!-- Curriculum Section JavaScript -->
   <script src="../js/curriculum.js" defer></script>
+
+  <!-- Testimonial Card Override Styles (loads after external CSS) -->
+  <style>
+    article.testimonial-card,
+    .testimonial-card {
+      gap: 30px !important;
+      min-height: 0 !important;
+    }
+  </style>
 
 </body>
 </html>
