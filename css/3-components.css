@@ -1460,15 +1460,15 @@ hr.separator {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   margin-top: var(--space-xl);
   flex-wrap: wrap;
 }
 
 .delivery-label {
-  font-size: 0.8125rem;
-  font-weight: 400;
-  color: var(--gray-500);
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--gray-600);
   white-space: nowrap;
 }
 
@@ -1481,15 +1481,14 @@ hr.separator {
 .format-pill {
   display: inline-flex;
   align-items: center;
-  padding: 6px 14px;
-  background: var(--gray-200);
+  padding: 8px 16px;
+  background: var(--gray-100);
   color: var(--gray-700);
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.5px;
   border-radius: var(--radius-full);
-  border: 1px solid var(--gray-300);
 }
 
 /* CTA Buttons Container */
@@ -1721,7 +1720,7 @@ hr.separator {
   gap: var(--space-xs);
   padding: var(--space-lg) var(--space-xl);
   min-width: 140px;
-  background: var(--white);
+  background: transparent;
   border: 2px solid var(--gray-200);
   border-radius: var(--radius-lg);
   cursor: pointer;
@@ -1732,11 +1731,18 @@ hr.separator {
 }
 
 /* Step Number (Roman Numeral) */
-.step-number {
+.curriculum-step-tab .step-number {
+  position: static !important;
+  width: auto !important;
+  height: auto !important;
+  background: transparent !important;
+  border: none !important;
+  border-radius: 0 !important;
   font-size: var(--text-2xl);
   font-weight: 700;
   color: var(--gray-600);
   transition: color var(--transition-base);
+  display: inline;
 }
 
 /* Step Label */

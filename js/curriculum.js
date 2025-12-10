@@ -62,14 +62,14 @@ const initCurriculum = () => {
     stepTabs.forEach(tab => {
       // Click handler
       tab.addEventListener('click', () => {
-        handleTabSwitch(tab, stepTabs, contentBlocks);
+        handleTabSwitch(tab, navCards, contentBlocks);
       });
 
       // Keyboard support: Enter and Space
       tab.addEventListener('keydown', (e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          handleTabSwitch(tab, stepTabs, contentBlocks);
+          handleTabSwitch(tab, navCards, contentBlocks);
         }
       });
     });
@@ -90,7 +90,7 @@ const initCurriculum = () => {
 
         if (targetTab) {
           targetTab.focus();
-          handleTabSwitch(targetTab, stepTabs, contentBlocks);
+          handleTabSwitch(targetTab, navCards, contentBlocks);
 
           // Scroll tab into view on mobile
           targetTab.scrollIntoView({
@@ -158,9 +158,31 @@ const handleTabSwitch = (clickedCard, allCards, allBlocks) => {
 
     // Announce change to screen readers
     announceToScreenReader(`${clickedCard.textContent} tab activated`);
+
+    // Scroll to top of curriculum section smoothly
+    const curriculumSection = document.querySelector('.curriculum-section');
+    if (curriculumSection) {
+      curriculumSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   }
 
-  // Sync state across step tabs (footer navigation)
+  // Sync state across all navigation elements
+  // Update navigation cards (top)
+  const allNavCards = document.querySelectorAll('.curriculum-nav-card');
+  allNavCards.forEach(navCard => {
+    const navTarget = navCard.getAttribute('data-target');
+    if (navTarget === targetBlockId) {
+      navCard.classList.add('active');
+      navCard.setAttribute('tabindex', '0');
+      navCard.setAttribute('aria-selected', 'true');
+    } else {
+      navCard.classList.remove('active');
+      navCard.setAttribute('tabindex', '-1');
+      navCard.setAttribute('aria-selected', 'false');
+    }
+  });
+
+  // Update step tabs (footer)
   const allStepTabs = document.querySelectorAll('.curriculum-step-tab');
   allStepTabs.forEach(stepTab => {
     const stepTarget = stepTab.getAttribute('data-target');

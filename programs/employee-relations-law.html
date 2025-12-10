@@ -3507,7 +3507,7 @@ button#prev-btn {
        =========================== */
     const CONFIG = {
       AIRTABLE: {
-        PROGRAMS_TABLE: ENV_CONFIG.AIRTABLE_PROGRAMS_TABLE,
+        PROGRAMS_TABLE: 'tblFaya3JyTzyAdjJ',
         INSTRUCTORS_TABLE: 'Instructors',
         get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}`; },
         get INSTRUCTORS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
@@ -5118,8 +5118,8 @@ button#prev-btn {
 
       // API Configuration (API calls now use serverless proxies)
       const TABLE_SESSIONS = 'Program Sessions';
-      const TABLE_COUPONS = ENV_CONFIG.AIRTABLE_COUPONS_TABLE; // Coupon Codes (table id)
-      const GHL_WEBHOOK_URL = ENV_CONFIG.GHL_REGISTRATION_WEBHOOK;
+      const TABLE_COUPONS = 'tblBaUQKmYuIMsVQm'; // Coupon Codes (table id)
+      // const GHL_WEBHOOK_URL = ENV_CONFIG.GHL_REGISTRATION_WEBHOOK; // Moved to backend APIs
 
       // DOM elements
       const qs = (sel) => document.querySelector(sel);
@@ -8675,22 +8675,6 @@ button#prev-btn {
                         </div>
                     </div>
                 </div>
-
-                <!-- FAQ 9 -->
-                <div class="faq-item">
-                    <button class="faq-question">
-                        I have 10+ years of HR experience. Is this too basic for me?
-                        <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-                        </svg>
-                    </button>
-                    <div class="faq-answer">
-                        <div class="faq-answer-content">
-                            Block I and II cover fundamentals, but with the depth and nuance that experienced professionals need. Block III specifically addresses sophisticated issues that catch even veteran HR professionals off guard. More importantly, employment law changes constantly—what you learned years ago may no longer reflect current standards. Many of our most satisfied participants are senior HR directors refreshing their expertise with current legal frameworks.
-                        </div>
-                    </div>
-                </div>
-
                 <!-- FAQ 10 -->
                 <div class="faq-item">
                     <button class="faq-question">
@@ -8838,8 +8822,8 @@ button#prev-btn {
 
     // Configuration
     const NEXT_PROGRAM_CONFIG = {
-      tableId: ENV_CONFIG.AIRTABLE_PROGRAMS_TABLE,
-      viewId: ENV_CONFIG.AIRTABLE_VIEW_ID
+      tableId: 'tblFaya3JyTzyAdjJ',
+      viewId: 'viwGwK0DuZyjMzsZI'
     };
 
     // Timezone-neutral date parsing to avoid date shifting issues
