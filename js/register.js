@@ -327,9 +327,16 @@
       if (s.direction) params.set(`sort[${i}][direction]`, s.direction);
     });
     const url = `/api/airtable-quiz?${params.toString()}`;
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`Airtable error ${res.status}`);
-    return res.json();
+
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error(`Airtable error ${res.status}`);
+      return res.json();
+    } catch (error) {
+      console.error('API Error:', error);
+      console.error('Tip: For local development, run: vercel dev');
+      throw new Error('API endpoint not available. Are you running vercel dev?');
+    }
   }
 
   async function submitToGHL(payload) {
@@ -804,7 +811,15 @@
       console.error('Error loading sessions:', err);
       if (loadingEl) loadingEl.classList.add('hidden');
       if (emptyEl) {
-        emptyEl.textContent = 'Unable to load sessions. Please try again.';
+        const isDevelopmentError = err.message.includes('vercel dev') || err.message.includes('API endpoint');
+        if (isDevelopmentError) {
+          emptyEl.innerHTML = `
+            <strong>Unable to load sessions.</strong><br><br>
+            <small>For local testing, run: <code style="background: #f0f0f0; padding: 2px 4px; border-radius: 3px;">vercel dev</code> from the project root.</small>
+          `;
+        } else {
+          emptyEl.textContent = 'Unable to load sessions. Please try again.';
+        }
         emptyEl.classList.remove('hidden');
       }
     }
