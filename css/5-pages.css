@@ -5004,12 +5004,12 @@
   border-radius: var(--radius-xl);
   padding: 40px;
   box-shadow: var(--shadow-md);
-  display: none;
-}
-
-.register-step.active {
   display: block;
   animation: fadeIn 300ms ease;
+}
+
+.register-step.hidden {
+  display: none;
 }
 
 @keyframes fadeIn {
