@@ -333,7 +333,10 @@
   }
 
   async function submitToGHL(payload) {
-    const webhookUrl = typeof ENV_CONFIG !== 'undefined' ? ENV_CONFIG.GHL_WEBHOOK_URL : '/api/ghl-webhook';
+    const webhookUrl = ENV_CONFIG?.GHL_REGISTRATION_WEBHOOK;
+    if (!webhookUrl) {
+      throw new Error('GHL registration webhook not configured. Add GHL_REGISTRATION_WEBHOOK to js/env-config.local.js');
+    }
     const res = await fetch(webhookUrl, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
