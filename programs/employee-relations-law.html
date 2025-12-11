@@ -3499,7 +3499,9 @@ button#prev-btn {
           params.append(k, v);
         }
       });
-      return `${base}?${params.toString()}`;
+      // Check if base already has query parameters
+      const separator = base.includes('?') ? '&' : '?';
+      return `${base}${separator}${params.toString()}`;
     }
 
     /* ===========================
@@ -3508,11 +3510,15 @@ button#prev-btn {
     const CONFIG = {
       AIRTABLE: {
         PROGRAMS_TABLE: 'tblFaya3JyTzyAdjJ',
+        PROGRAMS_VIEW: 'viwX4En7WerGZSPCO',
+        VIRTUAL_VIEW: 'viwG1w68D5qVdMHIa',
         INSTRUCTORS_TABLE: 'Instructors',
-        get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}`; },
+        get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.PROGRAMS_VIEW)}`; },
+        get VIRTUAL_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.VIRTUAL_VIEW)}`; },
         get INSTRUCTORS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
       },
       PROGRAMS_DATA: [],
+      VIRTUAL_COMPONENTS: [],
       INSTRUCTORS_DATA: { byName:{}, byId:{} },
       CURRENT_FORMAT: 'In-Person',
       isLoading: false,
@@ -3822,7 +3828,7 @@ button#prev-btn {
        DATA
        =========================== */
     async function fetchProgramsData(){
-      const headers = {'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
+      const headers = {'Content-Type':'application/json'};
       let allRecords = [];
       let offset = null;
 
@@ -3841,9 +3847,13 @@ button#prev-btn {
 
       const response = await fetch(url,{headers});
       if(!response.ok) {
+        console.error('API Response Error:', response.status, response.statusText);
+        const errorText = await response.text();
+        console.error('Error details:', errorText);
         throw new Error(`Airtable API error: ${response.status}`);
       }
       const data = await response.json();
+      console.log('API Response received, records count:', data.records?.length || 0);
 
         allRecords = allRecords.concat(data.records);
         offset = data.offset; // Airtable provides offset for next page
@@ -3902,45 +3912,131 @@ button#prev-btn {
         })
         .filter(program => program !== null) // Remove any failed records
         .filter(program => {
-          // Filter out past programs - only show programs that haven't ended yet
-          if (!program.endDate) {
-            // If no end date, check start date (for single-day programs)
-            if (!program.startDate) return true; // Keep programs with no dates (like on-demand)
-
-            // Handle different date formats from CSV
-            let startDate;
-            try {
-              // Try parsing as ISO date first
-              if (program.startDate.includes('-')) {
-                startDate = new Date(program.startDate + 'T00:00:00');
-              } else {
-                // Handle formats like "October 27, 2025"
-                startDate = new Date(program.startDate);
-              }
-            } catch (e) {
-              return true; // Keep if we can't parse
-            }
-
-            return startDate >= today;
+          // Filter out past programs - only show programs that haven't STARTED yet
+          if (!program.startDate) {
+            // Keep programs with no start date (e.g., on-demand)
+            return true;
           }
 
-          let endDate;
+          let startDate;
           try {
-            if (program.endDate.includes('-')) {
-              endDate = new Date(program.endDate + 'T00:00:00');
+            // Try parsing as ISO date first
+            if (program.startDate.includes('-')) {
+              startDate = new Date(program.startDate + 'T00:00:00');
             } else {
-              endDate = new Date(program.endDate);
+              // Handle formats like "October 27, 2025"
+              startDate = new Date(program.startDate);
             }
           } catch (e) {
+            console.warn('Could not parse start date:', program.startDate);
             return true; // Keep if we can't parse
           }
 
-          return endDate >= today;
+          // Only show programs that START in the future (start date > today)
+          return startDate > today;
         });
 
-
+      console.log(`fetchProgramsData completed: ${programs.length} total programs fetched`);
       return programs;
     }
+
+    async function fetchVirtualComponents(){
+      const headers = {'Content-Type':'application/json'};
+      let allRecords = [];
+      let offset = null;
+
+      console.log('Fetching Virtual component programs...');
+
+      do {
+        const params = {
+          'sort[0][field]': 'Session Start Date',
+          'sort[0][direction]': 'asc',
+          'pageSize': 100
+        };
+
+        if (offset) {
+          params.offset = offset;
+        }
+
+        const url = buildAirtableUrl(CONFIG.AIRTABLE.VIRTUAL_ENDPOINT, params);
+
+        const response = await fetch(url, {headers});
+        if(!response.ok) {
+          console.error('Virtual components API Error:', response.status, response.statusText);
+          const errorText = await response.text();
+          console.error('Error details:', errorText);
+          throw new Error(`Airtable API error: ${response.status}`);
+        }
+        const data = await response.json();
+        console.log('Virtual components batch received, records count:', data.records?.length || 0);
+
+        allRecords = allRecords.concat(data.records);
+        offset = data.offset;
+      } while (offset);
+
+      const programs = allRecords
+        .map(record => {
+          try {
+            const f = record.fields;
+            const detectedFormat = determineProgramType(f);
+
+            const safeString = (value) => {
+              if (!value) return '';
+              if (Array.isArray(value)) return value[0] || '';
+              return String(value);
+            };
+
+            return {
+              id: record.id,
+              program: safeString(f.Program),
+              format: detectedFormat,
+              startDate: f['Session Start Date'] || null,
+              endDate: f['Session End Date'] || null,
+              city: safeString(f.City),
+              state: safeString(f.State),
+              venueName: safeString(f['Venue Name (1)']),
+              heroImageUrl: normalizeImageFromFields(f),
+              block1Instructor: safeString(f['Block 1 Instructor (from Instructors)']),
+              block2Instructor: safeString(f['Block 2 Instructor (from Instructors)']),
+              block3Instructor: safeString(f['Block 3 Instructor (from Instructors)']),
+              price: (() => {
+                const raw = f['Program Pricing'];
+                const num = Number(String(raw).replace(/[^\d.]/g,'')||0);
+                return num || undefined;
+              })()
+            };
+          } catch (error) {
+            return null;
+          }
+        })
+        .filter(program => program !== null)
+        .filter(program => {
+          // Filter out past programs - only show programs that haven't STARTED yet
+          if (!program.startDate) {
+            // Keep programs with no start date
+            return true;
+          }
+
+          let startDate;
+          try {
+            if (program.startDate.includes('-')) {
+              startDate = new Date(program.startDate + 'T00:00:00');
+            } else {
+              startDate = new Date(program.startDate);
+            }
+          } catch (e) {
+            console.warn('Could not parse start date:', program.startDate);
+            return true;
+          }
+
+          // Only show programs that START in the future (start date > today)
+          return startDate > today;
+        });
+
+      console.log(`fetchVirtualComponents completed: ${programs.length} component programs fetched`);
+      return programs;
+    }
+
     function determineProgramType(fields){
 
       // Helper function to safely convert to string and lowercase
@@ -4050,7 +4146,7 @@ button#prev-btn {
       return '';
     }
     async function fetchInstructorsData(){
-      const headers = {'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
+      const headers = {'Content-Type':'application/json'};
       const response = await fetch(CONFIG.AIRTABLE.INSTRUCTORS_ENDPOINT,{headers});
       if(!response.ok) throw new Error(`Airtable API error: ${response.status}`);
       const data = await response.json();
@@ -4073,7 +4169,7 @@ button#prev-btn {
       return null;
     }
     async function fetchOnDemandProgram(){
-      const headers={'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
+      const headers={'Content-Type':'application/json'};
       const url = buildAirtableUrl(CONFIG.AIRTABLE.PROGRAMS_ENDPOINT, {
         filterByFormula: 'AND({Program}="Certificate in Employee Relations Law", OR(FIND("on-demand", LOWER({Format})), FIND("on demand", LOWER({Format}))))',
         'sort[0][field]': 'Session Start Date',
@@ -4165,8 +4261,12 @@ button#prev-btn {
       showLoadingState();
       try{
 
-        const [programsData,instructorsData,onDemandProgram] = await Promise.all([
+        const [programsData, virtualComponents, instructorsData, onDemandProgram] = await Promise.all([
           fetchProgramsData(),
+          fetchVirtualComponents().catch(err => {
+            console.error('Virtual components fetch error:', err);
+            return [];
+          }),
           fetchInstructorsData().catch(err => {
             return { byName: {}, byId: {} };
           }),
@@ -4177,11 +4277,17 @@ button#prev-btn {
 
 
         CONFIG.PROGRAMS_DATA = programsData;
+        CONFIG.VIRTUAL_COMPONENTS = virtualComponents;
         CONFIG.INSTRUCTORS_DATA = instructorsData;
+
+        console.log('Programs loaded:', CONFIG.PROGRAMS_DATA.length);
+        console.log('Virtual components loaded:', CONFIG.VIRTUAL_COMPONENTS.length);
+        console.log('Instructors loaded:', Object.keys(CONFIG.INSTRUCTORS_DATA.byName || {}).length);
 
         // Add on-demand program from Airtable if found
         if(onDemandProgram) {
           CONFIG.PROGRAMS_DATA.push(onDemandProgram);
+          console.log('On-Demand program from Airtable added');
         }
 
         // Add one Certificate in Employee Relations Law on-demand program if none exist
@@ -4205,11 +4311,10 @@ button#prev-btn {
             price: 2375
           };
           CONFIG.PROGRAMS_DATA.push(onDemandProgram);
+          console.log('Default On-Demand program added');
         }
 
-
-        // Data loaded successfully
-
+        console.log('Data loaded successfully. Total programs:', CONFIG.PROGRAMS_DATA.length);
         generateSessionCards();
         switchFormat(CONFIG.CURRENT_FORMAT);
       }catch(err){
@@ -4271,45 +4376,77 @@ button#prev-btn {
             return 0;
           }),
         'Virtual': (() => {
-          // Get all virtual programs
-          const allVirtual = CONFIG.PROGRAMS_DATA.filter(p => {
-            const f = norm(p.format);
-            return f === 'virtual' || f === 'online';
+          console.log('Generating Virtual composite programs...');
+
+          // Use the dedicated virtual components, not the main programs data
+          const allVirtual = CONFIG.VIRTUAL_COMPONENTS || [];
+          console.log('Virtual components available:', allVirtual.length);
+
+          // Separate the two component types
+          const comprehensivePrograms = allVirtual.filter(p => {
+            const programName = norm(p.program);
+            const isMatch = programName.includes('comprehensive labor relations');
+            if (isMatch) {
+              console.log('Found Comprehensive Labor Relations:', p.program, 'starting', p.startDate);
+            }
+            return isMatch;
           });
 
-          // Separate component programs
-          const comprehensivePrograms = allVirtual.filter(p =>
-            norm(p.program).includes('comprehensive labor relations')
-          );
-          const discriminationPrograms = allVirtual.filter(p =>
-            norm(p.program).includes('discrimination prevention') ||
-            norm(p.program).includes('discrimination prevention & risk')
-          );
+          const discriminationPrograms = allVirtual.filter(p => {
+            const programName = norm(p.program);
+            // Updated to match "Discrimination Prevention and Defense"
+            const isMatch = programName.includes('discrimination prevention');
+            if (isMatch) {
+              console.log('Found Discrimination Prevention:', p.program, 'starting', p.startDate);
+            }
+            return isMatch;
+          });
 
-          // Create composite virtual programs
+          console.log(`Found ${comprehensivePrograms.length} Comprehensive Labor Relations programs`);
+          console.log(`Found ${discriminationPrograms.length} Discrimination Prevention programs`);
+
           const compositePrograms = [];
+          const today = new Date();
+          today.setHours(0, 0, 0, 0);
 
-          // Match Comprehensive Labor Relations with Discrimination Prevention & Risk
-          // that start within 4 weeks of each other (Comprehensive starts first)
+          // Match programs: Comprehensive must start first, Discrimination within 4 weeks
           comprehensivePrograms.forEach(comp => {
-            if (!comp.startDate) return;
+            if (!comp.startDate) {
+              console.log('⚠️ Skipping Comprehensive program with no start date:', comp.program);
+              return;
+            }
 
+            // Check if program is in the future
             const compStartDate = new Date(comp.startDate + 'T00:00:00');
+            if (compStartDate <= today) {
+              console.log('⚠️ Skipping past Comprehensive program:', comp.program, comp.startDate);
+              return;
+            }
 
-            // Find matching discrimination program within 4 weeks
+            console.log('🔍 Trying to match Comprehensive program:', comp.program, 'starting', comp.startDate);
+
             const matchingDisc = discriminationPrograms.find(disc => {
               if (!disc.startDate) return false;
 
               const discStartDate = new Date(disc.startDate + 'T00:00:00');
+
+              // Discrimination must also be in the future
+              if (discStartDate <= today) return false;
+
+              // Calculate time difference
               const timeDiff = discStartDate.getTime() - compStartDate.getTime();
               const weeksDiff = timeDiff / (1000 * 60 * 60 * 24 * 7);
 
-              // Comprehensive must start first and within 4 weeks
-              return weeksDiff >= 0 && weeksDiff <= 4;
+              const isMatch = weeksDiff >= 0 && weeksDiff <= 4;
+
+              if (isMatch) {
+                console.log('  ✅ Matched with:', disc.program, 'starting', disc.startDate, `(${weeksDiff.toFixed(1)} weeks apart)`);
+              }
+
+              return isMatch;
             });
 
             if (matchingDisc) {
-              // Create composite program
               const composite = {
                 id: `composite-virtual-${comp.id}-${matchingDisc.id}`,
                 program: 'Certificate in Employee Relations Law',
@@ -4322,23 +4459,32 @@ button#prev-btn {
                 heroImageUrl: comp.heroImageUrl || matchingDisc.heroImageUrl,
                 isComposite: true,
                 componentPrograms: [
-                  { name: comp.program, startDate: comp.startDate, endDate: comp.endDate },
-                  { name: matchingDisc.program, startDate: matchingDisc.startDate, endDate: matchingDisc.endDate }
+                  {
+                    name: comp.program,
+                    startDate: comp.startDate,
+                    endDate: comp.endDate
+                  },
+                  {
+                    name: matchingDisc.program,
+                    startDate: matchingDisc.startDate,
+                    endDate: matchingDisc.endDate
+                  }
                 ],
                 block1Instructor: comp.block1Instructor,
                 block2Instructor: matchingDisc.block1Instructor,
                 block3Instructor: matchingDisc.block2Instructor,
                 price: 2375
               };
-
               compositePrograms.push(composite);
+              console.log('✅ Created composite program:', composite.id);
+            } else {
+              console.log('  ❌ No matching Discrimination Prevention program found within 4 weeks');
             }
           });
 
-          // Also include any existing composite programs from the data
-          const existingComposite = allVirtual.filter(p => p.isComposite);
+          console.log(`Successfully created ${compositePrograms.length} Virtual composite programs`);
 
-          return [...compositePrograms, ...existingComposite];
+          return compositePrograms;
         })(),
         'On-Demand': (() => {
           // Get all on-demand programs first
@@ -4991,17 +5137,21 @@ button#prev-btn {
        =========================== */
     async function testAirtableConnection(){
       try {
-        const headers = {'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
-        const url = `${CONFIG.AIRTABLE.PROGRAMS_ENDPOINT}?maxRecords=1`;
+        const headers = {'Content-Type':'application/json'};
+        // Build URL using proper method to avoid double query marks
+        const url = buildAirtableUrl(CONFIG.AIRTABLE.PROGRAMS_ENDPOINT, { maxRecords: 1 });
         const response = await fetch(url, {headers});
 
         if (response.ok) {
           const data = await response.json();
+          console.log('✅ Airtable connection test successful');
           return true;
         } else {
+          console.error('❌ Airtable connection test failed:', response.status);
           return false;
         }
       } catch (error) {
+        console.error('❌ Airtable connection test error:', error);
         return false;
       }
     }
@@ -8823,7 +8973,7 @@ button#prev-btn {
     // Configuration
     const NEXT_PROGRAM_CONFIG = {
       tableId: 'tblFaya3JyTzyAdjJ',
-      viewId: 'viwGwK0DuZyjMzsZI'
+      viewId: 'viwX4En7WerGZSPCO'
     };
 
     // Timezone-neutral date parsing to avoid date shifting issues
@@ -8859,22 +9009,41 @@ button#prev-btn {
 
         const data = await response.json();
         console.log('Fetched data:', data); // Debug log
+        console.log('Full API response:', data);  // Log entire response
+        console.log('Is data.records an array?', Array.isArray(data.records));
+        console.log('data.records value:', data.records);
 
-        const nextProgram = findNextProgram(data.records);
+        // Ensure records is an array
+        const records = data.records || data || [];
+        const nextProgram = findNextProgram(Array.isArray(records) ? records : []);
 
         if (nextProgram) {
           console.log('Found next program:', nextProgram); // Debug log
           generateNextProgramCard(nextProgram);
         } else {
           console.log('No upcoming programs found'); // Debug log
-          // Simply hide the card if no programs
-          document.getElementById('nextProgramCard').style.display = 'none';
+          console.warn('⚠️ Check Airtable view viwX4En7WerGZSPCO contains "Certificate in Employee Relations Law" programs');
+
+          // Show friendly message instead of hiding
+          document.getElementById('nextProgramCard').innerHTML = `
+            <div style="padding: 40px; text-align: center; color: #666; background: #f5f5f5; border-radius: 8px;">
+              <p style="margin: 0; font-size: 16px;">Next program dates coming soon!</p>
+              <p style="margin: 10px 0 0 0; font-size: 14px;">Check back shortly for upcoming sessions.</p>
+            </div>
+          `;
         }
 
       } catch (error) {
         console.error('Error fetching next program:', error);
-        // Simply hide the card on error
-        document.getElementById('nextProgramCard').style.display = 'none';
+        console.error('Error details:', error.message);
+
+        // Show error message instead of hiding
+        document.getElementById('nextProgramCard').innerHTML = `
+          <div style="padding: 40px; text-align: center; color: #999; background: #f5f5f5; border-radius: 8px;">
+            <p style="margin: 0; font-size: 16px;">Unable to load programs</p>
+            <p style="margin: 10px 0 0 0; font-size: 14px;">Please try refreshing the page.</p>
+          </div>
+        `;
       }
     }
 
@@ -8883,28 +9052,49 @@ button#prev-btn {
       const today = new Date();
       today.setHours(0, 0, 0, 0);
 
+      console.log(`Evaluating ${records.length} records from Airtable...`);
+
       const upcomingPrograms = records
         .filter(record => {
           const fields = record.fields;
 
+          // Log the program name for debugging
+          console.log('Checking program:', fields.Program, 'at', fields.City, fields.State);
+
           // Filter for Certificate in Employee Relations Law
           if (!fields.Program || !fields.Program.includes('Certificate in Employee Relations Law')) {
+            console.log(`❌ Filtered out: "${fields.Program}" (looking for "Certificate in Employee Relations Law")`);
             return false;
           }
 
           // Must have required fields
           if (!fields['Session Start Date'] || !fields.City || !fields.State || !fields['Hero Image Attachment']) {
+            console.log('❌ Missing required fields:', {
+              hasStartDate: !!fields['Session Start Date'],
+              hasCity: !!fields.City,
+              hasState: !!fields.State,
+              hasHeroImage: !!fields['Hero Image Attachment']
+            });
             return false;
           }
 
           // Check if Hero Image Attachment has valid URL
           if (!fields['Hero Image Attachment'] || !fields['Hero Image Attachment'][0] || !fields['Hero Image Attachment'][0].url) {
+            console.log('❌ Invalid Hero Image Attachment structure');
             return false;
           }
 
           // Remove programs that have started (on start date)
           const startDate = parseTimezoneNeutralDate(fields['Session Start Date']);
-          return startDate > today;
+          const isUpcoming = startDate > today;
+
+          if (!isUpcoming) {
+            console.log(`❌ Program has already started: ${fields['Session Start Date']}`);
+            return false;
+          }
+
+          console.log('✅ Valid program found:', fields.City, fields['Session Start Date']);
+          return true;
         })
         .sort((a, b) => {
           // Sort by start date (soonest first)
@@ -8913,6 +9103,7 @@ button#prev-btn {
           return dateA - dateB;
         });
 
+      console.log(`Found ${upcomingPrograms.length} upcoming programs`);
       return upcomingPrograms.length > 0 ? upcomingPrograms[0] : null;
     }
 
