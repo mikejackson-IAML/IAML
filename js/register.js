@@ -326,7 +326,7 @@
       if (s.field) params.set(`sort[${i}][field]`, s.field);
       if (s.direction) params.set(`sort[${i}][direction]`, s.direction);
     });
-    const url = `/api/airtable-quiz?${params.toString()}`;
+    const url = `/api/airtable-programs?${params.toString()}`;
 
     try {
       const res = await fetch(url);

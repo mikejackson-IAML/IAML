@@ -35,6 +35,7 @@ module.exports = async function handler(req, res) {
     const BASE_ID = process.env.AIRTABLE_BASE_ID;
     const API_KEY = process.env.AIRTABLE_QUIZ_API_KEY;
 
+
     // Validate environment variables
     if (!BASE_ID || !API_KEY) {
       console.error('Missing Airtable configuration');
