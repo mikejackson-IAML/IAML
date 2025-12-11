@@ -20,8 +20,9 @@
 
   <!-- Environment Configuration -->
   <script src="/js/env-config.local.js"></script>
+  <script src="/js/env-config.js"></script>
   <script>
-    // Fallback if local config doesn't exist
+    // Ensure ENV_CONFIG exists
     if (typeof ENV_CONFIG === 'undefined') {
       window.ENV_CONFIG = {};
     }

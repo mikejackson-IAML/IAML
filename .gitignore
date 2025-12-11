@@ -4,7 +4,6 @@
 .env.production
 .env.*.local
 env-config.local.js
-js/env-config.js
 
 # Backup/concatenated files with secrets
 code
