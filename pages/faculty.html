@@ -476,11 +476,8 @@
     // AIRTABLE CONFIGURATION
     // ============================================================================
     const AIRTABLE_CONFIG = {
-      baseId: 'applWPVmMkgMWoZIC',
-      programsTableId: 'tblFaya3JyTzyAdjJ',
       instructorsTableId: 'tblKAY2APl6AGqW7S',
-      testimonialsTableId: 'tblsu840FYsWbNJRC',
-      apiKey: '' // API key should be set via server-side proxy or environment config
+      testimonialsTableId: 'tblsu840FYsWbNJRC'
     };
 
     // Cache configuration
@@ -806,40 +803,20 @@
     // ============================================================================
 
     /**
-     * Fetch all records from an Airtable table with pagination
+     * Fetch records from Airtable via the server-side proxy
      */
     async function fetchAllAirtableRecords(tableId, filterFormula = null) {
-      const allRecords = [];
-      let offset = null;
+      const params = new URLSearchParams();
+      params.set('table', tableId);
+      if (filterFormula) params.set('filterByFormula', filterFormula);
 
-      do {
-        let url = `https://api.airtable.com/v0/${AIRTABLE_CONFIG.baseId}/${tableId}?pageSize=100`;
-
-        if (filterFormula) {
-          url += `&filterByFormula=${encodeURIComponent(filterFormula)}`;
-        }
-
-        if (offset) {
-          url += `&offset=${offset}`;
-        }
-
-        const response = await fetch(url, {
-          headers: {
-            'Authorization': `Bearer ${AIRTABLE_CONFIG.apiKey}`
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`Airtable API error: ${response.status}`);
-        }
-
-        const data = await response.json();
-        allRecords.push(...data.records);
-        offset = data.offset;
-
-      } while (offset);
-
-      return allRecords;
+      const response = await fetch(`/api/airtable-programs?${params.toString()}`);
+      if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || `Proxy error: ${response.status}`);
+      }
+      const data = await response.json();
+      return data.records || [];
     }
 
     /**
