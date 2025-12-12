@@ -36,7 +36,7 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { table, recordId, filterByFormula, maxRecords, view, sort } = req.query;
+    const { table, recordId, filterByFormula, maxRecords, view } = req.query;
 
     // Validate required parameters
     if (!table) {
@@ -64,7 +64,26 @@ module.exports = async function handler(req, res) {
     if (filterByFormula) params.append('filterByFormula', filterByFormula);
     if (maxRecords) params.append('maxRecords', maxRecords);
     if (view) params.append('view', view);
-    if (sort) params.append('sort[0][field]', sort);
+
+    // Parse sort array from query string (sort[0][field], sort[0][direction], etc.)
+    const sortParams = [];
+    Object.keys(req.query).forEach(key => {
+      const match = key.match(/^sort\[(\d+)\]\[(field|direction)\]$/);
+      if (match) {
+        const index = parseInt(match[1]);
+        const prop = match[2];
+        if (!sortParams[index]) sortParams[index] = {};
+        sortParams[index][prop] = req.query[key];
+      }
+    });
+
+    // Append to Airtable API params
+    sortParams.forEach((s, i) => {
+      if (s && s.field) {
+        params.append(`sort[${i}][field]`, s.field);
+        if (s.direction) params.append(`sort[${i}][direction]`, s.direction);
+      }
+    });
 
     if (params.toString()) {
       url += `?${params.toString()}`;
