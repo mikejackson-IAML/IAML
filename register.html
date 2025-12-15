@@ -18,11 +18,10 @@
   <link rel="stylesheet" href="css/4-layout.css">
   <link rel="stylesheet" href="css/5-pages.css">
 
-  <!-- Environment Configuration (Updated: 2025-12-11) -->
+  <!-- Environment Configuration -->
   <script src="/js/env-config.local.js"></script>
   <script src="/js/env-config.js"></script>
   <script>
-    // Ensure ENV_CONFIG exists
     if (typeof ENV_CONFIG === 'undefined') {
       window.ENV_CONFIG = {};
     }
@@ -50,13 +49,13 @@
         <!-- Progress Stepper -->
         <nav class="register-stepper" aria-label="Registration progress">
           <ol class="stepper-list" id="stepperList">
-            <!-- Steps will be dynamically generated based on URL params -->
+            <!-- Steps dynamically generated based on format/program -->
           </ol>
         </nav>
 
         <!-- Step Cards -->
         <div class="register-steps">
-          <!-- Step: Format Selection -->
+          <!-- Step 1: Format Selection -->
           <section id="step-format" class="register-step" data-step="format" aria-labelledby="step-format-title">
             <h2 id="step-format-title" class="step-title">Select Your Program Format</h2>
             <p class="step-subtitle">Choose how you'd like to attend your program</p>
@@ -94,7 +93,7 @@
             </div>
           </section>
 
-          <!-- Step: Program Selection -->
+          <!-- Step 2: Program Selection -->
           <section id="step-program" class="register-step hidden" data-step="program" aria-labelledby="step-program-title">
             <h2 id="step-program-title" class="step-title">Select Your Program</h2>
             <p class="step-subtitle">Choose the certificate program you'd like to enroll in</p>
@@ -103,16 +102,7 @@
             </div>
           </section>
 
-          <!-- Step: Block Selection (only for applicable programs) -->
-          <section id="step-blocks" class="register-step hidden" data-step="blocks" aria-labelledby="step-blocks-title">
-            <h2 id="step-blocks-title" class="step-title">Select Your Attendance</h2>
-            <p class="step-subtitle">Choose to attend the full program or select specific blocks</p>
-            <div class="block-options" id="blockOptions">
-              <!-- Blocks populated by JS -->
-            </div>
-          </section>
-
-          <!-- Step: Session Selection -->
+          <!-- Step 3: Session Selection (skip for On-Demand) -->
           <section id="step-session" class="register-step hidden" data-step="session" aria-labelledby="step-session-title">
             <h2 id="step-session-title" class="step-title">Select Your Session</h2>
             <p class="step-subtitle">Choose a date and location that works for you</p>
@@ -128,7 +118,16 @@
             </div>
           </section>
 
-          <!-- Step: Contact Information -->
+          <!-- Step 4: Attendance Selection (only for block programs) -->
+          <section id="step-attendance" class="register-step hidden" data-step="attendance" aria-labelledby="step-attendance-title">
+            <h2 id="step-attendance-title" class="step-title">Select Your Attendance</h2>
+            <p class="step-subtitle">Choose to attend the full program or select specific blocks</p>
+            <div class="attendance-options" id="attendanceOptions">
+              <!-- Attendance options populated by JS -->
+            </div>
+          </section>
+
+          <!-- Step 5: Your Information -->
           <section id="step-contact" class="register-step hidden" data-step="contact" aria-labelledby="step-contact-title">
             <h2 id="step-contact-title" class="step-title">Your Information</h2>
             <p class="step-subtitle">Tell us about yourself</p>
@@ -147,24 +146,24 @@
               </div>
               <div class="form-row">
                 <div class="form-field">
+                  <label for="email">Email <span class="required">*</span></label>
+                  <input type="email" id="email" name="email" autocomplete="email" required placeholder="your.email@example.com">
+                  <span class="field-error" id="emailError"></span>
+                </div>
+                <div class="form-field">
+                  <label for="phone">Phone <span class="required">*</span></label>
+                  <input type="tel" id="phone" name="phone" autocomplete="tel" required placeholder="(555) 555-5555">
+                  <span class="field-error" id="phoneError"></span>
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-field">
                   <label for="contactTitle">Title <span class="optional">(optional)</span></label>
                   <input type="text" id="contactTitle" name="title" autocomplete="organization-title" placeholder="Your job title">
                 </div>
                 <div class="form-field">
                   <label for="company">Company <span class="optional">(optional)</span></label>
                   <input type="text" id="company" name="company" autocomplete="organization" placeholder="Company name">
-                </div>
-              </div>
-              <div class="form-row">
-                <div class="form-field">
-                  <label for="phone">Phone <span class="required">*</span></label>
-                  <input type="tel" id="phone" name="phone" autocomplete="tel" required placeholder="(555) 555-5555">
-                  <span class="field-error" id="phoneError"></span>
-                </div>
-                <div class="form-field">
-                  <label for="email">Email <span class="required">*</span></label>
-                  <input type="email" id="email" name="email" autocomplete="email" required placeholder="your.email@example.com">
-                  <span class="field-error" id="emailError"></span>
                 </div>
               </div>
               <div class="form-field coupon-field">
@@ -178,25 +177,25 @@
             </form>
           </section>
 
-          <!-- Step: Payment Method Selection -->
-          <section id="step-payment" class="register-step hidden" data-step="payment" aria-labelledby="step-payment-title">
-            <h2 id="step-payment-title" class="step-title">Payment Method</h2>
+          <!-- Step 6: Payment Method Selection -->
+          <section id="step-payment-method" class="register-step hidden" data-step="payment-method" aria-labelledby="step-payment-method-title">
+            <h2 id="step-payment-method-title" class="step-title">Payment Method</h2>
             <p class="step-subtitle">Choose how you'd like to pay</p>
 
-            <div class="payment-options">
-              <label class="payment-option">
+            <div class="payment-method-options">
+              <label class="payment-method-option">
                 <input type="radio" name="paymentMethod" value="invoice">
-                <div class="payment-card">
+                <div class="payment-method-card">
                   <div class="payment-icon">📄</div>
                   <div class="payment-info">
-                    <strong>Bill My Employer</strong>
-                    <span>We'll send an invoice to your company's billing department</span>
+                    <strong>Request Invoice</strong>
+                    <span>We'll send you an invoice within 24 hours</span>
                   </div>
                 </div>
               </label>
-              <label class="payment-option">
+              <label class="payment-method-option">
                 <input type="radio" name="paymentMethod" value="stripe">
-                <div class="payment-card">
+                <div class="payment-method-card">
                   <div class="payment-icon">💳</div>
                   <div class="payment-info">
                     <strong>Pay Now with Card</strong>
@@ -206,9 +205,9 @@
               </label>
             </div>
 
-            <!-- Bill Employer Form -->
-            <div id="billingForm" class="billing-form hidden">
-              <h3 class="billing-title">Billing Information</h3>
+            <!-- Invoice Form (shown when invoice selected) -->
+            <div id="invoiceForm" class="invoice-form hidden">
+              <h3 class="form-section-title">Billing Information</h3>
               <div class="form-row">
                 <div class="form-field">
                   <label for="billingContactName">Billing Contact Name <span class="required">*</span></label>
@@ -255,15 +254,18 @@
               </div>
             </div>
 
-            <!-- Stripe Payment Form -->
-            <div id="stripeForm" class="stripe-form hidden">
-              <h3 class="stripe-title">Card Details</h3>
+            <!-- Stripe Payment Form (shown when pay now selected) -->
+            <div id="stripePaymentForm" class="stripe-payment-form hidden">
+              <h3 class="form-section-title">Card Details</h3>
               <div id="card-element" class="stripe-card-element">
                 <!-- Stripe Elements will be inserted here -->
               </div>
               <div id="card-errors" class="stripe-errors" role="alert"></div>
             </div>
           </section>
+
+          <!-- Step 7: Stripe Payment (conditional - integrated into payment method) -->
+          <!-- This step is handled by the payment method selection logic -->
 
           <!-- Confirmation: Invoice -->
           <section id="step-confirm-invoice" class="register-step hidden" data-step="confirm-invoice" aria-labelledby="confirm-invoice-title">
@@ -289,6 +291,11 @@
                   <div class="detail-row" id="confInvoiceLocationRow"><span class="label">Location:</span><span class="value" id="confInvoiceLocation">—</span></div>
                   <div class="detail-row"><span class="label">Enrollment Fee:</span><span class="value" id="confInvoicePrice">—</span></div>
                 </div>
+              </div>
+
+              <!-- Calendar Download -->
+              <div class="confirmation-calendar">
+                <button type="button" id="downloadCalendarInvoice" class="btn-calendar">📅 Add to Calendar</button>
               </div>
 
               <div class="confirmation-next-steps">
@@ -355,6 +362,11 @@
                 </div>
               </div>
 
+              <!-- Calendar Download -->
+              <div class="confirmation-calendar">
+                <button type="button" id="downloadCalendarPaid" class="btn-calendar">📅 Add to Calendar</button>
+              </div>
+
               <div class="confirmation-next-steps">
                 <h3>What Happens Next</h3>
                 <div class="next-step">
@@ -368,14 +380,14 @@
                   <div class="step-number">2</div>
                   <div class="step-content">
                     <h4>Book Your Consultation</h4>
-                    <p>Schedule your complimentary pre-program consultation to maximize your learning experience.</p>
+                    <p>Schedule your complimentary pre-program consultation to get the most out of your experience.</p>
                   </div>
                 </div>
-                <div class="next-step">
+                <div class="next-step" id="onDemandStep3">
                   <div class="step-number">3</div>
                   <div class="step-content">
-                    <h4>Prepare for Day 1</h4>
-                    <p>We'll send pre-program information one week before your program starts.</p>
+                    <h4 id="step3Title">Prepare for Day 1</h4>
+                    <p id="step3Description">We'll send pre-program information one week before your program starts.</p>
                   </div>
                 </div>
               </div>
@@ -389,84 +401,85 @@
         </div>
 
         <!-- Navigation Buttons -->
-        <div class="register-nav" id="registerNav">
-          <button type="button" id="backBtn" class="btn btn-secondary hidden">Back</button>
+        <div class="register-nav">
+          <button type="button" id="backBtn" class="btn btn-secondary">← Back</button>
           <div class="nav-spacer"></div>
-          <button type="button" id="nextBtn" class="btn btn-primary">Continue</button>
-          <button type="button" id="submitBtn" class="btn btn-primary hidden">Complete Registration</button>
+          <button type="button" id="nextBtn" class="btn btn-primary">Next →</button>
         </div>
-
-        <!-- Global Messages -->
-        <div id="globalMessage" class="global-message hidden" role="alert" aria-live="polite"></div>
       </div>
 
-      <!-- Right Column: Summary Sidebar -->
-      <aside class="register-sidebar" id="registerSidebar">
-        <div class="sidebar-sticky">
+      <!-- Right Column: Sidebar Summary -->
+      <aside class="register-sidebar" id="registerSidebar" aria-label="Registration summary">
+        <div class="sidebar-content">
           <h3 class="sidebar-title">Registration Summary</h3>
 
-          <div class="summary-section" id="summaryProgram">
-            <div class="summary-label">Program</div>
-            <div class="summary-value" id="summaryProgramValue">—</div>
+          <!-- Program Info -->
+          <div class="sidebar-section">
+            <span class="sidebar-label">Program:</span>
+            <span class="sidebar-value" id="sidebarProgram">—</span>
           </div>
 
-          <div class="summary-section" id="summaryFormat">
-            <div class="summary-label">Format</div>
-            <div class="summary-value">
-              <span id="summaryFormatBadge" class="format-badge-small">—</span>
+          <!-- Format Badge -->
+          <div class="sidebar-section">
+            <span id="sidebarFormatBadge" class="format-badge">—</span>
+          </div>
+
+          <!-- Attendance Info (for block programs) -->
+          <div class="sidebar-section" id="sidebarAttendanceSection" style="display: none;">
+            <span class="sidebar-label">Attendance:</span>
+            <span class="sidebar-value" id="sidebarAttendance">—</span>
+          </div>
+
+          <!-- Session Info (for in-person/virtual) -->
+          <div class="sidebar-section" id="sidebarSessionSection" style="display: none;">
+            <span class="sidebar-label">Dates:</span>
+            <span class="sidebar-value" id="sidebarDates">—</span>
+          </div>
+
+          <!-- Location Info (for in-person only) -->
+          <div class="sidebar-section" id="sidebarLocationSection" style="display: none;">
+            <span class="sidebar-label">Location:</span>
+            <span class="sidebar-value" id="sidebarLocation">—</span>
+          </div>
+
+          <!-- Divider -->
+          <div class="sidebar-divider"></div>
+
+          <!-- Pricing -->
+          <div class="sidebar-section pricing">
+            <div class="pricing-row">
+              <span class="pricing-label">Program Price:</span>
+              <span class="pricing-value" id="sidebarListPrice">—</span>
             </div>
-          </div>
-
-          <div class="summary-section hidden" id="summaryBlocks">
-            <div class="summary-label">Attendance</div>
-            <div class="summary-value" id="summaryBlocksValue">Full Program</div>
-          </div>
-
-          <div class="summary-section hidden" id="summarySession">
-            <div class="summary-label">Session</div>
-            <div class="summary-value" id="summarySessionValue">—</div>
-          </div>
-
-          <div class="summary-section hidden" id="summaryLocation">
-            <div class="summary-label">Location</div>
-            <div class="summary-value" id="summaryLocationValue">—</div>
-          </div>
-
-          <div class="summary-divider"></div>
-
-          <div class="summary-pricing">
-            <div class="pricing-row" id="pricingBase">
-              <span class="pricing-label" id="pricingBaseLabel">Program Fee</span>
-              <span class="pricing-amount" id="pricingBaseAmount">$0</span>
+            <div class="pricing-row" id="sidebarDiscountRow" style="display: none;">
+              <span class="pricing-label">Discount:</span>
+              <span class="pricing-value discount" id="sidebarDiscount">—</span>
             </div>
-            <div class="pricing-row discount hidden" id="pricingDiscount">
-              <span class="pricing-label" id="pricingDiscountLabel">Discount</span>
-              <span class="pricing-amount" id="pricingDiscountAmount">-$0</span>
+            <div class="pricing-row total">
+              <span class="pricing-label">Total:</span>
+              <span class="pricing-value" id="sidebarTotal">—</span>
             </div>
-            <div class="pricing-total">
-              <span class="pricing-label">Total Due</span>
-              <span class="pricing-amount" id="pricingTotal">$0</span>
-            </div>
-          </div>
-
-          <div class="summary-help">
-            <p>Questions? <a href="mailto:info@iaml.com">info@iaml.com</a></p>
-            <p><a href="tel:+19497601700">(949) 760-1700</a></p>
           </div>
         </div>
       </aside>
     </div>
   </main>
 
+  <!-- Error Message Banner -->
+  <div id="errorBanner" class="error-banner hidden" role="alert" aria-live="assertive">
+    <span id="errorMessage"></span>
+    <button type="button" class="error-close" aria-label="Close error message">×</button>
+  </div>
+
   <!-- Loading Overlay -->
-  <div id="loadingOverlay" class="loading-overlay hidden" aria-hidden="true">
-    <div class="loading-box">
+  <div id="loadingOverlay" class="loading-overlay hidden">
+    <div class="loading-spinner">
       <div class="spinner"></div>
-      <span class="loading-message">Processing...</span>
+      <p>Processing your registration...</p>
     </div>
   </div>
 
-  <!-- Registration JS -->
-  <script src="js/register.js?v=2"></script>
+  <!-- Registration Script -->
+  <script src="/js/register.js"></script>
 </body>
 </html>
