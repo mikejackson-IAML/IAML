@@ -3781,7 +3781,6 @@ button#prev-btn {
        DATA
        =========================== */
     async function fetchProgramsData(){
-      const headers = {'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
       let allRecords = [];
       let offset = null;
 
@@ -3798,7 +3797,7 @@ button#prev-btn {
 
         const url = buildAirtableUrl(CONFIG.AIRTABLE.PROGRAMS_ENDPOINT, params);
 
-      const response = await fetch(url,{headers});
+      const response = await fetch(url);
       if(!response.ok) {
         throw new Error(`Airtable API error: ${response.status}`);
       }
@@ -4009,8 +4008,7 @@ button#prev-btn {
       return '';
     }
     async function fetchInstructorsData(){
-      const headers = {'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
-      const response = await fetch(CONFIG.AIRTABLE.INSTRUCTORS_ENDPOINT,{headers});
+      const response = await fetch(CONFIG.AIRTABLE.INSTRUCTORS_ENDPOINT);
       if(!response.ok) throw new Error(`Airtable API error: ${response.status}`);
       const data = await response.json();
       const byName={}, byId={};
@@ -4032,14 +4030,13 @@ button#prev-btn {
       return null;
     }
     async function fetchOnDemandProgram(){
-      const headers={'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
       const url = buildAirtableUrl(CONFIG.AIRTABLE.PROGRAMS_ENDPOINT, {
         filterByFormula: 'AND({Program}="{{PROGRAM_NAME}}", OR(FIND("on-demand", LOWER({Format})), FIND("on demand", LOWER({Format}))))',
         'sort[0][field]': 'Session Start Date',
         'sort[0][direction]': 'asc'
       });
       try{
-        const response=await fetch(url,{headers});
+        const response=await fetch(url);
         if(!response.ok) return null;
         const data=await response.json();
         if(data.records.length>0){
@@ -4946,9 +4943,8 @@ button#prev-btn {
        =========================== */
     async function testAirtableConnection(){
       try {
-        const headers = {'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
         const url = `${CONFIG.AIRTABLE.PROGRAMS_ENDPOINT}?maxRecords=1`;
-        const response = await fetch(url, {headers});
+        const response = await fetch(url);
 
         if (response.ok) {
           const data = await response.json();
