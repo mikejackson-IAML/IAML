@@ -477,6 +477,11 @@
     updateNavigationButtons();
     updateSidebar();
 
+    // Load sessions when navigating to session step
+    if (stepName === 'session' && state.format !== 'on-demand' && state.program) {
+      loadSessions();
+    }
+
     // Scroll to top
     window.scrollTo(0, 0);
   }
@@ -910,11 +915,6 @@
 
           saveStateToSessionStorage();
           updateNextButtonVisibility();
-          showStep('session');
-
-          if (state.format !== 'on-demand') {
-            loadSessions();
-          }
         }
       });
 
@@ -1632,7 +1632,6 @@
       state.steps = determineSteps();
       buildStepperUI();
       showStep('format');
-      loadPrograms();
     }
 
     setupEventListeners();
