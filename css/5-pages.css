@@ -2133,7 +2133,7 @@
   justify-content: center;
   background: var(--black);
   color: var(--white);
-  padding: 100px 0 var(--space-3xl) 0;
+  padding: 150px 0 var(--space-3xl) 0;
   position: relative;
   overflow: hidden;
 }
