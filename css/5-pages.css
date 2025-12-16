@@ -2174,7 +2174,7 @@
 .hero-section-program .program-description {
   max-width: 100%;
   margin: 0 0 var(--space-xl) 0;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.8);
   font-family: var(--font-body);
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   line-height: 1.6;
