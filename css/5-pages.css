@@ -2437,12 +2437,12 @@
   }
 
   .program-title {
-    font-size: clamp(1.875rem, 5vw, 2.5rem);
+    font-size: clamp(2rem, 5.5vw, 3rem);
     margin-bottom: var(--space-xl);
   }
 
   .program-description {
-    font-size: 1rem;
+    font-size: clamp(1rem, 2vw, 1.25rem);
     margin-bottom: var(--space-xl);
   }
 
@@ -2496,12 +2496,12 @@
   }
 
   .program-title {
-    font-size: 1.75rem;
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
     margin-bottom: var(--space-lg);
   }
 
   .program-description {
-    font-size: 0.9375rem;
+    font-size: clamp(0.9375rem, 3vw, 1.125rem);
     margin-bottom: var(--space-lg);
   }
 
