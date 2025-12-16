@@ -5,27 +5,1141 @@
   This template is used by the /new-program slash command to generate program pages.
 
   PLACEHOLDERS (replace when generating):
-  - {{META_TITLE}} - Page title
-  - {{META_DESCRIPTION}} - Meta description
-  - {{META_KEYWORDS}} - SEO keywords
-  - {{OG_TITLE}}, {{OG_DESCRIPTION}}, {{OG_IMAGE}} - Open Graph tags
-  - {{PROGRAM_SLUG}} - URL-friendly slug (e.g., "employee-relations-law")
-  - {{PROGRAM_NAME}} - Full program name for Airtable queries
-  - {{PROGRAM_NAME_LOWERCASE}} - Lowercase version for string matching
-  - {{PROGRAM_TITLE}} - H1 title (can include <br>)
-  - {{PROGRAM_DESCRIPTION}} - Hero description
-  - {{PROGRAM_PRICE}} - Enrollment fee (number only)
-  - {{REGISTRATION_URL}} - External registration link
-  - {{DELIVERY_OPTIONS}} - Format pills HTML
-  - {{TESTIMONIALS_DATA}} - JSON array of testimonials
-  - {{CONTENT_HEADLINE}}, {{CONTENT_DESCRIPTION}}, {{CONTENT_BENEFITS}} - Content section
-  - {{CURRICULUM_HEADER_TITLE}}, {{CURRICULUM_HEADER_DESC}} - Curriculum header
-  - {{CURRICULUM_NAV_CARDS}} - Block navigation cards HTML
-  - {{CURRICULUM_BLOCKS}} - Curriculum content blocks HTML (keep existing structure)
-  - {{FACULTY_HEADLINE}}, {{FACULTY_SUBTITLE}} - Faculty section header
-  - {{FACULTY_CARDS}} - Faculty cards HTML
-  - {{BENEFIT_CREDITS}}, {{BENEFIT_UPDATES}}, {{BENEFIT_DISCOUNT}} - Benefits section
-  - {{FAQ_ITEMS}} - FAQ accordion items HTML
+  - Certificate in Strategic HR Leadership | IAML - Page title
+  - Stop being seen as just administrative. Master strategic frameworks that position HR as a business partner and competitive advantage. Certificate. $2,375. - Meta description
+  - [TO BE ADDED LATER] - SEO keywords
+  - Certificate in Strategic HR Leadership | IAML, Stop being seen as just administrative. Master strategic frameworks that position HR as a business partner and competitive advantage., https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69093f4637c43adac1bc0ab3.png - Open Graph tags
+  - strategic-hr-leadership - URL-friendly slug (e.g., "employee-relations-law")
+  - Certificate in Strategic HR Leadership - Full program name for Airtable queries
+  - certificate in strategic hr leadership - Lowercase version for string matching
+  - Certificate in Strategic HR Leadership - H1 title (can include <br>)
+  - Stop being seen as just an administrative function. Master the strategic frameworks that position HR as a business partner and competitive advantage for your organization. - Hero description
+  - 2375 - Enrollment fee (number only)
+  - [TO BE ADDED IN AIRTABLE] - External registration link
+  - <span class="format-pill">In Person</span>
+              <span class="format-pill">Virtual</span>
+              <span class="format-pill">On Demand</span> - Format pills HTML
+  - [
+  {
+    "quote": "This was a great program! One of the most useful programs I have attended in a long time. Instructors were awesome!",
+    "name": "Dean C. Goodwin",
+    "title": "Deputy Director, Administration",
+    "company": "Northern Virginia Criminal Justice Training Academy"
+  },
+  {
+    "quote": "The seminar was very good. It covered a lot of pertinent information. I felt I learned quite a bit that will have an immediate impact on my job.",
+    "name": "Bobbi Britton",
+    "title": "Sr. Human Resources Consultant",
+    "company": "Deltic Timber Corporation"
+  },
+  {
+    "quote": "Brenda Heinicke was fantastic! She did an amazing job of presenting the information clearly and concisely. Her high energy level engaged us in thought provoking conversations instead of 'talking at us' like many instructors tend to do.",
+    "name": "Brittany Hepler",
+    "title": "Mobility Supervisor",
+    "company": "Dayle McIntosh Disability Resource"
+  },
+  {
+    "quote": "Thank you for the insight and facilitated discussions. It was beneficial to hear about actual cases and learn how other HR professionals solve problems.",
+    "name": "Olivia Gunter",
+    "title": "Human Resources Analyst",
+    "company": "Hillenbrand, Inc."
+  },
+  {
+    "quote": "The instructors were very knowledgeable. It was a great seminar. I have been in HR for 12 years and still learned a lot!",
+    "name": "Krissy Houston",
+    "title": "Sr. Human Resources Representative",
+    "company": "Newmont Mining Corporation"
+  },
+  {
+    "quote": "Excellent seminar! This is the second IAML class I have attended. As a new manager, the information presented was invaluable! The instructor was amazing! I will definitely be back!",
+    "name": "Holly Dean",
+    "title": "Employment Manager",
+    "company": "Alfa Insurance Company"
+  },
+  {
+    "quote": "Di Ann Sanchez was truly inspiring. She gave me the energy that I needed to continue in the field of HR. I would recommend her session to entry level HR professionals as well as a refresher for seasoned professionals.",
+    "name": "Patrice Terrell",
+    "title": "Associate Director",
+    "company": "Georgia College"
+  },
+  {
+    "quote": "It was a great experience, and I am very thankful that I was allowed the opportunity to attend. I will look forward to more opportunities in the future.",
+    "name": "Molly Boyer",
+    "title": "Human Resources Generalist",
+    "company": "Flint Hills Resources"
+  },
+  {
+    "quote": "Both facilitators were excellent! I will be able to use key learning tools from the seminar immediately within my organization. Thank you again for another awesome course!",
+    "name": "Michi Eaton",
+    "title": "Regional Human Resources Manager",
+    "company": "AutoVin"
+  },
+  {
+    "quote": "I am taking away so much more knowledge than what I had walking in to the room on the first day. Di Ann's energy, enthusiasm, and passion made the class interesting and engaging. I am looking forward to sharing some of what I learned with my fellow co-workers, and begin to implement some positive changes.",
+    "name": "Megan Mihelick",
+    "title": "Human Resources Generalist",
+    "company": "Dow Corning Corporation"
+  },
+  {
+    "quote": "Overall the material and training was great! The instructor was informative. I will definitely recommend to others!",
+    "name": "Noelle Lees",
+    "title": "Human Resources Business Partner",
+    "company": "Hertz"
+  },
+  {
+    "quote": "Each instructor was extremely knowledgeable in their subject matter. High energy, great class environment. Most importantly, I want to say that Di Ann Sanchez' real world application of the laws, her best practices advice was great!",
+    "name": "Jackie Rudnick",
+    "title": "Senior Human Resources Specialist",
+    "company": "JM Family Enterprises, Inc."
+  }
+] - JSON array of testimonials
+  - Build HR Skills That Make You Indispensable to Your Organization, The Certificate in Strategic HR Leadership is 4.5 intensive days where you'll master the legal compliance and strategic HR skills that prevent liability, strengthen your organization, and position you as an indispensable business partner, working through real workplace scenarios with experienced attorneys and HR leaders, not theoretical lectures., <li><strong>✓ Complete HR legal and strategic coverage</strong> – Discrimination defense, wage-hour compliance, ADA/FMLA management, hiring risk, termination law, performance management, retention strategy, and workforce planning</li>
+                <li><strong>✓ Real-world application</strong> – Work through discrimination claims, accommodation requests, termination decisions, hybrid workplace challenges, and the strategic workforce issues you'll face Monday morning</li>
+                <li><strong>✓ Expert instruction</strong> – Learn from practicing employment attorneys and senior HR leaders who manage legal risk while building high-performing organizations</li>
+                <li><strong>✓ Professional certification</strong> – Earn your certificate plus 29.75 SHRM/HRCI continuing education credits</li>
+                <li><strong>✓ Ongoing support</strong> – Receive 12 months of quarterly employment law updates to keep your knowledge current as regulations evolve</li> - Content section
+  - Master 2 Blocks of Employment Law & Strategic HR, Block I covers legal compliance and risk management. Block II builds strategic HR capabilities that position you as a business partner. - Curriculum header
+  - <div class="curriculum-nav-card active" data-target="block1" tabindex="0" role="tab" aria-selected="true" aria-controls="block1">
+      <div class="block-label">Block I</div>
+      <h3>HR Law Fundamentals</h3>
+      <p>Master the legal foundation every HR professional needs.</p>
+      <div class="curriculum-price">$1375</div>
+      <div class="curriculum-availability">Available individually</div>
+    </div>
+          <div class="curriculum-nav-card " data-target="block2" tabindex="-1" role="tab" aria-selected="false" aria-controls="block2">
+      <div class="block-label">Block II</div>
+      <h3>Strategic HR Management</h3>
+      <p>Build strategic HR capabilities that drive business results.</p>
+      <div class="curriculum-price">$1575</div>
+      <div class="curriculum-availability">Available individually</div>
+    </div> - Block navigation cards HTML
+  - <div id="block1" class="curriculum-block active" role="tabpanel" aria-labelledby="nav-block1">
+            <div class="competency-group active">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="true">
+                <div>
+                  <h3>The New Landscape of Workplace Discrimination (2026)</h3>
+                  <p>What's changing in discrimination law and how to adapt policies, training, and investigations.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Expansion of protected characteristics under state law (gender identity, hairstyles/hygiene, reproductive decisions)</h4>
+                      <p>Update policies and training to comply with expanding protected classes across states.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Retaliation remains #1 EEOC claim — and why it now attaches to nearly every other complaint</h4>
+                      <p>Structure responses so protected activity doesn't convert routine actions into retaliation.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Religious accommodation conflicts (post-Groff; balancing beliefs and workplace behavior)</h4>
+                      <p>Apply post-Groff standards to balance sincere beliefs with operational and coworker impacts.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Harassment outside the four walls: remote misconduct, chat/messaging platforms, and bystander liability</h4>
+                      <p>Address off-site and digital conduct with clear rules, monitoring and prompt action.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Reverse discrimination and "post-DEI backlash" claims</h4>
+                      <p>Spot and mitigate risks as DEI programs face reverse-bias and retaliation allegations.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>ADA, FMLA & Accommodation in a Hybrid Workplace</h3>
+                  <p>Define essential functions, manage mental health accommodations, and avoid overlap traps in hybrid settings.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Documenting the interactive process so it protects you (not just HR)</h4>
+                      <p>Create a contemporaneous record that shows good-faith exploration of options.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Determining "essential job functions" when hybrid/remote is feasible</h4>
+                      <p>Define essential duties defensibly when remote and hybrid options exist.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Mental health accommodations and the new expectation of flexibility</h4>
+                      <p>Navigate mental health requests while maintaining performance and fairness.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>When performance issues are really medical/legal issues</h4>
+                      <p>Differentiate conduct from condition to choose coaching, discipline, or accommodation.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Overlap traps: FMLA + ADA + workers' comp + pregnancy accommodation</h4>
+                      <p>Coordinate leave and accommodation laws to avoid conflicts and double liability.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Hiring & Selection Compliance (Modern Risk Areas)</h3>
+                  <p>Compliant recruiting in 2026—from pay transparency to AI screening risks.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Pay transparency laws and salary band posting requirements</h4>
+                      <p>Meet posting rules while preserving market competitiveness and internal equity.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Salary history bans (still expanding state by state)</h4>
+                      <p>Remove salary-history bias from hiring and compensation decisions.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Negligent hiring & social media screening pitfalls</h4>
+                      <p>Use verifiable criteria and documented sources; avoid protected-class data.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Inclusive interviewing without increasing risk (what to ask / what not to ask)</h4>
+                      <p>Ask job-related, validated questions that minimize discrimination risk.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>AI/algorithmic recruiting laws (CO, NY, CA, IL emerging models)</h4>
+                      <p>Audit automated tools for bias, disclosures, and candidate opt-outs.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Wage & Hour Law in 2026</h3>
+                  <p>Stop off-the-clock risk, handle breaks and commutes, and avoid misclassification crackdowns.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Remote/off-the-clock time: when "quick emails" become unpaid work</h4>
+                      <p>Set boundaries and capture all hours for non-exempt remote work.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Travel time & hybrid commutes — what must be paid?</h4>
+                      <p>Apply federal and state rules to travel, home office trips, and training.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Pay transparency intersects with wage claims</h4>
+                      <p>Align postings, pay practices, and records to withstand claims.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Meal/rest break liability under remote tracking</h4>
+                      <p>Ensure compliant break tracking and off-duty controls for remote staff.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Misclassification crackdowns (independent contractor & salaried/exempt)</h4>
+                      <p>Reassess roles and duties before audits target grey areas.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Managing & Supervising Employees (HR as Risk Gatekeeper)</h3>
+                  <p>Tools managers need to document well, coach correctly, and reduce retaliation risk.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Coaching vs discipline vs accommodation: knowing which lane you're in</h4>
+                      <p>Pick the right path early to avoid mixed messages and legal exposure.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Documentation as legal shield — what juries look for</h4>
+                      <p>Write contemporaneous, behavior-based notes that show fairness and consistency.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Digital tone, Teams/Slack as evidence</h4>
+                      <p>Model respectful, concise communication that's safe to print in court.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>The "silent plaintiff file" — managers' notebooks and emails as discovery exhibits</h4>
+                      <p>Assume side notes and chats will be exhibits; keep them professional.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Legal do's & don'ts of progressive discipline</h4>
+                      <p>Follow clear steps, timelines, and expectations without rigid traps.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Performance Management & Evaluations</h3>
+                  <p>Write defensible evaluations and plans that hold up in litigation.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Why evaluations are Exhibit A in litigation</h4>
+                      <p>Make ratings match reality; avoid inflated scores that suggest pretext.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>"He was always rated 'exceeds'" — until termination" = pretext</h4>
+                      <p>Use trend lines and notes to explain performance changes.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Writing defensible comments based on behavior not personality</h4>
+                      <p>Anchor comments in observable actions, metrics, and impact.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Self-appraisals as risk management tool</h4>
+                      <p>Capture employee input to reduce disputes and surface issues early.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Corrective action plans that legally protect the company</h4>
+                      <p>Include specific behaviors, supports, deadlines, and consequences.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Termination Law & Separation Risk</h3>
+                  <p>Assess retaliation, handle references, and use releases appropriately.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>At-will vs implied contracts (what unintentionally creates one)</h4>
+                      <p>Avoid language and practices that look like job guarantees.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Off-duty conduct & political/social issue firings</h4>
+                      <p>Balance brand and policy with lawful off-workplace protections.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Retaliation analysis before discharge</h4>
+                      <p>Audit timeline, comparators, and documentation before acting.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Requests for references & defamation risk</h4>
+                      <p>Share neutral facts and required verifications only.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Severance/releases — when HR should recommend counsel</h4>
+                      <p>Use tailored terms and timing to maximize enforceability.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Workplace Safety, Leave Laws & Special Compliance Areas</h3>
+                  <p>OSHA 2.0, FMLA documentation, threats, dual-risk areas, and required flags.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Psychological safety = OSHA 2.0 (emerging enforcement theory)</h4>
+                      <p>Address psychosocial hazards with training, reporting, and response plans.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>FMLA abuse vs legal protected use — documentation rules</h4>
+                      <p>Tighten certifications, recertifications, and call-in rules lawfully.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Workplace threats & duty to act</h4>
+                      <p>Build multidisciplinary response protocols for credible threats.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Workers' comp plus ADA = dual risk area</h4>
+                      <p>Coordinate restrictions, RTW, and accommodations across programs.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>WARN, COBRA, ERISA (what HR must flag, even if counsel handles details)</h4>
+                      <p>Know the triggers and timelines HR must escalate immediately.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>HR Investigations (HR Edition, Non-Legal Version)</h3>
+                  <p>When to investigate, how to stay neutral, and retaliation-proof the aftermath.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>When HR must investigate vs when coaching is sufficient</h4>
+                      <p>Triage complaints quickly to choose the right response path.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Neutrality and avoiding "confirmation bias"</h4>
+                      <p>Use structured questions and corroboration to keep findings objective.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>What you can/can't promise about confidentiality</h4>
+                      <p>Set realistic privacy expectations while protecting the process.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Handling reluctant witnesses or anonymous complaints</h4>
+                      <p>Build participation through safeguards, not pressure.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Retaliation-proofing the aftermath</h4>
+                      <p>Implement follow-ups and guardrails after findings are delivered.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="block2" class="curriculum-block " role="tabpanel" aria-labelledby="nav-block2">
+            <div class="competency-group active">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="true">
+                <div>
+                  <h3>The Strategic Role of HR in 2026</h3>
+                  <p>Elevate HR as a business risk manager and culture architect with metrics leaders trust.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>HR metrics that executives actually listen to</h4>
+                      <p>Report leading indicators tied to revenue, cost, and risk.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>HR as business risk manager + culture architect</h4>
+                      <p>Integrate legal, financial, and cultural risk into business decisions.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Workforce planning in a skills-based economy</h4>
+                      <p>Forecast and build skills portfolios, not just headcount.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Talent Acquisition & Workforce Planning</h3>
+                  <p>Design roles for hybrid teams and hire skills-first while protecting the brand.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Job design for hybrid/distributed teams</h4>
+                      <p>Design roles for clarity, autonomy, and measurable outcomes.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Skills-based hiring vs credential-based hiring</h4>
+                      <p>Source and assess by capability evidence, not pedigree.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Employment branding in a candidate-skeptical labor market</h4>
+                      <p>Convey proof, not slogans—career growth, flexibility, and impact.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Psychological contract in the post-COVID workforce</h4>
+                      <p>Reset expectations on flexibility, trust, and development.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Retention & Engagement Strategy</h3>
+                  <p>Prevent disengagement and build mobility that keeps top performers.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Internal mobility as a retention strategy</h4>
+                      <p>Create pathways and visibility so talent moves before it leaves.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Why employees stay (2026 version, not 2016 version)</h4>
+                      <p>Prioritize meaning, growth, flexibility, and manager quality.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Preventing disengagement before it becomes turnover</h4>
+                      <p>Detect risk signals early and intervene with targeted actions.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Stay interviews > exit interviews</h4>
+                      <p>Use structured conversations to surface fixable issues sooner.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Talent & Leadership Development</h3>
+                  <p>Build future-ready skills, succession, and manager capability.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Career pathways and succession readiness</h4>
+                      <p>Map roles, skills, and readiness with objective criteria.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Future-ready skill building (not just training)</h4>
+                      <p>Deliver practice, projects, and coaching that change behavior.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Manager capability as retention lever</h4>
+                      <p>Equip managers to set clarity, coach well, and build trust.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Realigning underperformers without turnover spikes</h4>
+                      <p>Use fair plans and supports that improve results quickly.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Performance Management as a Strategic System</h3>
+                  <p>Shift from activity to value with continuous, fair performance systems.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Measuring value, not tasks</h4>
+                      <p>Define outputs and impact to replace activity metrics.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Continuous feedback vs annual ratings</h4>
+                      <p>Adopt light-weight, frequent touchpoints that drive growth.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Performance calibration to ensure fairness</h4>
+                      <p>Compare across teams to remove rater bias and drift.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Coaching for development vs coaching for documentation</h4>
+                      <p>Split growth coaching from compliance documentation cleanly.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Compensation & Total Rewards Strategy</h3>
+                  <p>Use transparent, market-smart rewards that drive retention.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Pay transparency as a trust-building tool</h4>
+                      <p>Use ranges, rationales, and progressions to build credibility.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Market pricing in unpredictable labor markets</h4>
+                      <p>Blend surveys and real-time signals for resilient ranges.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Differentiated rewards for critical roles</h4>
+                      <p>Invest more where scarcity and impact are highest.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Linking rewards to retention, not just performance</h4>
+                      <p>Tie incentives to staying power and skill criticality.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Workplace Culture, Trust, and Organizational Health</h3>
+                  <p>Manage cultural risk, rebuild trust, and handle dissent constructively.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-foundation">Foundation</span></div>
+                    <div class="competency-text">
+                      <h4>Psychological safety & leadership credibility</h4>
+                      <p>Leaders earn trust through consistency, clarity, and care.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Cultural risk ≠ legal risk (but both must be managed)</h4>
+                      <p>Track culture signals alongside compliance to reduce surprises.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Restoring culture after turnover or change</h4>
+                      <p>Rebuild norms with rituals, stories, and visible decisions.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Managing dissent, not suppressing it</h4>
+                      <p>Channel disagreement into better choices and stronger buy-in.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>HR Data, Metrics & Strategic Reporting</h3>
+                  <p>Turn HR data into decisions with predictive, executive-ready reporting.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Turning metrics into decisions</h4>
+                      <p>Pair data with clear actions, owners, and timelines.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>HR dashboards executives care about</h4>
+                      <p>Show few, high-signal metrics tied to outcomes and risk.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Cost of turnover & ROI of retention</h4>
+                      <p>Quantify avoidable churn and returns on retention levers.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-expert">Expert</span></div>
+                    <div class="competency-text">
+                      <h4>Predictive HR (leading indicators, not lagging)</h4>
+                      <p>Build early-warning views of capacity, risk, and demand.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="competency-group ">
+              <div class="competency-header" role="button" tabindex="0" aria-expanded="false">
+                <div>
+                  <h3>Strategic Case Study Application</h3>
+                  <p>Apply it all in a live, structured HR strategy exercise.</p>
+                </div>
+                <div class="competency-toggle"></div>
+              </div>
+              <div class="competency-content">
+                <div class="competency-list">
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Live structured case: build a simplified HR strategic plan</h4>
+                      <p>Apply the toolkit in a realistic scenario with feedback.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Translate legal compliance → workforce strategy</h4>
+                      <p>Turn risk controls into talent, culture, and performance levers.</p>
+                    </div>
+                  </div>
+                  <div class="competency-item">
+                    <div class="competency-item-badge"><span class="skill-badge badge-advanced">Advanced</span></div>
+                    <div class="competency-text">
+                      <h4>Align HR levers with organizational goals</h4>
+                      <p>Connect hiring, development, rewards, and culture to strategy.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> - Curriculum content blocks HTML (keep existing structure)
+  - Learn from Practicing Professionals, Not academics—practitioners who manage real legal risk while building high-performing organizations - Faculty section header
+  - <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebe98d66054ecb05fb.svg" alt="Wayne W. Williams, Esq.">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Wayne W. Williams, Esq.</h3>
+          <p class="faculty-title">Founder, Law Offices of Wayne W. Williams</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebe98d665980cb05f7.svg" alt="Dawn R. Kubik, Esq.">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Dawn R. Kubik, Esq.</h3>
+          <p class="faculty-title">Of Counsel</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6911ef6e87254432cbd4b2fe.svg" alt="Brenda Heinicke">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Brenda Heinicke</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667eb6947d88a87edcc70.svg" alt="Di Ann Sanchez">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Di Ann Sanchez</h3>
+          <p class="faculty-title">Human Resources Chief Exceptional Officer</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690e22acc87c0f45146d61fd.svg" alt="Amy Zdravecky">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Amy Zdravecky</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690e229c43570019cba3b51f.svg" alt="Grant Gibeau">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Grant Gibeau</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690e22920269a38b86c905cb.svg" alt="Rudi Turner">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Rudi Turner</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6911f33aeb42483a1e806109.svg" alt="Cyndi Ramirez Ryan">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Cyndi Ramirez Ryan</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article> - Faculty cards HTML
+  - 29.75 SHRM/HRCI credits (plus 6 additional from quarterly updates = 35.75 total), 12 months, $300-$500 - Benefits section
+  - <div class="faq-item active">
+  <button class="faq-question" aria-expanded="true">
+    Can I take just Block I (HR Legal Mastery) or Block II (Strategic HR Leadership) separately?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Yes. Block I (HR Legal Mastery, $1,375) covers discrimination law, ADA/FMLA, wage-hour compliance, hiring/termination risk—the legal foundation every HR professional needs. Block II (Strategic HR Leadership, $1,575) focuses on workforce planning, retention strategy, performance systems, and positioning HR as a business partner. Most participants take both blocks together ($2,375, saving you $575), but you can register for either block individually based on your immediate needs.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    What's the difference between in-person, virtual, and on-demand formats?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      All three formats feature the same instructors (practicing employment attorneys and senior HR leaders), current content, and professional credits. In-person provides face-to-face networking and immediate interaction. Virtual delivers the same live instruction via Zoom with full Q&A capability. On-demand lets you learn at your own pace over 90 days with the ability to pause and revisit complex topics. Choose the format that fits your schedule and learning style—the quality remains identical.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    What happens after I register?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Within minutes, you'll receive an invoice email. Once payment is processed, you can schedule your complimentary pre-program consultation (10-15 minutes) to discuss your specific HR challenges—whether you're dealing with accommodation requests, termination decisions, retention issues, or positioning HR strategically within your organization. Pre-program materials arrive one week before your session starts.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    How is this different from the Certificate in Employee Relations Law program?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      The Employee Relations Law program focuses exclusively on legal compliance—labor relations, discrimination defense, and employment law risk. This Strategic HR Management program covers the same legal foundations in Block I, then adds Block II on strategic HR capabilities: workforce planning, talent strategy, retention systems, and positioning HR as a business driver rather than just a compliance function. If you want legal expertise plus the strategic frameworks that get HR a seat at the leadership table, this is your program.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    I already have strong legal knowledge. Should I skip Block I and just take Block II?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      That depends on when you last updated your legal knowledge. Employment law has changed significantly—post-Groff religious accommodation standards, AI hiring regulations in multiple states, expanded protected characteristics, new FMLA/ADA intersection traps, and hybrid workplace compliance issues. Many experienced HR professionals find that what they learned 3-5 years ago no longer reflects current legal standards. Block I updates your legal foundation with 2026 realities before Block II builds your strategic capabilities on that updated foundation.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    Will this help me move from HR generalist to HR business partner or director roles?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      That's exactly who this program is designed for. Block I ensures you have bulletproof legal credibility (executives trust HR professionals who prevent problems, not create them). Block II gives you the strategic frameworks that distinguish business partners from administrative support: workforce planning aligned with business goals, retention strategies that reduce costly turnover, performance systems that drive results, and the metrics executives actually care about. You'll walk away speaking leadership's language, not just HR's.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    What continuing education credits will I earn?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      The complete program provides 29.75 SHRM/HRCI credits. Plus, your enrollment includes 12 months of quarterly employment law updates (4 sessions × 1.5 credits each = 6 additional credits), bringing your total to 35.75 credits—typically more than HR professionals earn in two years. Block I alone provides approximately 16 credits; Block II provides approximately 13.75 credits.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    How current is the content? When was it last updated?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Your materials are living resources that update continuously as employment law and HR practices evolve. Recent updates include 2026 pay transparency laws across multiple states, AI hiring regulations (CO, NY, CA, IL), post-COVID workforce engagement strategies, remote/hybrid performance management systems, skills-based hiring frameworks, and the shift from traditional succession planning to dynamic talent mobility models. Unlike static textbooks that become outdated immediately, your resources reflect current legal requirements and strategic HR best practices.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    What are the quarterly employment law updates, and how long do I have access?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Every program enrollment includes FREE access to all four quarterly 90-minute update sessions for 12 months (valued at $1,588). These instructor-led sessions cover new regulations, court decisions, and strategic HR trends—delivered mid-January, April, July, and October. Each session is recorded and available within 24 hours. After your first year, you can continue receiving updates at alumni pricing. This keeps you current on both legal compliance AND evolving HR strategies as the workplace continues to change.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    Does the $2,375 program fee include everything?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Yes. Your enrollment includes all live instruction from both practicing attorneys (Block I) and senior HR leaders (Block II), complete program materials, 29.75 continuing education credits, pre-program consultation, 12 months of quarterly employment law updates (4 sessions, $1,588 value), permanent access to living resources that update continuously, and alumni benefits for all future programs. The only additional cost would be travel and lodging if you choose in-person format. There are no hidden fees or additional charges.
+    </div>
+  </div>
+</div> - FAQ accordion items HTML
 
   See programs/data/_schema.json for the full data structure.
   Run /new-program [slug] to generate a new program page.
@@ -36,22 +1150,22 @@
   <!-- Meta Tags -->
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="{{META_DESCRIPTION}}">
-  <meta name="keywords" content="{{META_KEYWORDS}}">
+  <meta name="description" content="Stop being seen as just administrative. Master strategic frameworks that position HR as a business partner and competitive advantage. Certificate. $2,375.">
+  <meta name="keywords" content="[TO BE ADDED LATER]">
   <meta name="author" content="Institute for Applied Management & Law">
 
   <!-- Open Graph / Social Media -->
-  <meta property="og:title" content="{{OG_TITLE}}">
-  <meta property="og:description" content="{{OG_DESCRIPTION}}">
+  <meta property="og:title" content="Certificate in Strategic HR Leadership | IAML">
+  <meta property="og:description" content="Stop being seen as just administrative. Master strategic frameworks that position HR as a business partner and competitive advantage.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://iaml.com/programs/{{PROGRAM_SLUG}}">
-  <meta property="og:image" content="{{OG_IMAGE}}">
+  <meta property="og:url" content="https://iaml.com/programs/strategic-hr-leadership">
+  <meta property="og:image" content="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69093f4637c43adac1bc0ab3.png">
 
   <!-- Favicon -->
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 
-  <title>{{META_TITLE}}</title>
+  <title>Certificate in Strategic HR Leadership | IAML</title>
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -146,21 +1260,23 @@
           <!-- Left Column: Program Header -->
           <section class="program-header">
             <h1 class="program-title">
-              {{PROGRAM_TITLE}}
+              Certificate in Strategic HR Leadership
             </h1>
 
             <p class="program-description">
-              {{PROGRAM_DESCRIPTION}}
+              Stop being seen as just an administrative function. Master the strategic frameworks that position HR as a business partner and competitive advantage for your organization.
             </p>
 
-            <button id="openModalBtn-{{PROGRAM_SLUG}}" class="register-button" onclick="connectPopup_open()" type="button">
-              Program Enrollment Fee: ${{PROGRAM_PRICE}}
+            <button id="openModalBtn-strategic-hr" class="register-button" onclick="connectPopup_open()" type="button">
+              Program Enrollment Fee: $2,375
             </button>
 
             <div class="delivery-options">
               <span class="delivery-label">Delivery Options:</span>
               <div class="format-pills">
-                {{DELIVERY_OPTIONS}}
+                <span class="format-pill">In Person</span>
+              <span class="format-pill">Virtual</span>
+              <span class="format-pill">On Demand</span>
               </div>
             </div>
           </section>
@@ -217,15 +1333,19 @@
 
           <!-- Right Column: Static Content -->
           <article class="content-section">
-            <h2 class="font-display text-display text-primary">{{CONTENT_HEADLINE}}</h2>
+            <h2 class="font-display text-display text-primary">Build HR Skills That Make You Indispensable to Your Organization</h2>
             <p class="text-large text-secondary">
-              {{CONTENT_DESCRIPTION}}
+              The Certificate in Strategic HR Leadership is 4.5 intensive days where you'll master the legal compliance and strategic HR skills that prevent liability, strengthen your organization, and position you as an indispensable business partner, working through real workplace scenarios with experienced attorneys and HR leaders, not theoretical lectures.
             </p>
             <hr class="separator"/>
             <div class="benefits-section benefits-section--gradient benefits-section--card">
               <h3 class="font-display">What Sets This Program Apart</h3>
               <ul class="benefits-list">
-                {{CONTENT_BENEFITS}}
+                <li><strong>✓ Complete HR legal and strategic coverage</strong> – Discrimination defense, wage-hour compliance, ADA/FMLA management, hiring risk, termination law, performance management, retention strategy, and workforce planning</li>
+                <li><strong>✓ Real-world application</strong> – Work through discrimination claims, accommodation requests, termination decisions, hybrid workplace challenges, and the strategic workforce issues you'll face Monday morning</li>
+                <li><strong>✓ Expert instruction</strong> – Learn from practicing employment attorneys and senior HR leaders who manage legal risk while building high-performing organizations</li>
+                <li><strong>✓ Professional certification</strong> – Earn your certificate plus 29.75 SHRM/HRCI continuing education credits</li>
+                <li><strong>✓ Ongoing support</strong> – Receive 12 months of quarterly employment law updates to keep your knowledge current as regulations evolve</li>
               </ul>
               <a href="#all-programs" class="btn btn-primary">VIEW UPCOMING PROGRAMS</a>
             </div>
@@ -238,7 +1358,80 @@
     <script>
       // Testimonial data from program evaluations
       // TEMPLATE: Replace this array with program-specific testimonials
-      const TESTIMONIALS_DATA = {{TESTIMONIALS_DATA}};
+      const TESTIMONIALS_DATA = [
+  {
+    "quote": "This was a great program! One of the most useful programs I have attended in a long time. Instructors were awesome!",
+    "name": "Dean C. Goodwin",
+    "title": "Deputy Director, Administration",
+    "company": "Northern Virginia Criminal Justice Training Academy"
+  },
+  {
+    "quote": "The seminar was very good. It covered a lot of pertinent information. I felt I learned quite a bit that will have an immediate impact on my job.",
+    "name": "Bobbi Britton",
+    "title": "Sr. Human Resources Consultant",
+    "company": "Deltic Timber Corporation"
+  },
+  {
+    "quote": "Brenda Heinicke was fantastic! She did an amazing job of presenting the information clearly and concisely. Her high energy level engaged us in thought provoking conversations instead of 'talking at us' like many instructors tend to do.",
+    "name": "Brittany Hepler",
+    "title": "Mobility Supervisor",
+    "company": "Dayle McIntosh Disability Resource"
+  },
+  {
+    "quote": "Thank you for the insight and facilitated discussions. It was beneficial to hear about actual cases and learn how other HR professionals solve problems.",
+    "name": "Olivia Gunter",
+    "title": "Human Resources Analyst",
+    "company": "Hillenbrand, Inc."
+  },
+  {
+    "quote": "The instructors were very knowledgeable. It was a great seminar. I have been in HR for 12 years and still learned a lot!",
+    "name": "Krissy Houston",
+    "title": "Sr. Human Resources Representative",
+    "company": "Newmont Mining Corporation"
+  },
+  {
+    "quote": "Excellent seminar! This is the second IAML class I have attended. As a new manager, the information presented was invaluable! The instructor was amazing! I will definitely be back!",
+    "name": "Holly Dean",
+    "title": "Employment Manager",
+    "company": "Alfa Insurance Company"
+  },
+  {
+    "quote": "Di Ann Sanchez was truly inspiring. She gave me the energy that I needed to continue in the field of HR. I would recommend her session to entry level HR professionals as well as a refresher for seasoned professionals.",
+    "name": "Patrice Terrell",
+    "title": "Associate Director",
+    "company": "Georgia College"
+  },
+  {
+    "quote": "It was a great experience, and I am very thankful that I was allowed the opportunity to attend. I will look forward to more opportunities in the future.",
+    "name": "Molly Boyer",
+    "title": "Human Resources Generalist",
+    "company": "Flint Hills Resources"
+  },
+  {
+    "quote": "Both facilitators were excellent! I will be able to use key learning tools from the seminar immediately within my organization. Thank you again for another awesome course!",
+    "name": "Michi Eaton",
+    "title": "Regional Human Resources Manager",
+    "company": "AutoVin"
+  },
+  {
+    "quote": "I am taking away so much more knowledge than what I had walking in to the room on the first day. Di Ann's energy, enthusiasm, and passion made the class interesting and engaging. I am looking forward to sharing some of what I learned with my fellow co-workers, and begin to implement some positive changes.",
+    "name": "Megan Mihelick",
+    "title": "Human Resources Generalist",
+    "company": "Dow Corning Corporation"
+  },
+  {
+    "quote": "Overall the material and training was great! The instructor was informative. I will definitely recommend to others!",
+    "name": "Noelle Lees",
+    "title": "Human Resources Business Partner",
+    "company": "Hertz"
+  },
+  {
+    "quote": "Each instructor was extremely knowledgeable in their subject matter. High energy, great class environment. Most importantly, I want to say that Di Ann Sanchez' real world application of the laws, her best practices advice was great!",
+    "name": "Jackie Rudnick",
+    "title": "Senior Human Resources Specialist",
+    "company": "JM Family Enterprises, Inc."
+  }
+];
 
       (function(){
         const track = document.querySelector(".testimonial-track");
@@ -329,14 +1522,27 @@
 
         <!-- Section Header -->
         <header class="curriculum-header">
-          <h2>{{CURRICULUM_HEADER_TITLE}}</h2>
-          <p>{{CURRICULUM_HEADER_DESC}}</p>
+          <h2>Master 2 Blocks of Employment Law & Strategic HR</h2>
+          <p>Block I covers legal compliance and risk management. Block II builds strategic HR capabilities that position you as a business partner.</p>
         </header>
 
         <!-- Block Navigation -->
         <!-- TEMPLATE: Replace with curriculum navigation cards -->
         <div class="curriculum-nav">
-          {{CURRICULUM_NAV_CARDS}}
+          <div class="curriculum-nav-card active" data-target="block1" tabindex="0" role="tab" aria-selected="true" aria-controls="block1">
+      <div class="block-label">Block I</div>
+      <h3>HR Law Fundamentals</h3>
+      <p>Master the legal foundation every HR professional needs.</p>
+      <div class="curriculum-price">$1375</div>
+      <div class="curriculum-availability">Available individually</div>
+    </div>
+          <div class="curriculum-nav-card " data-target="block2" tabindex="-1" role="tab" aria-selected="false" aria-controls="block2">
+      <div class="block-label">Block II</div>
+      <h3>Strategic HR Management</h3>
+      <p>Build strategic HR capabilities that drive business results.</p>
+      <div class="curriculum-price">$1575</div>
+      <div class="curriculum-availability">Available individually</div>
+    </div>
         </div>
 
         <!-- Curriculum Content Blocks -->
@@ -3133,7 +4339,7 @@ button#prev-btn {
       <div class="iaml-modal" role="dialog" aria-modal="true" aria-labelledby="iamlModalTitle">
         <div class="iaml-header">
           <div class="iaml-title">
-            <h2 id="iamlModalTitle">{{PROGRAM_NAME}}</h2>
+            <h2 id="iamlModalTitle">Certificate in Strategic HR Leadership</h2>
             <span class="text-muted" id="iamlSubTitle">In-Person Registration</span>
           </div>
           <button id="closeModalBtn" class="iaml-close" aria-label="Close">✕</button>
@@ -3154,7 +4360,7 @@ button#prev-btn {
             <div class="progress" aria-hidden="true" id="progressStep2"></div>
             <h3>Select your program</h3>
             <div class="format-options" id="programOptions">
-              <label class="option-row"><input type="radio" name="program" value="{{PROGRAM_NAME}}" checked> <span>{{PROGRAM_NAME}}</span></label>
+              <label class="option-row"><input type="radio" name="program" value="Certificate in Strategic HR Leadership" checked> <span>Certificate in Strategic HR Leadership</span></label>
             </div>
           </div>
 
@@ -4033,7 +5239,7 @@ button#prev-btn {
     async function fetchOnDemandProgram(){
       const headers={'Authorization':`Bearer ${CONFIG.AIRTABLE.API_KEY}`,'Content-Type':'application/json'};
       const url = buildAirtableUrl(CONFIG.AIRTABLE.PROGRAMS_ENDPOINT, {
-        filterByFormula: 'AND({Program}="{{PROGRAM_NAME}}", OR(FIND("on-demand", LOWER({Format})), FIND("on demand", LOWER({Format}))))',
+        filterByFormula: 'AND({Program}="Certificate in Strategic HR Leadership", OR(FIND("on-demand", LOWER({Format})), FIND("on demand", LOWER({Format}))))',
         'sort[0][field]': 'Session Start Date',
         'sort[0][direction]': 'asc'
       });
@@ -4065,7 +5271,7 @@ button#prev-btn {
       return [
         {
           id: 'sample-inperson-1',
-          program: '{{PROGRAM_NAME}}',
+          program: 'Certificate in Strategic HR Leadership',
           format: 'In-Person',
           startDate: '2025-03-15',
           endDate: '2025-03-19',
@@ -4077,7 +5283,7 @@ button#prev-btn {
         },
         {
           id: 'sample-inperson-2',
-          program: '{{PROGRAM_NAME}}',
+          program: 'Certificate in Strategic HR Leadership',
           format: 'In-Person',
           startDate: '2025-04-12',
           endDate: '2025-04-16',
@@ -4089,7 +5295,7 @@ button#prev-btn {
         },
         {
           id: 'sample-virtual-1',
-          program: '{{PROGRAM_NAME}}',
+          program: 'Certificate in Strategic HR Leadership',
           format: 'Virtual',
           startDate: '2025-02-20',
           endDate: '2025-02-24',
@@ -4101,7 +5307,7 @@ button#prev-btn {
         },
         {
           id: 'sample-ondemand-1',
-          program: '{{PROGRAM_NAME}}',
+          program: 'Certificate in Strategic HR Leadership',
           format: 'On-Demand',
           startDate: null,
           endDate: null,
@@ -4152,7 +5358,7 @@ button#prev-btn {
         if (!hasEmployeeRelationsOnDemand) {
           const onDemandProgram = {
             id: 'ondemand-cert-relations',
-            program: '{{PROGRAM_NAME}}',
+            program: 'Certificate in Strategic HR Leadership',
             format: 'On-Demand',
             startDate: null,
             endDate: null,
@@ -4212,7 +5418,7 @@ button#prev-btn {
             if (!isInPerson) return false;
 
             // Only include programs matching this page's program name
-            const isMatchingProgram = programName.includes('{{PROGRAM_NAME_LOWERCASE}}');
+            const isMatchingProgram = programName.includes('certificate in strategic hr leadership');
 
             if (!isMatchingProgram) return false;
 
@@ -4268,7 +5474,7 @@ button#prev-btn {
               // Create composite program
               const composite = {
                 id: `composite-virtual-${comp.id}-${matchingDisc.id}`,
-                program: '{{PROGRAM_NAME}}',
+                program: 'Certificate in Strategic HR Leadership',
                 format: 'Virtual',
                 startDate: comp.startDate,
                 endDate: matchingDisc.endDate,
@@ -4307,7 +5513,7 @@ button#prev-btn {
             if (!isOnDemand) return false;
 
             // Only include programs matching this page's program name
-            const isMatchingProgram = programName.includes('{{PROGRAM_NAME_LOWERCASE}}');
+            const isMatchingProgram = programName.includes('certificate in strategic hr leadership');
 
             return isMatchingProgram;
           });
@@ -8308,8 +9514,8 @@ button#prev-btn {
     <!-- Hero Headline Section -->
     <section class="hero-headline-section-attroneys">
         <div class="headline-content">
-            <h2 class="section-title">{{FACULTY_HEADLINE}}</h2>
-            <p class="section-subtitle">{{FACULTY_SUBTITLE}}</p>
+            <h2 class="section-title">Learn from Practicing Professionals</h2>
+            <p class="section-subtitle">Not academics—practitioners who manage real legal risk while building high-performing organizations</p>
         </div>
     </section>
 
@@ -8318,7 +9524,110 @@ button#prev-btn {
     <section class="faculty-section">
         <div class="faculty-container">
             <div class="faculty-grid">
-                {{FACULTY_CARDS}}
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebe98d66054ecb05fb.svg" alt="Wayne W. Williams, Esq.">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Wayne W. Williams, Esq.</h3>
+          <p class="faculty-title">Founder, Law Offices of Wayne W. Williams</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667ebe98d665980cb05f7.svg" alt="Dawn R. Kubik, Esq.">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Dawn R. Kubik, Esq.</h3>
+          <p class="faculty-title">Of Counsel</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6911ef6e87254432cbd4b2fe.svg" alt="Brenda Heinicke">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Brenda Heinicke</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690667eb6947d88a87edcc70.svg" alt="Di Ann Sanchez">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Di Ann Sanchez</h3>
+          <p class="faculty-title">Human Resources Chief Exceptional Officer</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690e22acc87c0f45146d61fd.svg" alt="Amy Zdravecky">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Amy Zdravecky</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690e229c43570019cba3b51f.svg" alt="Grant Gibeau">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Grant Gibeau</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/690e22920269a38b86c905cb.svg" alt="Rudi Turner">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Rudi Turner</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
+                <article class="faculty-card">
+      <div class="faculty-card-inner">
+        <div class="faculty-image">
+          <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/6911f33aeb42483a1e806109.svg" alt="Cyndi Ramirez Ryan">
+        </div>
+        <div class="faculty-content">
+          <h3 class="faculty-name">Cyndi Ramirez Ryan</h3>
+          <p class="faculty-title">[TITLE TO BE ADDED]</p>
+          <p class="faculty-bio">[FULL BIO TO BE ADDED]</p>
+          
+        </div>
+      </div>
+    </article>
             </div>
         </div>
     </section>
@@ -8348,21 +9657,21 @@ button#prev-btn {
                   <span class="benefit-steps__dot" aria-hidden="true"></span>
                   <h3 class="benefit-steps__title">Professional Credits</h3>
                   <p class="benefit-steps__text">
-                    Earn {{BENEFIT_CREDITS}} credits—more than most HR professionals earn in two years.
+                    Earn 29.75 SHRM/HRCI credits (plus 6 additional from quarterly updates = 35.75 total) credits—more than most HR professionals earn in two years.
                   </p>
                 </li>
                 <li class="benefit-steps__item">
                   <span class="benefit-steps__dot" aria-hidden="true"></span>
                   <h3 class="benefit-steps__title">Ongoing Development</h3>
                   <p class="benefit-steps__text">
-                    {{BENEFIT_UPDATES}} of quarterly employment law updates keep you current as regulations change.
+                    12 months of quarterly employment law updates keep you current as regulations change.
                   </p>
                 </li>
                 <li class="benefit-steps__item">
                   <span class="benefit-steps__dot" aria-hidden="true"></span>
                   <h3 class="benefit-steps__title">Alumni Advantages</h3>
                   <p class="benefit-steps__text">
-                    {{BENEFIT_DISCOUNT}} off all future programs—for you and every colleague you refer.
+                    $300-$500 off all future programs—for you and every colleague you refer.
                   </p>
                 </li>
               </ul>
@@ -8394,7 +9703,136 @@ button#prev-btn {
 
           <!-- TEMPLATE: Replace faq-list contents with program-specific FAQs -->
           <div class="faq-list">
-                {{FAQ_ITEMS}}
+                <div class="faq-item active">
+  <button class="faq-question" aria-expanded="true">
+    Can I take just Block I (HR Legal Mastery) or Block II (Strategic HR Leadership) separately?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Yes. Block I (HR Legal Mastery, $1,375) covers discrimination law, ADA/FMLA, wage-hour compliance, hiring/termination risk—the legal foundation every HR professional needs. Block II (Strategic HR Leadership, $1,575) focuses on workforce planning, retention strategy, performance systems, and positioning HR as a business partner. Most participants take both blocks together ($2,375, saving you $575), but you can register for either block individually based on your immediate needs.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    What's the difference between in-person, virtual, and on-demand formats?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      All three formats feature the same instructors (practicing employment attorneys and senior HR leaders), current content, and professional credits. In-person provides face-to-face networking and immediate interaction. Virtual delivers the same live instruction via Zoom with full Q&A capability. On-demand lets you learn at your own pace over 90 days with the ability to pause and revisit complex topics. Choose the format that fits your schedule and learning style—the quality remains identical.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    What happens after I register?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Within minutes, you'll receive an invoice email. Once payment is processed, you can schedule your complimentary pre-program consultation (10-15 minutes) to discuss your specific HR challenges—whether you're dealing with accommodation requests, termination decisions, retention issues, or positioning HR strategically within your organization. Pre-program materials arrive one week before your session starts.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    How is this different from the Certificate in Employee Relations Law program?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      The Employee Relations Law program focuses exclusively on legal compliance—labor relations, discrimination defense, and employment law risk. This Strategic HR Management program covers the same legal foundations in Block I, then adds Block II on strategic HR capabilities: workforce planning, talent strategy, retention systems, and positioning HR as a business driver rather than just a compliance function. If you want legal expertise plus the strategic frameworks that get HR a seat at the leadership table, this is your program.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    I already have strong legal knowledge. Should I skip Block I and just take Block II?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      That depends on when you last updated your legal knowledge. Employment law has changed significantly—post-Groff religious accommodation standards, AI hiring regulations in multiple states, expanded protected characteristics, new FMLA/ADA intersection traps, and hybrid workplace compliance issues. Many experienced HR professionals find that what they learned 3-5 years ago no longer reflects current legal standards. Block I updates your legal foundation with 2026 realities before Block II builds your strategic capabilities on that updated foundation.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    Will this help me move from HR generalist to HR business partner or director roles?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      That's exactly who this program is designed for. Block I ensures you have bulletproof legal credibility (executives trust HR professionals who prevent problems, not create them). Block II gives you the strategic frameworks that distinguish business partners from administrative support: workforce planning aligned with business goals, retention strategies that reduce costly turnover, performance systems that drive results, and the metrics executives actually care about. You'll walk away speaking leadership's language, not just HR's.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    What continuing education credits will I earn?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      The complete program provides 29.75 SHRM/HRCI credits. Plus, your enrollment includes 12 months of quarterly employment law updates (4 sessions × 1.5 credits each = 6 additional credits), bringing your total to 35.75 credits—typically more than HR professionals earn in two years. Block I alone provides approximately 16 credits; Block II provides approximately 13.75 credits.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    How current is the content? When was it last updated?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Your materials are living resources that update continuously as employment law and HR practices evolve. Recent updates include 2026 pay transparency laws across multiple states, AI hiring regulations (CO, NY, CA, IL), post-COVID workforce engagement strategies, remote/hybrid performance management systems, skills-based hiring frameworks, and the shift from traditional succession planning to dynamic talent mobility models. Unlike static textbooks that become outdated immediately, your resources reflect current legal requirements and strategic HR best practices.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    What are the quarterly employment law updates, and how long do I have access?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Every program enrollment includes FREE access to all four quarterly 90-minute update sessions for 12 months (valued at $1,588). These instructor-led sessions cover new regulations, court decisions, and strategic HR trends—delivered mid-January, April, July, and October. Each session is recorded and available within 24 hours. After your first year, you can continue receiving updates at alumni pricing. This keeps you current on both legal compliance AND evolving HR strategies as the workplace continues to change.
+    </div>
+  </div>
+</div>
+                <div class="faq-item ">
+  <button class="faq-question" aria-expanded="false">
+    Does the $2,375 program fee include everything?
+    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
+    </svg>
+  </button>
+  <div class="faq-answer">
+    <div class="faq-answer-content">
+      Yes. Your enrollment includes all live instruction from both practicing attorneys (Block I) and senior HR leaders (Block II), complete program materials, 29.75 continuing education credits, pre-program consultation, 12 months of quarterly employment law updates (4 sessions, $1,588 value), permanent access to living resources that update continuously, and alumni benefits for all future programs. The only additional cost would be travel and lodging if you choose in-person format. There are no hidden fees or additional charges.
+    </div>
+  </div>
+</div>
           </div>
         </div>
       </div>
@@ -8578,7 +10016,7 @@ button#prev-btn {
           const fields = record.fields;
 
           // Filter for this program
-          if (!fields.Program || !fields.Program.includes('{{PROGRAM_NAME}}')) {
+          if (!fields.Program || !fields.Program.includes('Certificate in Strategic HR Leadership')) {
             return false;
           }
 
