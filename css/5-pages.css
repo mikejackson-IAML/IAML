@@ -7021,6 +7021,10 @@ input[type="radio"].session-radio {
   background: #d1d5db;
 }
 
+.register-nav .btn {
+  transition: opacity 0.3s ease, transform 0.2s ease;
+}
+
 /* ========================================
    TABLET RESPONSIVE (768px and up)
    ======================================== */

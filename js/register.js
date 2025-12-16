@@ -506,6 +506,52 @@
     // Update next button text
     const isLastStep = currentIndex === state.steps.length - 1;
     nextBtn.textContent = isLastStep ? 'Complete Registration' : 'Next →';
+
+    // Update button visibility
+    updateNextButtonVisibility();
+  }
+
+  function updateNextButtonVisibility() {
+    const nextBtn = qs('#nextBtn');
+    const step = state.currentStep;
+
+    // Always show on contact and payment-method steps
+    if (step === 'contact' || step === 'payment-method') {
+      nextBtn.style.display = 'block';
+      nextBtn.style.opacity = '1';
+      nextBtn.disabled = false;
+      return;
+    }
+
+    // For selection steps, check if selection is made
+    let hasValidSelection = false;
+
+    switch (step) {
+      case 'format':
+        hasValidSelection = !!state.format;
+        break;
+      case 'program':
+        hasValidSelection = !!state.program;
+        break;
+      case 'session':
+        hasValidSelection = !!state.sessionId;
+        break;
+      case 'attendance':
+        hasValidSelection = state.attendanceType === 'Full' ||
+                           (state.attendanceType === 'Partial' && state.selectedBlocks.length > 0);
+        break;
+      default:
+        hasValidSelection = true;
+    }
+
+    // Show/hide button based on validation
+    if (hasValidSelection) {
+      nextBtn.style.display = 'block';
+      nextBtn.style.opacity = '1';
+      nextBtn.disabled = false;
+    } else {
+      nextBtn.style.display = 'none';
+    }
   }
 
   function updateSidebar() {
@@ -745,6 +791,7 @@
         buildStepperUI();
         loadPrograms();
         saveStateToSessionStorage();
+        updateNextButtonVisibility();
         showStep('program');
       });
     });
@@ -862,6 +909,7 @@
           state.finalPrice = programData.price;
 
           saveStateToSessionStorage();
+          updateNextButtonVisibility();
           showStep('session');
 
           if (state.format !== 'on-demand') {
@@ -949,6 +997,7 @@
             }
 
             saveStateToSessionStorage();
+            updateNextButtonVisibility();
             showStep('attendance');
             loadAttendanceOptions();
           }
@@ -1001,6 +1050,7 @@
       state.listPrice = programData.full || programData.price;
       state.finalPrice = state.listPrice - state.couponDiscount;
       saveStateToSessionStorage();
+      updateNextButtonVisibility();
       updateSidebar();
       updateBlockCheckboxes();
     });
@@ -1029,6 +1079,7 @@
     partialInput.addEventListener('change', () => {
       state.attendanceType = 'Partial';
       saveStateToSessionStorage();
+      updateNextButtonVisibility();
       updateBlockCheckboxes();
     });
 
@@ -1076,6 +1127,7 @@
         state.finalPrice = state.listPrice - state.couponDiscount;
 
         saveStateToSessionStorage();
+        updateNextButtonVisibility();
         updateSidebar();
         updateBlockCheckboxes();
       });
