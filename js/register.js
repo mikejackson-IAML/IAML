@@ -780,6 +780,12 @@
       });
     });
 
+    // Coupon code apply button
+    const applyCouponBtn = qs('#applyCouponBtn');
+    if (applyCouponBtn) {
+      applyCouponBtn.addEventListener('click', handleApplyCoupon);
+    }
+
     // Error banner close
     qs('.error-close').addEventListener('click', hideErrorMessage);
 
@@ -1095,6 +1101,106 @@
   }
 
   // ============================================
+  // COUPON CODE HANDLING
+  // ============================================
+
+  async function handleApplyCoupon() {
+    const couponInput = qs('#couponCode');
+    const couponMessage = qs('#couponMessage');
+    const code = couponInput.value.trim();
+
+    if (!code) {
+      couponMessage.textContent = 'Please enter a coupon code';
+      couponMessage.className = 'coupon-message error';
+      return;
+    }
+
+    // Clear previous message
+    couponMessage.textContent = '';
+    couponMessage.className = 'coupon-message';
+
+    try {
+      // Validate coupon via API
+      const response = await fetch(`/api/airtable-coupons?code=${encodeURIComponent(code)}`);
+      const data = await response.json();
+
+      if (!response.ok || !data.records || data.records.length === 0) {
+        couponMessage.textContent = 'Invalid coupon code';
+        couponMessage.className = 'coupon-message error';
+        return;
+      }
+
+      const coupon = data.records[0];
+      const couponRecord = coupon.fields;
+
+      // Check if coupon is active/valid
+      if (couponRecord['Status'] !== 'Active') {
+        couponMessage.textContent = 'This coupon is no longer valid';
+        couponMessage.className = 'coupon-message error';
+        return;
+      }
+
+      // Check expiration date
+      if (couponRecord['Expiration Date']) {
+        const expirationDate = new Date(couponRecord['Expiration Date']);
+        if (new Date() > expirationDate) {
+          couponMessage.textContent = 'This coupon has expired';
+          couponMessage.className = 'coupon-message error';
+          return;
+        }
+      }
+
+      // Check usage limits
+      const maxUses = couponRecord['Max Uses'] || Infinity;
+      const timesUsed = couponRecord['Times Used'] || 0;
+      if (timesUsed >= maxUses) {
+        couponMessage.textContent = 'This coupon has reached its usage limit';
+        couponMessage.className = 'coupon-message error';
+        return;
+      }
+
+      // Apply the coupon
+      state.couponCode = code;
+      state.couponRecord = coupon;
+
+      // Get discount amount
+      const discountAmount = couponRecord['Discount Amount'] || 0;
+      const discountPercent = couponRecord['Discount Percent'] || 0;
+
+      // Calculate discount based on type
+      if (discountPercent > 0) {
+        state.couponDiscount = Math.round(state.listPrice * (discountPercent / 100));
+      } else {
+        state.couponDiscount = discountAmount;
+      }
+
+      // Ensure discount doesn't exceed list price
+      state.couponDiscount = Math.min(state.couponDiscount, state.listPrice);
+
+      // Recalculate final price
+      state.finalPrice = state.listPrice - state.couponDiscount;
+
+      // Show success message
+      const discountText = discountPercent > 0
+        ? `${discountPercent}% off`
+        : formatCurrency(discountAmount);
+      couponMessage.textContent = `Coupon applied! You saved ${discountText}`;
+      couponMessage.className = 'coupon-message success';
+
+      // Update sidebar with new pricing
+      updateSidebar();
+
+      // Save state
+      saveStateToSessionStorage();
+
+    } catch (error) {
+      console.error('Coupon validation error:', error);
+      couponMessage.textContent = 'Error validating coupon. Please try again.';
+      couponMessage.className = 'coupon-message error';
+    }
+  }
+
+  // ============================================
   // SUBMISSION HANDLERS
   // ============================================
 
@@ -1107,14 +1213,12 @@
       state.registrationCode = generateRegistrationCode();
 
       // Create/find contact
-      const contactResponse = await findOrCreateContact();
-      state.contactRecordId = contactResponse.id;
+      state.contactRecordId = await findOrCreateContact();
 
       // Create/find company
       let companyId = null;
       if (state.contactCompany) {
-        const companyResponse = await findOrCreateCompany();
-        companyId = companyResponse.id;
+        companyId = await findOrCreateCompany();
       }
       state.companyRecordId = companyId;
 
@@ -1188,14 +1292,12 @@
       }
 
       // Create/find contact
-      const contactResponse = await findOrCreateContact();
-      state.contactRecordId = contactResponse.id;
+      state.contactRecordId = await findOrCreateContact();
 
       // Create/find company
       let companyId = null;
       if (state.contactCompany) {
-        const companyResponse = await findOrCreateCompany();
-        companyId = companyResponse.id;
+        companyId = await findOrCreateCompany();
       }
       state.companyRecordId = companyId;
 
@@ -1226,7 +1328,7 @@
 
     const data = await response.json();
     if (data.records && data.records.length > 0) {
-      return data.records[0];
+      return data.records[0].id;
     }
 
     // Create new contact
@@ -1249,11 +1351,11 @@
     }
 
     const newContact = await createResponse.json();
-    return newContact;
+    return newContact.id;
   }
 
   async function findOrCreateCompany() {
-    const filter = `LOWER({Company Name})=LOWER('${state.contactCompany.replace(/'/g, "\\'")}')'`;
+    const filter = `LOWER({Company Name})=LOWER('${state.contactCompany.replace(/'/g, "\\'")}')`
     const response = await fetch(`/api/airtable-companies?filterByFormula=${encodeURIComponent(filter)}`);
 
     if (!response.ok) {
@@ -1262,7 +1364,7 @@
 
     const data = await response.json();
     if (data.records && data.records.length > 0) {
-      return data.records[0];
+      return data.records[0].id;
     }
 
     // Create new company
@@ -1281,7 +1383,7 @@
     }
 
     const newCompany = await createResponse.json();
-    return newCompany;
+    return newCompany.id;
   }
 
   async function createAirtableRegistration(paymentStatus) {
@@ -1464,6 +1566,9 @@
     if (window.ENV_CONFIG && window.ENV_CONFIG.STRIPE_PUBLISHABLE_KEY) {
       const stripe = Stripe(window.ENV_CONFIG.STRIPE_PUBLISHABLE_KEY);
       state.stripe = stripe;
+
+      // Initialize Stripe Elements
+      initializeStripeElements();
     }
 
     // Determine initial steps
@@ -1480,6 +1585,45 @@
 
     setupEventListeners();
     updateSidebar();
+  }
+
+  // Initialize Stripe Elements
+  function initializeStripeElements() {
+    if (!state.stripe) return;
+
+    const cardElement = qs('#card-element');
+    if (!cardElement) return;
+
+    const elements = state.stripe.elements();
+    const cardInput = elements.create('card', {
+      style: {
+        base: {
+          fontSize: '16px',
+          color: '#424770',
+          fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
+          '::placeholder': {
+            color: '#aab7c4'
+          }
+        },
+        invalid: {
+          color: '#fa755a',
+          iconColor: '#fa755a'
+        }
+      }
+    });
+
+    cardInput.mount('#card-element');
+    state.cardElement = cardInput;
+
+    // Handle real-time validation errors
+    cardInput.on('change', (event) => {
+      const cardErrors = qs('#card-errors');
+      if (event.error) {
+        cardErrors.textContent = event.error.message;
+      } else {
+        cardErrors.textContent = '';
+      }
+    });
   }
 
   // ============================================

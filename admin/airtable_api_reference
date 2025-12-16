@@ -6,7 +6,7 @@ API URL: https://api.airtable.com/v0/applWPVmMkgMWoZIC
 
 
 🔐 Security
-API Key: pat3Q51ELpxfPXqRr.14d53ac7a8783b8086f2c283c2ccc079e31d0019c9657946fbe4001a97e4a7e3 ⚠️ KEEP THIS SECRET
+API Key: [REDACTED - Store in environment variable] ⚠️ KEEP THIS SECRET
 
 Never commit to Git
 Never share in chat/screenshots
