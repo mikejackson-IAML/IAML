@@ -2242,6 +2242,22 @@
   outline-offset: 4px;
 }
 
+/* Delivery Options - Override for Dark Background in Hero Section */
+.hero-section-program .delivery-label {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.hero-section-program .format-pill {
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--white);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.hero-section-program .format-pill:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
 /* Next Program Card Component */
 .next-program-card {
   width: 100%;
