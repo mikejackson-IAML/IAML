@@ -2260,6 +2260,10 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+.hero-section-program .delivery-options {
+  margin-bottom: 100px;
+}
+
 /* Next Program Card Component */
 .next-program-card {
   width: 100%;
