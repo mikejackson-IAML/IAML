@@ -2101,15 +2101,6 @@
   font-family: var(--font-body);
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #4f46e5 0%, #6366f1 100%);
-  color: #fff;
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
-}
 
 .btn-secondary {
   background: #fff;
@@ -7020,16 +7011,6 @@ input[type="radio"].session-radio {
   white-space: nowrap;
 }
 
-.btn-primary {
-  background: var(--color-primary);
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #2563eb;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
-}
 
 .btn-secondary {
   background: #e5e7eb;
