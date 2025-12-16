@@ -2153,11 +2153,13 @@
 }
 
 /* Program Header - Left Column */
-.program-header {
+.hero-section-program .program-header {
   width: 100%;
   max-width: 600px;
   background: transparent;
   padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .program-title {
