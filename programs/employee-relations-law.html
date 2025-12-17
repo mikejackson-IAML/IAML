@@ -3841,7 +3841,28 @@ button#prev-btn {
 
           return {
             id: record.id,
-              program: safeString(f.Program || f['Program Name'] || (Array.isArray(f.Programs) && f.Programs.length > 0 ? f.Programs[0] : null) || f['Title']) || 'Unknown Program',
+              program: (() => {
+                // First try explicit program name fields
+                if (f.Program) return safeString(f.Program);
+                if (f['Program Name']) return safeString(f['Program Name']);
+
+                // Extract from Instance Name (e.g., "HR Law Fundamentals - Jul 2026 Orlando")
+                if (f['Instance Name']) {
+                  const instanceName = safeString(f['Instance Name']);
+                  const dashIndex = instanceName.indexOf(' - ');
+                  if (dashIndex > 0) {
+                    return instanceName.substring(0, dashIndex).trim();
+                  }
+                  return instanceName;
+                }
+
+                // Fallback to linked record ID (won't match, but better than nothing)
+                if (Array.isArray(f.Programs) && f.Programs.length > 0) {
+                  return safeString(f.Programs[0]);
+                }
+
+                return 'Unknown Program';
+              })(),
             format: detectedFormat,
               startDate: safeString(f['Session Start Date'] || f['Start Date'] || f['Date']),
               endDate: safeString(f['Session End Date'] || f['End Date'] || f['End']),
