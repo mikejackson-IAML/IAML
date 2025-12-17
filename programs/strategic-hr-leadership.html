@@ -2545,11 +2545,11 @@
     }
     .program-sessions-widget .reserve-btn:hover { background: #ff4c4c; transform: translateY(-2px); box-shadow: 0 6px 10px rgba(0,0,0,.4); }
 
-    .program-sessions-widget .session-faculty { display: none; margin-top: 0rem; padding-top: 0rem;}
-    .program-sessions-widget .faculty-title { font-size: .85rem; color: #10B981; text-transform: uppercase; letter-spacing: 1px; margin-bottom: .75rem; font-weight: 600; display: none;}
+    .program-sessions-widget .session-faculty { display: block; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #374151;}
+    .program-sessions-widget .faculty-title { font-size: .85rem; color: #10B981; text-transform: uppercase; letter-spacing: 1px; margin-bottom: .75rem; font-weight: 600; display: block;}
     .program-sessions-widget .faculty-list { display: flex; flex-direction: column; gap: .75rem; }
-    .program-sessions-widget .faculty-member { display: flex; flex-direction: column; gap: .25rem; }
-    .program-sessions-widget .faculty-name { color: #60A5FA; font-weight: 600; font-size: .95rem; cursor: pointer; transition: color .2s ease; text-decoration: none; }
+    .program-sessions-widget .faculty-member { display: flex; flex-direction: column; gap: .1rem; }
+    .program-sessions-widget .faculty-name { font-family: 'Lato', sans-serif; color: #60A5FA; font-weight: 600; font-size: .95rem; cursor: pointer; transition: color .2s ease; text-decoration: none; }
     .program-sessions-widget .faculty-name:hover { color: #93C5FD; text-decoration: underline; }
     .program-sessions-widget .faculty-title-text { color: #9CA3AF; font-size: .85rem; line-height: 1.4; }
 
@@ -4673,7 +4673,7 @@ button#prev-btn {
     const CONFIG = {
       AIRTABLE: {
         PROGRAMS_TABLE: 'tblympiL1p6PmQz9i',
-        INSTRUCTORS_TABLE: 'Instructors',
+        INSTRUCTORS_TABLE: 'Faculty',
         get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}`; },
         get INSTRUCTORS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
       },
@@ -5241,9 +5241,8 @@ button#prev-btn {
         const f=r.fields;
         const firstName=f['First Name']||'', lastName=f['Last Name']||'';
         const fullName=f['Full Name'] || `${firstName} ${lastName}`.trim();
-        const hasEsq=f['Has Esq']||false;
-        const displayName = hasEsq ? `${fullName}, Esq.` : fullName;
-        const instructorData={ id:r.id, firstName,lastName, fullName, displayName, title:null, company:f['Title 2 (for grid)']||'', profileUrl:f['Profile URL']||'#', hasEsq };
+        const displayName = f['Full Name with Credentials'] || fullName;
+        const instructorData={ id:r.id, firstName,lastName, fullName, displayName, title:null, company:(()=>{const t=f['Current Title']||'',o=f['Current Firm/Organization']||'';return[t,o].filter(Boolean).join(', ');})()||'', profileUrl:f['Profile URL']||'#' };
         byName[displayName.toLowerCase()] = instructorData;
         byId[r.id]=instructorData;
       });
@@ -5657,13 +5656,13 @@ button#prev-btn {
           <div class="card-overlay">
             <div class="session-content">
               <div class="session-main-info">
+                ${program.venueName && formatKey!=='on-demand' ? `<div class="session-venue">${program.venueName}</div>` : ''}
+                ${program.venueName && formatKey!=='virtual' && formatKey!=='on-demand' ? `<div class="hotel-details-link" data-venue-action="show-modal" data-session-id="${program.id}" data-venue-name="${program.venueName}">(view hotel details)</div>` : ''}
+                ${formatKey==='on-demand' && program.price ? `<div class="session-price">$${program.price.toLocaleString()}</div>` : ''}
                 <div class="session-date">${dateString}</div>
                 <div class="session-location">
                   ${program.city ? `${program.city}, ${program.state||''}` : (formatKey==='on-demand' ? 'Online Learning Platform' : 'Virtual Program')}
                 </div>
-                ${program.venueName && formatKey!=='on-demand' ? `<div class="session-venue">${program.venueName}</div>` : ''}
-                ${program.venueName && formatKey!=='virtual' && formatKey!=='on-demand' ? `<div class="hotel-details-link" data-venue-action="show-modal" data-session-id="${program.id}" data-venue-name="${program.venueName}">(view hotel details)</div>` : ''}
-                ${formatKey==='on-demand' && program.price ? `<div class="session-price">$${program.price.toLocaleString()}</div>` : ''}
                 <a href="#" class="reserve-btn register-btn"
                    data-section="employee-relations-law"
                    data-format="${format}"
@@ -10004,7 +10003,7 @@ button#prev-btn {
               <div class="next-program-badge">Next Program</div>
 
               <div class="program-info">
-                <div class="program-location">${fields.City}, ${fields.State}</div>
+                <div class="program-location">${fields.City}, ${fields['State/Province']}</div>
                 <div class="program-dates">${dateRange}</div>
               </div>
 

@@ -12,7 +12,9 @@ if (!process.env.AIRTABLE_BASE_ID && process.env.NODE_ENV !== 'production') {
       envContent.split('\n').forEach(line => {
         const [key, value] = line.split('=');
         if (key && value) {
-          process.env[key.trim()] = value.trim();
+          // Remove quotes from value if present
+          const cleanValue = value.trim().replace(/^["']|["']$/g, '');
+          process.env[key.trim()] = cleanValue;
         }
       });
     }
@@ -45,6 +47,10 @@ module.exports = async function handler(req, res) {
 
     const BASE_ID = process.env.AIRTABLE_BASE_ID;
     const API_KEY = process.env.AIRTABLE_PROGRAMS_API_KEY;
+
+    // Debug logging
+    console.log('BASE_ID:', BASE_ID ? `${BASE_ID.substring(0, 8)}...` : 'MISSING');
+    console.log('API_KEY:', API_KEY ? `${API_KEY.substring(0, 10)}...` : 'MISSING');
 
     // Validate environment variables
     if (!BASE_ID || !API_KEY) {
