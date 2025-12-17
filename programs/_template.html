@@ -4285,7 +4285,13 @@ button#prev-btn {
           // Also include any existing composite programs from the data
           const existingComposite = allVirtual.filter(p => p.isComposite);
 
-          return [...compositePrograms, ...existingComposite];
+          // Combine and sort by start date chronologically
+          return [...compositePrograms, ...existingComposite].sort((a, b) => {
+            if (a.startDate && b.startDate) {
+              return new Date(a.startDate) - new Date(b.startDate);
+            }
+            return 0;
+          });
         })(),
         'On-Demand': (() => {
           // Get all on-demand programs first

@@ -4436,7 +4436,13 @@ button#prev-btn {
 
           console.log(`Successfully created ${compositePrograms.length} Virtual composite programs`);
 
-          return compositePrograms;
+          // Sort by start date chronologically
+          return compositePrograms.sort((a, b) => {
+            if (a.startDate && b.startDate) {
+              return new Date(a.startDate) - new Date(b.startDate);
+            }
+            return 0;
+          });
         })(),
         'On-Demand': (() => {
           // Get all on-demand programs first
