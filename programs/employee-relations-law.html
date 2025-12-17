@@ -3843,12 +3843,12 @@ button#prev-btn {
 
           return {
             id: record.id,
-              program: safeString(f.Program || f['Program Name'] || f['Title']) || 'Unknown Program',
+              program: safeString(f.Program || f['Program Name'] || (Array.isArray(f.Programs) && f.Programs.length > 0 ? f.Programs[0] : null) || f['Title']) || 'Unknown Program',
             format: detectedFormat,
               startDate: safeString(f['Session Start Date'] || f['Start Date'] || f['Date']),
               endDate: safeString(f['Session End Date'] || f['End Date'] || f['End']),
               city: safeString(f.City || f['Location']),
-              state: safeString(f.State || f['State/Province']),
+              state: safeString(f['State/Province'] || f.State),
               venueName: safeString(f['Venue Name (1)'] || f['Venue Name Field'] || f['Venue Name'] || f['Venue'] || f['Location Name']),
               venueDescription: safeString(f['Venue Description']),
               venueAddress: safeString(f['Street Address (from Venue Name)'] || f['Venue Address'] || f['Address']),
