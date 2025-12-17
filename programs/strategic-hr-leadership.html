@@ -5327,60 +5327,32 @@ button#prev-btn {
       showLoadingState();
       try{
 
-        const [programsData,instructorsData,onDemandProgram] = await Promise.all([
+        // Fetch programs and instructors (these are critical)
+        const [programsData, instructorsData] = await Promise.all([
           fetchProgramsData(),
           fetchInstructorsData().catch(err => {
             return { byName: {}, byId: {} };
-          }),
-          fetchOnDemandProgram().catch(err => {
-            return null;
           })
         ]);
-
 
         CONFIG.PROGRAMS_DATA = programsData;
         CONFIG.INSTRUCTORS_DATA = instructorsData;
 
-        // Add on-demand program from Airtable if found
-        if(onDemandProgram) {
-          CONFIG.PROGRAMS_DATA.push(onDemandProgram);
-        }
-
-        // Add one Certificate in Employee Relations Law on-demand program if none exist
-        const hasEmployeeRelationsOnDemand = CONFIG.PROGRAMS_DATA.some(p =>
-          p.format === 'On-Demand' &&
-          (p.program.toLowerCase().includes('certificate in employee relations law') ||
-           p.program.toLowerCase().includes('employee relations law'))
-        );
-
-        if (!hasEmployeeRelationsOnDemand) {
-          const onDemandProgram = {
-            id: 'ondemand-cert-relations',
-            program: 'Certificate in Strategic HR Leadership',
-            format: 'On-Demand',
-            startDate: null,
-            endDate: null,
-            city: null,
-            state: null,
-            venueName: 'Online Learning Platform',
-            heroImageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-            price: 2375
-          };
-          CONFIG.PROGRAMS_DATA.push(onDemandProgram);
-        }
-
+        // The new Airtable table already includes all On-Demand programs in the main fetch
+        // No need to call fetchOnDemandProgram() - the data is already in programsData
+        // The fetchOnDemandProgram() function was using an invalid filter formula that
+        // referenced a {Program} field that doesn't exist in the new table structure
 
         // Data loaded successfully
-
         generateSessionCards();
         switchFormat(CONFIG.CURRENT_FORMAT);
       }catch(err){
+        console.error('Error loading data from Airtable:', err);
         // Fallback: Load sample data if Airtable fails
         CONFIG.PROGRAMS_DATA = getSampleData();
         CONFIG.INSTRUCTORS_DATA = { byName: {}, byId: {} };
 
         // Using fallback sample data
-
         generateSessionCards();
         switchFormat(CONFIG.CURRENT_FORMAT);
       }
@@ -9866,56 +9838,8 @@ button#prev-btn {
   </main>
 
   <!-- ===== FOOTER ===== -->
-  <footer class="footer" role="contentinfo">
-    <div class="wrap">
-        <nav class="grid" aria-label="Footer">
-            <!-- Brand -->
-            <section class="brand" aria-label="Organization">
-                <div class="logo">
-                    <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML logo">
-                </div>
-            </section>
-
-            <!-- Programs -->
-            <section class="col">
-                <h3>Programs</h3>
-                <ul class="list" aria-label="Programs">
-                    <li><a href="https://iaml.com/programs/employee-relations-law">Certificate in Employee Relations Law</a></li>
-                    <li><a href="https://iaml.com/programs/strategic-hr-leadership">Advanced Certificate in Strategic Employment Law</a></li>
-                    <li><a href="https://iaml.com/programs/workplace-investigations">Certificate in Workplace Investigations</a></li>
-                    <li><a href="https://iaml.com/programs/strategic-hr-management">Certificate in Strategic HR Management</a></li>
-                    <li><a href="https://iaml.com/programs/employee-benefits-law">Certificate in Employee Benefits Law</a></li>
-                    <li><a href="https://iaml.com/programs/employee-benefits-law-advanced">Advanced Certificate in Employee Benefits Law</a></li>
-                </ul>
-            </section>
-
-            <!-- Resources -->
-            <section class="col">
-                <h3>Resources</h3>
-                <ul class="list" aria-label="Resources">
-                    <li><a href="https://iaml.com/why-iaml">Why IAML</a></li>
-                    <li><a href="https://iaml.com/faculty">Faculty</a></li>
-                    <li><a href="https://iaml.com/alumni-benefits">Alumni Benefits</a></li>
-                    <li><a href="https://iaml.com/corporate-training">Corporate Training</a></li>
-                    <li><a href="https://iaml.com//program-schedule">Schedule &amp; Locations</a></li>
-                </ul>
-            </section>
-
-            <!-- Support -->
-            <section class="col">
-                <h3>Support</h3>
-                <ul class="list" aria-label="Support">
-                    <li><a href="https://iaml.com/faq">FAQ</a></li>
-                    <li><a href="https://iaml.com/contact-us">Contact</a></li>
-                </ul>
-            </section>
-        </nav>
-
-        <div class="bottom">
-            <div>© 2025 Institute for Applied Management &amp; Law, Inc. All rights reserved.</div>
-        </div>
-    </div>
-  </footer>
+  <!-- Footer placeholder (loaded by components.js) -->
+  <div id="footer-placeholder"></div>
 
   <!-- ===== MODALS ===== -->
 
@@ -10392,6 +10316,11 @@ button#prev-btn {
 
   <!-- Curriculum Section JavaScript -->
   <script src="../js/curriculum.js" defer></script>
+
+  <!-- Dynamic Component Loading -->
+  <script src="../js/components.js" defer></script>
+  <script src="../js/headerBehavior.js" defer></script>
+  <script src="../js/mobileMenu.js" defer></script>
 
   <!-- Testimonial Card Override Styles (loads after external CSS) -->
   <!-- Testimonial Card Override Styles (loads after external CSS) -->

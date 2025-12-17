@@ -4221,7 +4221,8 @@ button#prev-btn {
       showLoadingState();
       try{
 
-        const [programsData, virtualComponents, instructorsData, onDemandProgram] = await Promise.all([
+        // Fetch programs, virtual components, and instructors (these are critical)
+        const [programsData, virtualComponents, instructorsData] = await Promise.all([
           fetchProgramsData(),
           fetchVirtualComponents().catch(err => {
             console.error('Virtual components fetch error:', err);
@@ -4229,12 +4230,8 @@ button#prev-btn {
           }),
           fetchInstructorsData().catch(err => {
             return { byName: {}, byId: {} };
-          }),
-          fetchOnDemandProgram().catch(err => {
-            return null;
           })
         ]);
-
 
         CONFIG.PROGRAMS_DATA = programsData;
         CONFIG.VIRTUAL_COMPONENTS = virtualComponents;
@@ -4244,40 +4241,16 @@ button#prev-btn {
         console.log('Virtual components loaded:', CONFIG.VIRTUAL_COMPONENTS.length);
         console.log('Instructors loaded:', Object.keys(CONFIG.INSTRUCTORS_DATA.byName || {}).length);
 
-        // Add on-demand program from Airtable if found
-        if(onDemandProgram) {
-          CONFIG.PROGRAMS_DATA.push(onDemandProgram);
-          console.log('On-Demand program from Airtable added');
-        }
-
-        // Add one Certificate in Employee Relations Law on-demand program if none exist
-        const hasEmployeeRelationsOnDemand = CONFIG.PROGRAMS_DATA.some(p =>
-          p.format === 'On-Demand' &&
-          (p.program.toLowerCase().includes('certificate in employee relations law') ||
-           p.program.toLowerCase().includes('employee relations law'))
-        );
-
-        if (!hasEmployeeRelationsOnDemand) {
-          const onDemandProgram = {
-            id: 'ondemand-cert-relations',
-            program: 'Certificate in Employee Relations Law',
-            format: 'On-Demand',
-            startDate: null,
-            endDate: null,
-            city: null,
-            state: null,
-            venueName: 'Online Learning Platform',
-            heroImageUrl: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80',
-            price: 2375
-          };
-          CONFIG.PROGRAMS_DATA.push(onDemandProgram);
-          console.log('Default On-Demand program added');
-        }
+        // The new Airtable table already includes all On-Demand programs in the main fetch
+        // No need to call fetchOnDemandProgram() - the data is already in programsData
+        // The fetchOnDemandProgram() function was using an invalid filter formula that
+        // referenced a {Program} field that doesn't exist in the new table structure
 
         console.log('Data loaded successfully. Total programs:', CONFIG.PROGRAMS_DATA.length);
         generateSessionCards();
         switchFormat(CONFIG.CURRENT_FORMAT);
       }catch(err){
+        console.error('Error loading data from Airtable:', err);
         // Fallback: Load sample data if Airtable fails
         CONFIG.PROGRAMS_DATA = getSampleData();
         CONFIG.INSTRUCTORS_DATA = { byName: {}, byId: {} };
