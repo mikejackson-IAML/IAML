@@ -5428,57 +5428,56 @@ button#prev-btn {
             return f === 'virtual' || f === 'online';
           });
 
-          // Separate component programs
-          const comprehensivePrograms = allVirtual.filter(p =>
-            norm(p.program).includes('comprehensive labor relations')
+          // Separate component programs for Certificate in Strategic HR Leadership
+          const hrLawPrograms = allVirtual.filter(p =>
+            norm(p.program).includes('hr law fundamentals')
           );
-          const discriminationPrograms = allVirtual.filter(p =>
-            norm(p.program).includes('discrimination prevention') ||
-            norm(p.program).includes('discrimination prevention & risk')
+          const strategicHRPrograms = allVirtual.filter(p =>
+            norm(p.program).includes('strategic hr management')
           );
 
           // Create composite virtual programs
           const compositePrograms = [];
 
-          // Match Comprehensive Labor Relations with Discrimination Prevention & Risk
-          // that start within 4 weeks of each other (Comprehensive starts first)
-          comprehensivePrograms.forEach(comp => {
-            if (!comp.startDate) return;
+          // Match HR Law Fundamentals with Strategic HR Management
+          // that start within 4 weeks of each other (HR Law starts first)
+          hrLawPrograms.forEach(hrLaw => {
+            if (!hrLaw.startDate) return;
 
-            const compStartDate = new Date(comp.startDate + 'T00:00:00');
+            const hrLawStartDate = new Date(hrLaw.startDate + 'T00:00:00');
 
-            // Find matching discrimination program within 4 weeks
-            const matchingDisc = discriminationPrograms.find(disc => {
-              if (!disc.startDate) return false;
+            // Find matching Strategic HR Management program within 4 weeks
+            const matchingStrategicHR = strategicHRPrograms.find(strategicHR => {
+              if (!strategicHR.startDate) return false;
 
-              const discStartDate = new Date(disc.startDate + 'T00:00:00');
-              const timeDiff = discStartDate.getTime() - compStartDate.getTime();
+              const strategicHRStartDate = new Date(strategicHR.startDate + 'T00:00:00');
+              const timeDiff = strategicHRStartDate.getTime() - hrLawStartDate.getTime();
               const weeksDiff = timeDiff / (1000 * 60 * 60 * 24 * 7);
 
-              // Comprehensive must start first and within 4 weeks
+              // HR Law Fundamentals must start first and Strategic HR Management within 4 weeks
               return weeksDiff >= 0 && weeksDiff <= 4;
             });
 
-            if (matchingDisc) {
+            if (matchingStrategicHR) {
               // Create composite program
               const composite = {
-                id: `composite-virtual-${comp.id}-${matchingDisc.id}`,
+                id: `composite-virtual-${hrLaw.id}-${matchingStrategicHR.id}`,
                 program: 'Certificate in Strategic HR Leadership',
                 format: 'Virtual',
-                startDate: comp.startDate,
-                endDate: matchingDisc.endDate,
+                startDate: hrLaw.startDate,
+                endDate: matchingStrategicHR.endDate,
                 city: 'Virtual',
                 state: null,
                 venueName: 'Virtual Program',
-                heroImageUrl: comp.heroImageUrl || matchingDisc.heroImageUrl,
+                heroImageUrl: hrLaw.heroImageUrl || matchingStrategicHR.heroImageUrl,
                 isComposite: true,
                 componentPrograms: [
-                  { name: comp.program, startDate: comp.startDate, endDate: comp.endDate },
-                  { name: matchingDisc.program, startDate: matchingDisc.startDate, endDate: matchingDisc.endDate }
+                  { name: hrLaw.program, startDate: hrLaw.startDate, endDate: hrLaw.endDate },
+                  { name: matchingStrategicHR.program, startDate: matchingStrategicHR.startDate, endDate: matchingStrategicHR.endDate }
                 ],
-                block1Instructor: comp.block1Instructor,
-                block2Instructor: matchingDisc.block1Instructor,
-                block3Instructor: matchingDisc.block2Instructor,
+                block1Instructor: hrLaw.block1Instructor,
+                block2Instructor: matchingStrategicHR.block1Instructor,
+                block3Instructor: matchingStrategicHR.block2Instructor,
                 price: 2375
               };
 
