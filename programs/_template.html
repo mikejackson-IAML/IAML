@@ -1340,11 +1340,11 @@
     }
     .program-sessions-widget .reserve-btn:hover { background: #ff4c4c; transform: translateY(-2px); box-shadow: 0 6px 10px rgba(0,0,0,.4); }
 
-    .program-sessions-widget .session-faculty { display: none; margin-top: 0rem; padding-top: 0rem;}
-    .program-sessions-widget .faculty-title { font-size: .85rem; color: #10B981; text-transform: uppercase; letter-spacing: 1px; margin-bottom: .75rem; font-weight: 600; display: none;}
+    .program-sessions-widget .session-faculty { display: block; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #374151;}
+    .program-sessions-widget .faculty-title { font-size: .85rem; color: #10B981; text-transform: uppercase; letter-spacing: 1px; margin-bottom: .75rem; font-weight: 600; display: block;}
     .program-sessions-widget .faculty-list { display: flex; flex-direction: column; gap: .75rem; }
-    .program-sessions-widget .faculty-member { display: flex; flex-direction: column; gap: .25rem; }
-    .program-sessions-widget .faculty-name { color: #60A5FA; font-weight: 600; font-size: .95rem; cursor: pointer; transition: color .2s ease; text-decoration: none; }
+    .program-sessions-widget .faculty-member { display: flex; flex-direction: column; gap: .1rem; }
+    .program-sessions-widget .faculty-name { font-family: 'Lato', sans-serif; color: #60A5FA; font-weight: 600; font-size: .95rem; cursor: pointer; transition: color .2s ease; text-decoration: none; }
     .program-sessions-widget .faculty-name:hover { color: #93C5FD; text-decoration: underline; }
     .program-sessions-widget .faculty-title-text { color: #9CA3AF; font-size: .85rem; line-height: 1.4; }
 
@@ -3468,7 +3468,7 @@ button#prev-btn {
     const CONFIG = {
       AIRTABLE: {
         PROGRAMS_TABLE: 'tblympiL1p6PmQz9i',
-        INSTRUCTORS_TABLE: 'Instructors',
+        INSTRUCTORS_TABLE: 'Faculty',
         get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}`; },
         get INSTRUCTORS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
       },
@@ -4036,9 +4036,8 @@ button#prev-btn {
         const f=r.fields;
         const firstName=f['First Name']||'', lastName=f['Last Name']||'';
         const fullName=f['Full Name'] || `${firstName} ${lastName}`.trim();
-        const hasEsq=f['Has Esq']||false;
-        const displayName = hasEsq ? `${fullName}, Esq.` : fullName;
-        const instructorData={ id:r.id, firstName,lastName, fullName, displayName, title:null, company:f['Title 2 (for grid)']||'', profileUrl:f['Profile URL']||'#', hasEsq };
+        const displayName = f['Full Name with Credentials'] || fullName;
+        const instructorData={ id:r.id, firstName,lastName, fullName, displayName, title:null, company:(()=>{const t=f['Current Title']||'',o=f['Current Firm/Organization']||'';return[t,o].filter(Boolean).join(', ');})()||'', profileUrl:f['Profile URL']||'#' };
         byName[displayName.toLowerCase()] = instructorData;
         byId[r.id]=instructorData;
       });
@@ -4159,6 +4158,7 @@ button#prev-btn {
 
         // Data loaded successfully
         generateSessionCards();
+        updateTabVisibility();
         switchFormat(CONFIG.CURRENT_FORMAT);
       }catch(err){
         console.error('Error loading data from Airtable:', err);
@@ -4169,6 +4169,7 @@ button#prev-btn {
         // Using fallback sample data
 
         generateSessionCards();
+        updateTabVisibility();
         switchFormat(CONFIG.CURRENT_FORMAT);
       }
       CONFIG.isLoading=false;
@@ -4347,27 +4348,91 @@ button#prev-btn {
         showEmptyState('No programs are currently available. Please check back soon or contact us for more information.');
         return;
       }
+    }
 
-      // All cards are visible by default - pagination will handle display
-      ['In-Person','Virtual','On-Demand'].forEach(format=>{
-        const formatKey = format.toLowerCase();
-        const formatCards=container.querySelectorAll(`.session-card[data-format="${formatKey}"]`);
-        formatCards.forEach((card,idx)=>{
-          card.classList.remove('card-hidden');
-          card.classList.remove('hidden-page');
-        });
+    /**
+     * Updates tab visibility based on available program inventory
+     *
+     * Hides tabs with zero programs, shows tabs with programs, and handles
+     * the zero-programs scenario (all formats empty). Auto-selects the first
+     * available format when programs exist.
+     *
+     * @requires programsByFormat - Object with format keys and program arrays
+     * @modifies CONFIG.CURRENT_FORMAT - Sets to first available format
+     * @modifies DOM - Shows/hides tab buttons and pagination arrows
+     */
+    function updateTabVisibility() {
+      // Count programs per format from programsByFormat object
+      const formatCounts = {
+        'In-Person': programsByFormat['In-Person'].length,
+        'Virtual': programsByFormat['Virtual'].length,
+        'On-Demand': programsByFormat['On-Demand'].length
+      };
+
+      // Calculate total programs across all formats
+      const totalPrograms = formatCounts['In-Person'] + formatCounts['Virtual'] + formatCounts['On-Demand'];
+
+      // Get DOM elements
+      const tabButtons = document.querySelectorAll('.program-sessions-widget .toggle-option');
+      const formatToggleContainer = document.querySelector('.program-sessions-widget .format-toggle');
+      const prevBtn = document.getElementById('prev-btn');
+      const nextBtn = document.getElementById('next-btn');
+
+      // ZERO PROGRAMS SCENARIO
+      if (totalPrograms === 0) {
+        // Hide all tabs
+        formatToggleContainer.style.display = 'none';
+
+        // Hide pagination arrows
+        if (prevBtn) prevBtn.style.display = 'none';
+        if (nextBtn) nextBtn.style.display = 'none';
+
+        // Show "New programs coming soon!" message
+        removeEmptyState();
+        showEmptyState('New programs coming soon!');
+
+        return; // Exit early
+      }
+
+      // SOME PROGRAMS EXIST - Show toggle container
+      formatToggleContainer.style.display = 'flex';
+
+      // Show/hide individual tabs based on availability
+      tabButtons.forEach(btn => {
+        const format = btn.dataset.format;
+        const count = formatCounts[format];
+
+        if (count > 0) {
+          btn.style.display = 'block';
+          btn.setAttribute('aria-hidden', 'false');
+          btn.removeAttribute('disabled');
+        } else {
+          btn.style.display = 'none';
+          btn.setAttribute('aria-hidden', 'true');
+          btn.setAttribute('disabled', 'true');
+        }
       });
 
-      // Arrows removed - showing all cards at once
+      // Determine first available format
+      const firstAvailableFormat =
+        formatCounts['In-Person'] > 0 ? 'In-Person' :
+        formatCounts['Virtual'] > 0 ? 'Virtual' :
+        formatCounts['On-Demand'] > 0 ? 'On-Demand' : null;
 
-      setupCardEventListeners();
+      // Auto-select first available tab
+      if (firstAvailableFormat) {
+        CONFIG.CURRENT_FORMAT = firstAvailableFormat;
+      }
 
-      // Disable navigation arrows completely
-      disableNavigationArrows();
-
-      // Setup pagination
-      setupPagination();
+      // Show pagination arrows (updatePagination will handle enabling/disabling)
+      if (prevBtn) prevBtn.style.display = 'block';
+      if (nextBtn) nextBtn.style.display = 'block';
     }
+
+    // Setup pagination
+    setupPagination();
+    }
+
     function createSessionCard(program,index,format){
       const card=document.createElement('div');
       const formatKey = (format || '').toLowerCase();
@@ -4454,13 +4519,13 @@ button#prev-btn {
           <div class="card-overlay">
             <div class="session-content">
               <div class="session-main-info">
+                ${program.venueName && formatKey!=='on-demand' ? `<div class="session-venue">${program.venueName}</div>` : ''}
+                ${program.venueName && formatKey!=='virtual' && formatKey!=='on-demand' ? `<div class="hotel-details-link" data-venue-action="show-modal" data-session-id="${program.id}" data-venue-name="${program.venueName}">(view hotel details)</div>` : ''}
+                ${formatKey==='on-demand' && program.price ? `<div class="session-price">$${program.price.toLocaleString()}</div>` : ''}
                 <div class="session-date">${dateString}</div>
                 <div class="session-location">
                   ${program.city ? `${program.city}, ${program.state||''}` : (formatKey==='on-demand' ? 'Online Learning Platform' : 'Virtual Program')}
                 </div>
-                ${program.venueName && formatKey!=='on-demand' ? `<div class="session-venue">${program.venueName}</div>` : ''}
-                ${program.venueName && formatKey!=='virtual' && formatKey!=='on-demand' ? `<div class="hotel-details-link" data-venue-action="show-modal" data-session-id="${program.id}" data-venue-name="${program.venueName}">(view hotel details)</div>` : ''}
-                ${formatKey==='on-demand' && program.price ? `<div class="session-price">$${program.price.toLocaleString()}</div>` : ''}
                 <a href="#" class="reserve-btn register-btn"
                    data-section="employee-relations-law"
                    data-format="${format}"
@@ -4858,6 +4923,18 @@ button#prev-btn {
 
     /* switchFormat (with empty-state) */
     function switchFormat(format){
+      // Validate format has programs before switching
+      const formatCounts = {
+        'In-Person': programsByFormat['In-Person'].length,
+        'Virtual': programsByFormat['Virtual'].length,
+        'On-Demand': programsByFormat['On-Demand'].length
+      };
+
+      if (formatCounts[format] === 0) {
+        console.warn(`Cannot switch to ${format} - no programs available`);
+        return;
+      }
+
       CONFIG.CURRENT_FORMAT = format;
       CONFIG.PAGINATION.currentPage = 1; // Reset to first page when switching formats
 
@@ -4981,7 +5058,12 @@ button#prev-btn {
       hotelModal.init();
 
       document.querySelectorAll('.program-sessions-widget .toggle-option').forEach(btn=>{
-        btn.addEventListener('click', ()=> switchFormat(btn.dataset.format));
+        btn.addEventListener('click', ()=> {
+          // Check if tab is visible before switching
+          if (btn.style.display !== 'none') {
+            switchFormat(btn.dataset.format);
+          }
+        });
       });
 
       // Test connection first
@@ -8569,7 +8651,7 @@ button#prev-btn {
               <div class="next-program-badge">Next Program</div>
 
               <div class="program-info">
-                <div class="program-location">${fields.City}, ${fields.State}</div>
+                <div class="program-location">${fields.City}, ${fields['State/Province']}</div>
                 <div class="program-dates">${dateRange}</div>
               </div>
 
