@@ -3466,7 +3466,7 @@ button#prev-btn {
        =========================== */
     const CONFIG = {
       AIRTABLE: {
-        PROGRAMS_TABLE: 'tblFaya3JyTzyAdjJ',
+        PROGRAMS_TABLE: 'tblympiL1p6PmQz9i',
         INSTRUCTORS_TABLE: 'Instructors',
         get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}`; },
         get INSTRUCTORS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
@@ -8509,8 +8509,8 @@ button#prev-btn {
 
     // Configuration
     const NEXT_PROGRAM_CONFIG = {
-      tableId: 'tblFaya3JyTzyAdjJ',
-      viewId: 'viwGwK0DuZyjMzsZI'
+      tableId: 'tblympiL1p6PmQz9i',
+      viewId: 'viwjSrF7oSzlzYuIc'
     };
 
     // Timezone-neutral date parsing to avoid date shifting issues
@@ -8574,29 +8574,24 @@ button#prev-btn {
         .filter(record => {
           const fields = record.fields;
 
-          // Filter for this program
-          if (!fields.Program || !fields.Program.includes('{{PROGRAM_NAME}}')) {
+          // Filter for this program - Programs field is an array of linked records
+          if (!fields.Programs || !Array.isArray(fields.Programs) || fields.Programs.length === 0) {
             return false;
           }
 
           // Must have required fields
-          if (!fields['Session Start Date'] || !fields.City || !fields.State || !fields['Hero Image Attachment']) {
-            return false;
-          }
-
-          // Check if Hero Image Attachment has valid URL
-          if (!fields['Hero Image Attachment'] || !fields['Hero Image Attachment'][0] || !fields['Hero Image Attachment'][0].url) {
+          if (!fields['Start Date'] || !fields.City || !fields.State) {
             return false;
           }
 
           // Remove programs that have started (on start date)
-          const startDate = parseTimezoneNeutralDate(fields['Session Start Date']);
+          const startDate = parseTimezoneNeutralDate(fields['Start Date']);
           return startDate > today;
         })
         .sort((a, b) => {
           // Sort by start date (soonest first)
-          const dateA = parseTimezoneNeutralDate(a.fields['Session Start Date']);
-          const dateB = parseTimezoneNeutralDate(b.fields['Session Start Date']);
+          const dateA = parseTimezoneNeutralDate(a.fields['Start Date']);
+          const dateB = parseTimezoneNeutralDate(b.fields['Start Date']);
           return dateA - dateB;
         });
 
@@ -8608,14 +8603,12 @@ button#prev-btn {
       const cardContainer = document.getElementById('nextProgramCard');
       const fields = program.fields;
 
-      const startDate = parseTimezoneNeutralDate(fields['Session Start Date']);
-      const endDate = parseTimezoneNeutralDate(fields['Session End Date']);
+      const startDate = parseTimezoneNeutralDate(fields['Start Date']);
+      const endDate = parseTimezoneNeutralDate(fields['End Date']);
       const dateRange = formatDateRange(startDate, endDate);
 
-      // Safely extract image URL from attachment field
-      const imageUrl = fields['Hero Image Attachment'] && fields['Hero Image Attachment'][0]
-        ? fields['Hero Image Attachment'][0].url
-        : '';
+      // Use image URL from field (can be Google Cloud Storage URL or Airtable attachment)
+      const imageUrl = fields['Hero Image URL'] || '';
 
       cardContainer.innerHTML = `
         <div class="hero-program-card">

@@ -3473,7 +3473,7 @@ button#prev-btn {
        =========================== */
     const CONFIG = {
       AIRTABLE: {
-        PROGRAMS_TABLE: 'tblFaya3JyTzyAdjJ',
+        PROGRAMS_TABLE: 'tblympiL1p6PmQz9i',
         PROGRAMS_VIEW: 'viwX4En7WerGZSPCO',
         VIRTUAL_VIEW: 'viwG1w68D5qVdMHIa',
         INSTRUCTORS_TABLE: 'Instructors',
@@ -8888,7 +8888,7 @@ button#prev-btn {
 
     // Configuration
     const NEXT_PROGRAM_CONFIG = {
-      tableId: 'tblFaya3JyTzyAdjJ',
+      tableId: 'tblympiL1p6PmQz9i',
       viewId: 'viwX4En7WerGZSPCO'
     };
 
@@ -8975,47 +8975,44 @@ button#prev-btn {
           const fields = record.fields;
 
           // Log the program name for debugging
-          console.log('Checking program:', fields.Program, 'at', fields.City, fields.State);
+          // Programs field is an array of linked records
+          const programNames = Array.isArray(fields.Programs)
+            ? fields.Programs.map(p => typeof p === 'string' ? p : p).join(', ')
+            : fields.Programs;
+          console.log('Checking program:', programNames, 'at', fields.City, fields.State);
 
-          // Filter for Certificate in Employee Relations Law
-          if (!fields.Program || !fields.Program.includes('Certificate in Employee Relations Law')) {
-            console.log(`❌ Filtered out: "${fields.Program}" (looking for "Certificate in Employee Relations Law")`);
+          // Filter for Certificate in Employee Relations Law - Programs field is an array of linked records
+          if (!fields.Programs || !Array.isArray(fields.Programs) || fields.Programs.length === 0) {
+            console.log(`❌ Filtered out: no Programs field`);
             return false;
           }
 
           // Must have required fields
-          if (!fields['Session Start Date'] || !fields.City || !fields.State || !fields['Hero Image Attachment']) {
+          if (!fields['Start Date'] || !fields.City || !fields.State) {
             console.log('❌ Missing required fields:', {
-              hasStartDate: !!fields['Session Start Date'],
+              hasStartDate: !!fields['Start Date'],
               hasCity: !!fields.City,
-              hasState: !!fields.State,
-              hasHeroImage: !!fields['Hero Image Attachment']
+              hasState: !!fields.State
             });
             return false;
           }
 
-          // Check if Hero Image Attachment has valid URL
-          if (!fields['Hero Image Attachment'] || !fields['Hero Image Attachment'][0] || !fields['Hero Image Attachment'][0].url) {
-            console.log('❌ Invalid Hero Image Attachment structure');
-            return false;
-          }
-
           // Remove programs that have started (on start date)
-          const startDate = parseTimezoneNeutralDate(fields['Session Start Date']);
+          const startDate = parseTimezoneNeutralDate(fields['Start Date']);
           const isUpcoming = startDate > today;
 
           if (!isUpcoming) {
-            console.log(`❌ Program has already started: ${fields['Session Start Date']}`);
+            console.log(`❌ Program has already started: ${fields['Start Date']}`);
             return false;
           }
 
-          console.log('✅ Valid program found:', fields.City, fields['Session Start Date']);
+          console.log('✅ Valid program found:', fields.City, fields['Start Date']);
           return true;
         })
         .sort((a, b) => {
           // Sort by start date (soonest first)
-          const dateA = parseTimezoneNeutralDate(a.fields['Session Start Date']);
-          const dateB = parseTimezoneNeutralDate(b.fields['Session Start Date']);
+          const dateA = parseTimezoneNeutralDate(a.fields['Start Date']);
+          const dateB = parseTimezoneNeutralDate(b.fields['Start Date']);
           return dateA - dateB;
         });
 
@@ -9028,14 +9025,12 @@ button#prev-btn {
       const cardContainer = document.getElementById('nextProgramCard');
       const fields = program.fields;
 
-      const startDate = parseTimezoneNeutralDate(fields['Session Start Date']);
-      const endDate = parseTimezoneNeutralDate(fields['Session End Date']);
+      const startDate = parseTimezoneNeutralDate(fields['Start Date']);
+      const endDate = parseTimezoneNeutralDate(fields['End Date']);
       const dateRange = formatDateRange(startDate, endDate);
 
-      // Safely extract image URL from attachment field
-      const imageUrl = fields['Hero Image Attachment'] && fields['Hero Image Attachment'][0]
-        ? fields['Hero Image Attachment'][0].url
-        : '';
+      // Use image URL from field (can be Google Cloud Storage URL or Airtable attachment)
+      const imageUrl = fields['Hero Image URL'] || '';
 
       cardContainer.innerHTML = `
         <div class="hero-program-card">
