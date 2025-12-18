@@ -8982,7 +8982,7 @@ button#prev-btn {
           const programNames = Array.isArray(fields.Programs)
             ? fields.Programs.map(p => typeof p === 'string' ? p : p).join(', ')
             : fields.Programs;
-          console.log('Checking program:', programNames, 'at', fields.City, fields.State);
+          console.log('Checking program:', programNames, 'at', fields.City, fields['State/Province']);
 
           // Filter for Certificate in Employee Relations Law - Programs field is an array of linked records
           if (!fields.Programs || !Array.isArray(fields.Programs) || fields.Programs.length === 0) {
@@ -8991,11 +8991,11 @@ button#prev-btn {
           }
 
           // Must have required fields
-          if (!fields['Start Date'] || !fields.City || !fields.State) {
+          if (!fields['Start Date'] || !fields.City || !fields['State/Province']) {
             console.log('❌ Missing required fields:', {
               hasStartDate: !!fields['Start Date'],
               hasCity: !!fields.City,
-              hasState: !!fields.State
+              hasStateProvince: !!fields['State/Province']
             });
             return false;
           }
@@ -9043,7 +9043,7 @@ button#prev-btn {
               <div class="next-program-badge">Next Program</div>
 
               <div class="program-info">
-                <div class="program-location">${fields.City}, ${fields.State}</div>
+                <div class="program-location">${fields.City}, ${fields['State/Province']}</div>
                 <div class="program-dates">${dateRange}</div>
               </div>
 
