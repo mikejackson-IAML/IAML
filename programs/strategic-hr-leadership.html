@@ -4976,7 +4976,7 @@ button#prev-btn {
     const CONFIG = {
       AIRTABLE: {
         PROGRAMS_TABLE: 'tblympiL1p6PmQz9i',
-        INSTRUCTORS_TABLE: 'Instructors',
+        INSTRUCTORS_TABLE: 'Faculty',
         get PROGRAMS_ENDPOINT(){ return `${API_BASE}/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}`; },
         get INSTRUCTORS_ENDPOINT(){ return `${API_BASE}/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
       },
@@ -5544,9 +5544,18 @@ button#prev-btn {
         const f=r.fields;
         const firstName=f['First Name']||'', lastName=f['Last Name']||'';
         const fullName=f['Full Name'] || `${firstName} ${lastName}`.trim();
-        const hasEsq=f['Has Esq']||false;
-        const displayName = hasEsq ? `${fullName}, Esq.` : fullName;
-        const instructorData={ id:r.id, firstName,lastName, fullName, displayName, title:null, company:f['Title 2 (for grid)']||'', profileUrl:f['Profile URL']||'#', hasEsq };
+        const displayName = f['Full Name with Credentials'] || fullName;
+        const instructorData={
+          id:r.id,
+          firstName,
+          lastName,
+          fullName,
+          displayName, // Full Name with Credentials
+          title: f['Current Title'] || '',
+          company: f['Current Firm/Organization'] || '',
+          bioUrl: f['Full Bio URL'] || '#',
+          profileUrl: f['Profile URL'] || '#'
+        };
         byName[displayName.toLowerCase()] = instructorData;
         byId[r.id]=instructorData;
       });
@@ -6003,11 +6012,16 @@ button#prev-btn {
         ids.forEach(id=>{
           let data=CONFIG.INSTRUCTORS_DATA.byId[id] || CONFIG.INSTRUCTORS_DATA.byName[(id||'').toLowerCase()];
           if(data && !seen.has(data.displayName)){
-            let displayTitle=data.company || '';
-            if(displayTitle && data.fullName){
-              displayTitle = displayTitle.replace(new RegExp(data.fullName,'gi'),'').trim().replace(/^[,\s-]+|[,\s-]+$/g,'');
-            }
-            instructors.push({ displayName: data.fullName || data.displayName, title: displayTitle || null, profileUrl: data.profileUrl || '#'});
+            // Format: "Current Title, Current Firm/Organization"
+            const titleCompany = [data.title, data.company]
+              .filter(Boolean)
+              .join(', ');
+
+            instructors.push({
+              displayName: data.displayName, // Full Name with Credentials
+              title: titleCompany, // Combined "Title, Company" format
+              profileUrl: data.bioUrl || data.profileUrl || '#' // Use Full Bio URL
+            });
             seen.add(data.displayName);
           }
         });
