@@ -29,8 +29,8 @@ const shuffleArray = (array) => {
  */
 const fetchProgramBySlug = async (slug) => {
   const formula = `{Slug}='${slug}'`;
-  // Use local proxy in development (port 3001), /api in production
-  const apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
+  // Use global API_BASE (set in HTML head) - port 3001 on localhost, relative path in production
+  const apiBase = window.API_BASE || '';
   const url = `${apiBase}/api/airtable-programs?table=tbl6jgbX0WW641L84&filterByFormula=${encodeURIComponent(formula)}`;
 
   try {
@@ -57,9 +57,9 @@ const fetchProgramBySlug = async (slug) => {
  * Second step of two-step query using program record ID
  */
 const fetchFacultyByProgram = async (programRecordId) => {
-  const formula = `SEARCH("${programRecordId}", ARRAYJOIN({PROGRAMS (Faculty)}))`;
-  // Use local proxy in development (port 3001), /api in production
-  const apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
+  const formula = `SEARCH("${programRecordId}", ARRAYJOIN({Program Record IDs}))`;
+  // Use global API_BASE (set in HTML head) - port 3001 on localhost, relative path in production
+  const apiBase = window.API_BASE || '';
   const url = `${apiBase}/api/airtable-programs?table=tblVz9VPGhZgE4jBD&filterByFormula=${encodeURIComponent(formula)}`;
 
   try {
@@ -81,7 +81,7 @@ const fetchFacultyByProgram = async (programRecordId) => {
       firstName: record.fields['First Name'] || '',
       title: record.fields['Current Title'] || '',
       organization: record.fields['Current Firm/Organization'] || '',
-      bio: record.fields['Short Bio (3-line)'] || '',
+      bio: record.fields['Short Bio (250-300 characters)'] || '',
       imageUrl: record.fields['Headshot Photo'] || '',
       bioLink: record.fields['Full Bio URL'] || ''
     }));

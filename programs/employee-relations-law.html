@@ -21,6 +21,11 @@
 
   <title>Certificate in Employee Relations Law - IAML</title>
 
+  <!-- Global API Configuration - accessible to all scripts -->
+  <script>
+    window.API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
+  </script>
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -3477,9 +3482,9 @@ button#prev-btn {
         PROGRAMS_VIEW: 'viwX4En7WerGZSPCO',
         VIRTUAL_VIEW: 'viwG1w68D5qVdMHIa',
         INSTRUCTORS_TABLE: 'Instructors',
-        get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.PROGRAMS_VIEW)}`; },
-        get VIRTUAL_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.VIRTUAL_VIEW)}`; },
-        get INSTRUCTORS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
+        get PROGRAMS_ENDPOINT(){ return `${API_BASE}/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.PROGRAMS_VIEW)}`; },
+        get VIRTUAL_ENDPOINT(){ return `${API_BASE}/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.VIRTUAL_VIEW)}`; },
+        get INSTRUCTORS_ENDPOINT(){ return `${API_BASE}/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
       },
       PROGRAMS_DATA: [],
       VIRTUAL_COMPONENTS: [],
@@ -6074,7 +6079,7 @@ button#prev-btn {
 
       async function airtableList(tableName, opts = {}) {
         const { filterByFormula, sort = [], maxRecords } = opts;
-        const url = new URL(`/api/airtable-programs`);
+        const url = new URL(`${API_BASE}/api/airtable-programs`, window.location.origin);
         url.searchParams.set('table', tableName);
         if (filterByFormula) url.searchParams.set('filterByFormula', filterByFormula);
         if (maxRecords) url.searchParams.set('maxRecords', String(maxRecords));
@@ -8907,7 +8912,7 @@ button#prev-btn {
     // Fetch next program from Airtable via proxy
     async function fetchNextProgram() {
       try {
-        const url = `/api/airtable-programs?table=${encodeURIComponent(NEXT_PROGRAM_CONFIG.tableId)}&view=${encodeURIComponent(NEXT_PROGRAM_CONFIG.viewId)}&maxRecords=1`;
+        const url = `${API_BASE}/api/airtable-programs?table=${encodeURIComponent(NEXT_PROGRAM_CONFIG.tableId)}&view=${encodeURIComponent(NEXT_PROGRAM_CONFIG.viewId)}&maxRecords=1`;
 
         const response = await fetch(url, {
           method: 'GET',

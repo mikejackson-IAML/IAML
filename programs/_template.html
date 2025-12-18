@@ -53,6 +53,11 @@
 
   <title>{{META_TITLE}}</title>
 
+  <!-- Global API Configuration - accessible to all scripts -->
+  <script>
+    window.API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
+  </script>
+
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

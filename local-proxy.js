@@ -151,8 +151,12 @@ const server = http.createServer((req, res) => {
       res.end(data);
 
       if (airtableRes.statusCode === 200) {
-        const records = JSON.parse(data).records || [];
+        const parsedData = JSON.parse(data);
+        const records = parsedData.records || [];
         console.log(`✓ Success: ${records.length} record(s)`);
+        if (table === 'tblVz9VPGhZgE4jBD' && filterByFormula && filterByFormula.includes('SEARCH')) {
+          console.log('DEBUG: Faculty query response:', JSON.stringify(parsedData, null, 2));
+        }
       } else {
         console.log(`✗ Error: ${airtableRes.statusCode}`);
       }
