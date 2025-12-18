@@ -7185,6 +7185,86 @@ input[type="radio"].session-radio {
 }
 
 /* ========================================
+   SESSION CARDS - FACULTY DISPLAY
+   ======================================== */
+
+/* Make session-content the positioning context for faculty */
+.session-content {
+  position: relative;
+}
+
+/* Position faculty section on the right without affecting left side */
+.session-faculty {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  padding-left: 20px;
+  max-width: 300px;
+  border-left: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Ensure left side has no borders */
+.session-main-info {
+  border: none;
+}
+
+.faculty-title {
+  font-family: var(--font-body);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.faculty-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faculty-member {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+.faculty-name {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  line-height: 1.3;
+  transition: color 0.2s ease;
+}
+
+.faculty-name:hover {
+  color: var(--blue-primary);
+  text-decoration: underline;
+}
+
+.faculty-title-text {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+  line-height: 1.3;
+  margin: 0;
+}
+
+/* Responsive adjustments for session content */
+@media (max-width: 768px) {
+  .session-faculty {
+    position: static;
+    max-width: 100%;
+    border-left: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-left: 0;
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+}
+
+/* ========================================
    SMALL MOBILE (< 480px)
    ======================================== */
 
