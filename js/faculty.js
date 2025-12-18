@@ -31,7 +31,7 @@ const fetchProgramBySlug = async (slug) => {
   const formula = `{Slug}='${slug}'`;
   // Use local proxy in development (port 3001), /api in production
   const apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
-  const url = `${apiBase}/api/airtable-programs?table=PROGRAMS&filterByFormula=${encodeURIComponent(formula)}`;
+  const url = `${apiBase}/api/airtable-programs?table=tbl6jgbX0WW641L84&filterByFormula=${encodeURIComponent(formula)}`;
 
   try {
     const response = await fetch(url);
@@ -60,7 +60,7 @@ const fetchFacultyByProgram = async (programRecordId) => {
   const formula = `SEARCH("${programRecordId}", ARRAYJOIN({PROGRAMS (Faculty)}))`;
   // Use local proxy in development (port 3001), /api in production
   const apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
-  const url = `${apiBase}/api/airtable-programs?table=FACULTY&filterByFormula=${encodeURIComponent(formula)}`;
+  const url = `${apiBase}/api/airtable-programs?table=tblVz9VPGhZgE4jBD&filterByFormula=${encodeURIComponent(formula)}`;
 
   try {
     const response = await fetch(url);
