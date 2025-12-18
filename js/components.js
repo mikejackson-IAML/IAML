@@ -73,7 +73,7 @@ const getFooterHTML = () => `
                     <li><a href="/programs/employee-relations-law">Certificate in Employee Relations Law</a></li>
                     <li><a href="/programs/strategic-hr-leadership">Advanced Certificate in Strategic Employment Law</a></li>
                     <li><a href="/programs/workplace-investigations">Certificate in Workplace Investigations</a></li>
-                    <li><a href="/programs/strategic-hr-management">Certificate in Strategic HR Management</a></li>
+                    <li><a href="/programs/strategic-hr-leadership">Certificate in Strategic HR Leadership</a></li>
                     <li><a href="/programs/employee-benefits-law">Certificate in Employee Benefits Law</a></li>
                     <li><a href="/programs/employee-benefits-law-advanced">Advanced Certificate in Employee Benefits Law</a></li>
                 </ul>

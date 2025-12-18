@@ -971,7 +971,7 @@
         const startDate = formatDate(fields['Session Start Date']);
         const endDate = formatDate(fields['Session End Date']);
         const location = state.format === 'in-person'
-          ? `${fields['City']}, ${fields['State']}`
+          ? `${fields['City']}, ${fields['State/Province']}`
           : fields['Virtual Platform'] || 'Virtual';
 
         card.innerHTML = `
@@ -987,7 +987,7 @@
             state.sessionId = session.id;
             state.sessionRecord = session;
             state.city = fields['City'] || '';
-            state.stateProvince = fields['State'] || '';
+            state.stateProvince = fields['State/Province'] || '';
             state.venueName = fields['Venue Name'] || '';
 
             // Parse block dates if applicable

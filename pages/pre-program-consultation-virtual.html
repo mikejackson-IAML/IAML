@@ -138,56 +138,8 @@
   </main>
 
   <!-- ===== FOOTER ===== -->
-  <footer class="footer" role="contentinfo">
-    <div class="wrap">
-      <nav class="grid" aria-label="Footer">
-        <!-- Brand -->
-        <section class="brand" aria-label="Organization">
-          <div class="logo">
-            <img data-src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML logo" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1 1'%3E%3C/svg%3E">
-          </div>
-        </section>
-
-        <!-- Programs -->
-        <section class="col">
-          <h3>Programs</h3>
-          <ul class="list" aria-label="Programs">
-            <li><a href="https://iaml.com/programs/employee-relations-law">Certificate in Employee Relations Law</a></li>
-            <li><a href="https://iaml.com/programs/strategic-hr-leadership">Advanced Certificate in Strategic Employment Law</a></li>
-            <li><a href="https://iaml.com/programs/workplace-investigations">Certificate in Workplace Investigations</a></li>
-            <li><a href="https://iaml.com/programs/strategic-hr-management">Certificate in Strategic HR Management</a></li>
-            <li><a href="https://iaml.com/programs/employee-benefits-law">Certificate in Employee Benefits Law</a></li>
-            <li><a href="https://iaml.com/programs/employee-benefits-law-advanced">Advanced Certificate in Employee Benefits Law</a></li>
-          </ul>
-        </section>
-
-        <!-- Resources -->
-        <section class="col">
-          <h3>Resources</h3>
-          <ul class="list" aria-label="Resources">
-            <li><a href="https://iaml.com/why-iaml">Why IAML</a></li>
-            <li><a href="https://iaml.com/faculty">Faculty</a></li>
-            <li><a href="https://iaml.com/alumni-benefits">Alumni Benefits</a></li>
-            <li><a href="https://iaml.com/corporate-training">Corporate Training</a></li>
-            <li><a href="https://iaml.com//program-schedule">Schedule &amp; Locations</a></li>
-          </ul>
-        </section>
-
-        <!-- Support -->
-        <section class="col">
-          <h3>Support</h3>
-          <ul class="list" aria-label="Support">
-            <li><a href="https://iaml.com/faq">FAQ</a></li>
-            <li><a href="https://iaml.com/contact-us">Contact</a></li>
-          </ul>
-        </section>
-      </nav>
-
-      <div class="bottom">
-        <div>&copy; 2025 Institute for Applied Management &amp; Law, Inc. All rights reserved.</div>
-      </div>
-    </div>
-  </footer>
+  <!-- Footer placeholder (loaded by components.js) -->
+  <div id="footer-placeholder"></div>
 
   <!-- ===== MODALS ===== -->
 
@@ -323,6 +275,11 @@
 
     mobileBackdrop.addEventListener('click', closeMobileMenu);
   </script>
+
+  <!-- Dynamic Component Loading -->
+  <script src="../js/components.js" defer></script>
+  <script src="../js/headerBehavior.js" defer></script>
+  <script src="../js/mobileMenu.js" defer></script>
 
 </body>
 </html>
