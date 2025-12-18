@@ -92,7 +92,7 @@ const server = http.createServer((req, res) => {
   }
 
   // Build Airtable API URL
-  let airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(table)}`;
+  let airtableUrl = `https://api.airtable.com/v0/${BASE_ID}/${table}`;
 
   if (recordId) {
     airtableUrl += `/${recordId}`;
