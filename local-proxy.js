@@ -39,8 +39,9 @@ const loadEnvFile = () => {
 
 loadEnvFile();
 
-const BASE_ID = process.env.AIRTABLE_BASE_ID;
-const API_KEY = process.env.AIRTABLE_PROGRAMS_API_KEY;
+// Strip quotes from environment variables (some editors add them automatically)
+const BASE_ID = process.env.AIRTABLE_BASE_ID?.replace(/^["']|["']$/g, '');
+const API_KEY = process.env.AIRTABLE_PROGRAMS_API_KEY?.replace(/^["']|["']$/g, '');
 
 if (!BASE_ID || !API_KEY) {
   console.error('✗ Missing AIRTABLE_BASE_ID or AIRTABLE_PROGRAMS_API_KEY in .env.local');
