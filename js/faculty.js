@@ -76,6 +76,7 @@ const fetchFacultyByProgram = async (programRecordId) => {
       name: record.fields['Full Name with Credentials'] || '',
       firstName: record.fields['First Name'] || '',
       title: record.fields['Current Title'] || '',
+      organization: record.fields['Current Firm/Organization'] || '',
       bio: record.fields['Short Bio (3-line)'] || '',
       imageUrl: record.fields['Headshot Photo'] || '',
       bioLink: record.fields['Full Bio URL'] || ''
@@ -91,6 +92,11 @@ const fetchFacultyByProgram = async (programRecordId) => {
  * Uses template literal for performance and readability
  */
 const createFacultyCardHTML = (faculty) => {
+  // Combine title and organization with comma if both exist
+  const titleLine = [faculty.title, faculty.organization]
+    .filter(Boolean)  // Remove empty values
+    .join(', ');      // Join with comma and space
+
   return `
     <article class="faculty-card">
       <div class="faculty-card-inner">
@@ -99,7 +105,7 @@ const createFacultyCardHTML = (faculty) => {
         </div>
         <div class="faculty-content">
           <h3 class="faculty-name">${faculty.name}</h3>
-          <p class="faculty-title">${faculty.title}</p>
+          <p class="faculty-title">${titleLine}</p>
           <p class="faculty-bio">${faculty.bio}</p>
           <a href="${faculty.bioLink}" class="faculty-link">Read ${faculty.firstName}'s full bio →</a>
         </div>
