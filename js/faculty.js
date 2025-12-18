@@ -57,7 +57,7 @@ const fetchProgramBySlug = async (slug) => {
  * Second step of two-step query using program record ID
  */
 const fetchFacultyByProgram = async (programRecordId) => {
-  const formula = `SEARCH("${programRecordId}", ARRAYJOIN({PROGRAMS (Faculty)}))`;
+  const formula = `SEARCH("${programRecordId}", ARRAYJOIN({PROGRAMS}))`;
   // Use local proxy in development (port 3001), /api in production
   const apiBase = window.location.hostname === 'localhost' ? 'http://localhost:3001' : '';
   const url = `${apiBase}/api/airtable-programs?table=tblVz9VPGhZgE4jBD&filterByFormula=${encodeURIComponent(formula)}`;
