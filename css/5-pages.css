@@ -7229,6 +7229,7 @@ input[type="radio"].session-radio {
 .faculty-member {
   display: flex;
   flex-direction: column;
+  gap: 1px;
 }
 
 .faculty-name {
