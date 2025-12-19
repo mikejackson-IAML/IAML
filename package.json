@@ -1,0 +1,15 @@
+{
+  "name": "iaml-qa",
+  "version": "1.0.0",
+  "description": "QA automation for IAML website",
+  "private": true,
+  "scripts": {
+    "qa:registration": "npx playwright test qa/tests/registration.spec.js",
+    "qa:smoke": "npx playwright test qa/tests/smoke.spec.js",
+    "qa:full": "npx playwright test",
+    "qa:report": "npx playwright show-report"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.40.0"
+  }
+}
