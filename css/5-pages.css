@@ -7210,7 +7210,7 @@ input[type="radio"].session-radio {
   border-right: none !important;
 }
 
-.faculty-title {
+.session-faculty .faculty-title {
   font-family: var(--font-body);
   font-size: 0.875rem;
   font-weight: 600;
