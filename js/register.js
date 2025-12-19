@@ -1829,24 +1829,38 @@
   }
 
   async function createAirtableRegistration(paymentStatus) {
+    // Get UTM tracking data if available
+    const trackingData = typeof window.getIAMLTrackingData === 'function'
+      ? window.getIAMLTrackingData()
+      : {};
+
+    const fields = {
+      'Contact': [state.contactRecordId],
+      'Company': state.companyRecordId ? [state.companyRecordId] : [],
+      'Program Instance': [state.sessionId],
+      'Registration Date': new Date().toISOString(),
+      'Registration Source': 'Website',
+      'List Price': state.listPrice,
+      'Discount Amount': state.couponDiscount,
+      'Final Price': state.finalPrice,
+      'Payment Status': paymentStatus,
+      'Payment Method': state.paymentMethod === 'invoice' ? 'Invoice' : 'Credit Card',
+      'Registration Status': 'Confirmed'
+    };
+
+    // Add tracking fields only if they have values
+    if (trackingData.utm_source) fields['UTM Source'] = trackingData.utm_source;
+    if (trackingData.utm_medium) fields['UTM Medium'] = trackingData.utm_medium;
+    if (trackingData.utm_campaign) fields['UTM Campaign'] = trackingData.utm_campaign;
+    if (trackingData.utm_content) fields['UTM Content'] = trackingData.utm_content;
+    if (trackingData.utm_term) fields['UTM Term'] = trackingData.utm_term;
+    if (trackingData.landing_page) fields['Landing Page'] = trackingData.landing_page;
+    if (trackingData.referring_url) fields['Referring URL'] = trackingData.referring_url;
+
     const response = await fetch('/api/airtable-registrations', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        fields: {
-          'Contact': [state.contactRecordId],
-          'Company': state.companyRecordId ? [state.companyRecordId] : [],
-          'Program Instance': [state.sessionId],
-          'Registration Date': new Date().toISOString(),
-          'Registration Source': 'Website',
-          'List Price': state.listPrice,
-          'Discount Amount': state.couponDiscount,
-          'Final Price': state.finalPrice,
-          'Payment Status': paymentStatus,
-          'Payment Method': state.paymentMethod === 'invoice' ? 'Invoice' : 'Credit Card',
-          'Registration Status': 'Confirmed'
-        }
-      })
+      body: JSON.stringify({ fields })
     });
 
     if (!response.ok) {
@@ -1922,6 +1936,11 @@
   // ============================================
 
   function showConfirmationPage(type) {
+    // Clear UTM tracking data after successful registration
+    if (typeof window.clearIAMLTrackingData === 'function') {
+      window.clearIAMLTrackingData();
+    }
+
     // Hide all steps
     qsa('.register-step').forEach(el => el.classList.add('hidden'));
 

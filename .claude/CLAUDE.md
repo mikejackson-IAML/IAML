@@ -105,6 +105,23 @@ claude --plan "Add [feature description]"
 - Keep functions small and focused
 - Comment complex logic
 
+### Required Scripts for All Pages
+
+**UTM Tracking Script (REQUIRED on every page):**
+The `utm-tracking.js` script must be included on ALL pages to capture marketing attribution data.
+
+```html
+<!-- Dynamic Component Loading -->
+<script src="js/components.js" defer></script>
+<script src="js/utm-tracking.js" defer></script>  <!-- REQUIRED -->
+<script src="js/headerBehavior.js" defer></script>
+<script src="js/mobileMenu.js" defer></script>
+```
+
+- Placement: Immediately after `components.js`, before other feature scripts
+- For pages in subdirectories (e.g., `/pages/`, `/programs/`), use `../js/utm-tracking.js`
+- This script captures UTM parameters, landing page, and referring URL for registration attribution
+
 ### Progressive Enhancement Requirements
 
 **Every feature must work without JavaScript:**
