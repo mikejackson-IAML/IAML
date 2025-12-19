@@ -1808,6 +1808,7 @@ button#prev-btn {
         font-size: 1.8rem;
         font-weight: 700;
         margin: 0;
+        color: #ffffff;
         text-shadow: 0 1px 2px rgba(0, 0, 0, 0.15);
         letter-spacing: 0.5px;
         position: relative;
@@ -1971,9 +1972,11 @@ button#prev-btn {
 
     .hotel-booking-section {
         display: flex;
+        flex-direction: column;
         align-items: center;
         justify-content: center;
-        min-height: 80px;
+        gap: 1rem;
+        margin-top: 1.5rem;
     }
 
     .hotel-booking-btn {
@@ -2076,6 +2079,138 @@ button#prev-btn {
         }
     }
 
+    /* Contact Information List */
+    .hotel-contact-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .hotel-contact-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 1.5rem;
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .hotel-contact-item:hover {
+        background: #f8f9fa;
+        border-color: #dee2e6;
+        transform: translateX(5px);
+    }
+
+    .hotel-contact-label {
+        color: #666666;
+        font-weight: 500;
+        font-size: 0.95rem;
+        letter-spacing: 0.3px;
+        font-family: 'Lato', sans-serif;
+    }
+
+    .hotel-contact-value {
+        color: #3B5998;
+        font-weight: 600;
+        font-size: 1rem;
+        font-family: 'Lato', sans-serif;
+    }
+
+    .hotel-contact-link {
+        color: #3B5998;
+        font-weight: 600;
+        font-size: 1rem;
+        font-family: 'Lato', sans-serif;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .hotel-contact-link:hover {
+        color: #e93d3d;
+        text-decoration: underline;
+    }
+
+    /* Amenities Grid Layout */
+    .hotel-amenities-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        margin-top: 0.5rem;
+    }
+
+    .hotel-amenity-item {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        padding: 1rem;
+        background: #ffffff;
+        border-radius: 8px;
+        border: 1px solid #e9ecef;
+        transition: all 0.3s ease;
+    }
+
+    .hotel-amenity-item:hover {
+        background: #f8f9fa;
+        border-color: #3B5998;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(59, 89, 152, 0.1);
+    }
+
+    .hotel-amenity-icon {
+        font-size: 1.5rem;
+        line-height: 1;
+        flex-shrink: 0;
+    }
+
+    .hotel-amenity-label {
+        color: #666666;
+        font-weight: 500;
+        font-size: 0.9rem;
+        font-family: 'Lato', sans-serif;
+        line-height: 1.3;
+    }
+
+    /* Group Rate Cutoff Notice */
+    .hotel-cutoff-text {
+        color: #666666;
+        font-weight: 500;
+        font-size: 0.9rem;
+        font-family: 'Lato', sans-serif;
+        text-align: center;
+        font-style: italic;
+        margin-top: 0.5rem;
+    }
+
+    .hotel-description {
+        color: #334155;
+        font-size: 1rem;
+        line-height: 1.7;
+        font-family: 'Lato', sans-serif;
+    }
+
+    /* Responsive adjustments for amenities */
+    @media (max-width: 768px) {
+        .hotel-amenities-grid {
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.75rem;
+        }
+
+        .hotel-amenity-item {
+            padding: 0.75rem;
+            gap: 0.5rem;
+        }
+
+        .hotel-amenity-icon {
+            font-size: 1.25rem;
+        }
+
+        .hotel-amenity-label {
+            font-size: 0.85rem;
+        }
+    }
 
     @media (max-width: 480px) {
     .iaml-modal-overlay .card {
@@ -3603,118 +3738,167 @@ button#prev-btn {
         buildModalContent(program) {
             const sections = [];
 
+            // Check if we have enough data to show modal
+            const hasVenueData = program.venueName && (program.streetAddress || program.city);
 
-            // Special case for Flamingo Las Vegas - add fallback data if Airtable data is missing
-            if (program.venueName && program.venueName.toLowerCase().includes('flamingo')) {
-                if (!program.venueDescription) {
-                    program.venueDescription = 'Flamingo Las Vegas is a hotel and casino located on the Las Vegas Strip in Paradise, Nevada. It is owned and operated by Caesars Entertainment Corporation. The hotel features a tropical theme with pink flamingos and lush gardens.';
-                }
-                if (!program.venueAddress) {
-                    program.venueAddress = '3555 S Las Vegas Blvd, Las Vegas, NV 89109';
-                }
-                if (!program.phoneNumber) {
-                    program.phoneNumber = '(702) 733-3111';
-                }
-                if (!program.averageCost) {
-                    program.averageCost = 89;
-                }
-                if (!program.selfParking) {
-                    program.selfParking = 15;
-                }
-                if (program.resortFee === undefined || program.resortFee === null) {
-                    program.resortFee = 0;
-                }
+            if (!hasVenueData) {
+                return `
+                    <div class="hotel-section">
+                        <h3 class="hotel-section-title">Venue Information</h3>
+                        <p class="hotel-section-content">Venue details coming soon. Please check back later or contact us for information.</p>
+                    </div>
+                `;
             }
 
-            // General fallback for any venue missing data
-            if (!program.venueDescription && program.venueName) {
-                program.venueDescription = `Welcome to ${program.venueName}. This venue provides excellent facilities for our professional development programs.`;
-            }
-            if (!program.venueAddress && program.city && program.state) {
-                program.venueAddress = `${program.city}, ${program.state}`;
-            }
-            if (!program.phoneNumber) {
-                program.phoneNumber = 'Contact venue directly for phone number';
-            }
-            if (!program.averageCost) {
-                program.averageCost = 'Contact venue for pricing';
-            }
-            if (!program.selfParking) {
-                program.selfParking = 'Contact venue for parking information';
-            }
-            if (program.resortFee === undefined || program.resortFee === null) {
-                program.resortFee = 0;
+            // 1. LOCATION & CONTACT INFORMATION (COMBINED)
+            const locationContactSection = [];
+
+            // Address subsection
+            if (program.streetAddress || program.city || program.state) {
+                const addressParts = [];
+                if (program.streetAddress) addressParts.push(program.streetAddress);
+                if (program.city && program.state) {
+                    addressParts.push(`${program.city}, ${program.state} ${program.zipCode || ''}`.trim());
+                } else if (program.city) {
+                    addressParts.push(program.city);
+                } else if (program.state) {
+                    addressParts.push(program.state);
+                }
+                if (program.country && program.country !== 'USA' && program.country !== 'United States') {
+                    addressParts.push(program.country);
+                }
+
+                locationContactSection.push(`<p class="hotel-section-content">${addressParts.join('<br>')}</p>`);
             }
 
-            // Description
+            // Contact information
+            const contactItems = [];
+            if (program.phoneNumber) {
+                contactItems.push(`
+                    <div class="hotel-contact-item">
+                        <span class="hotel-contact-label">Phone</span>
+                        <span class="hotel-contact-value">${this.formatText(program.phoneNumber)}</span>
+                    </div>
+                `);
+            }
+            if (program.website) {
+                contactItems.push(`
+                    <div class="hotel-contact-item">
+                        <span class="hotel-contact-label">Website</span>
+                        <a href="${program.website}" target="_blank" rel="noopener noreferrer" class="hotel-contact-link">Visit Website</a>
+                    </div>
+                `);
+            }
+            if (program.reservationsPhone) {
+                contactItems.push(`
+                    <div class="hotel-contact-item">
+                        <span class="hotel-contact-label">Reservations</span>
+                        <span class="hotel-contact-value">${this.formatText(program.reservationsPhone)}</span>
+                    </div>
+                `);
+            }
+
+            if (contactItems.length > 0) {
+                locationContactSection.push(`<div class="hotel-contact-list">${contactItems.join('')}</div>`);
+            }
+
+            if (locationContactSection.length > 0) {
+                sections.push(`
+                    <div class="hotel-section">
+                        <h3 class="hotel-section-title">Location & Contact Information</h3>
+                        ${locationContactSection.join('')}
+                    </div>
+                `);
+            }
+
+            // 2. PROPERTY DESCRIPTION
             if (program.venueDescription) {
                 sections.push(`
                     <div class="hotel-section">
-                        <h3 class="hotel-section-title">Description</h3>
-                        <p class="hotel-section-content">${this.formatText(program.venueDescription)}</p>
+                        <h3 class="hotel-section-title">Property Description</h3>
+                        <p class="hotel-description">${this.formatText(program.venueDescription)}</p>
                     </div>
                 `);
             }
 
-            // Address - Handle array fields as specified in documentation
-            const address = program.venueAddress;
-            if (address) {
-                const addressValue = Array.isArray(address) ? address[0] : address;
+            // 3. AMENITIES SECTION (Icon-based display)
+            const amenities = [];
+            if (program.businessCenter) amenities.push({ icon: '💼', label: 'Business Center' });
+            if (program.fitnessCenter) amenities.push({ icon: '🏋️', label: 'Fitness Center' });
+            if (program.restaurantOnSite) amenities.push({ icon: '🍽️', label: 'Restaurant On-Site' });
+            if (program.roomService) amenities.push({ icon: '🛎️', label: 'Room Service' });
+            if (program.wifiAvailable) amenities.push({ icon: '📶', label: 'WiFi Available' });
+            if (program.parkingAvailable) {
+                const parkingLabel = program.parkingType ? `Parking (${program.parkingType})` : 'Parking Available';
+                amenities.push({ icon: '🚗', label: parkingLabel });
+            }
+
+            if (amenities.length > 0) {
                 sections.push(`
                     <div class="hotel-section">
-                        <h3 class="hotel-section-title">Address</h3>
-                        <p class="hotel-section-content">${addressValue}</p>
+                        <h3 class="hotel-section-title">Amenities</h3>
+                        <div class="hotel-amenities-grid">
+                            ${amenities.map(a => `
+                                <div class="hotel-amenity-item">
+                                    <span class="hotel-amenity-icon">${a.icon}</span>
+                                    <span class="hotel-amenity-label">${a.label}</span>
+                                </div>
+                            `).join('')}
+                        </div>
                     </div>
                 `);
             }
 
-            // Phone - Handle array fields as specified in documentation
-            const phone = program.phoneNumber;
-            if (phone) {
-                const phoneValue = Array.isArray(phone) ? phone[0] : phone;
-                sections.push(`
-                    <div class="hotel-section">
-                        <h3 class="hotel-section-title">Phone</h3>
-                        <p class="hotel-section-content">${phoneValue}</p>
-                    </div>
-                `);
-            }
-
-            // Cost Information
+            // 4. PRICING SECTION
             const costItems = [];
 
-            if (program.averageCost) {
+            if (program.roomRate) {
                 costItems.push(`
                     <div class="hotel-cost-item">
-                        <span class="hotel-cost-label">Average Cost per Night</span>
-                        <span class="hotel-cost-value">${this.formatCurrency(program.averageCost)}</span>
+                        <span class="hotel-cost-label">Avg. Room Rate (per night)</span>
+                        <span class="hotel-cost-value">${this.formatCurrency(program.roomRate)}</span>
                     </div>
                 `);
             }
 
-            if (program.selfParking) {
-                costItems.push(`
-                    <div class="hotel-cost-item">
-                        <span class="hotel-cost-label">Self Parking</span>
-                        <span class="hotel-cost-value">${this.formatCurrency(program.selfParking)}</span>
-                    </div>
-                `);
-            }
-
-            if (program.resortFee !== undefined && program.resortFee !== null) {
-                const resortFeeValue = program.resortFee > 0 ? this.formatCurrency(program.resortFee) : 'None';
+            if (program.resortFee !== undefined && program.resortFee !== null && program.resortFee !== '') {
+                const resortFeeValue = parseFloat(String(program.resortFee).replace(/[^\d.]/g, '')) || 0;
+                const displayValue = resortFeeValue > 0 ? this.formatCurrency(resortFeeValue) : 'None';
                 costItems.push(`
                     <div class="hotel-cost-item">
                         <span class="hotel-cost-label">Resort Fee</span>
-                        <span class="hotel-cost-value">${resortFeeValue}</span>
+                        <span class="hotel-cost-value">${displayValue}</span>
                     </div>
                 `);
+            }
+
+            // Only show parking fee if parking is available
+            if (program.parkingAvailable && program.parkingFee) {
+                costItems.push(`
+                    <div class="hotel-cost-item">
+                        <span class="hotel-cost-label">Parking Fee</span>
+                        <span class="hotel-cost-value">${this.formatCurrency(program.parkingFee)}</span>
+                    </div>
+                `);
+            }
+
+            // Only show WiFi cost if WiFi is available AND has a cost
+            if (program.wifiAvailable && program.wifiCost) {
+                const wifiCostValue = parseFloat(String(program.wifiCost).replace(/[^\d.]/g, '')) || 0;
+                if (wifiCostValue > 0) {
+                    costItems.push(`
+                        <div class="hotel-cost-item">
+                            <span class="hotel-cost-label">WiFi Cost</span>
+                            <span class="hotel-cost-value">${this.formatCurrency(wifiCostValue)}</span>
+                        </div>
+                    `);
+                }
             }
 
             if (costItems.length > 0) {
                 sections.push(`
                     <div class="hotel-section">
-                        <h3 class="hotel-section-title">Cost Information</h3>
+                        <h3 class="hotel-section-title">Pricing Information</h3>
                         <div class="hotel-cost-list">
                             ${costItems.join('')}
                         </div>
@@ -3722,32 +3906,36 @@ button#prev-btn {
                 `);
             }
 
-            // Hotel Booking Link
-            if (program.hotelBookingLink) {
+            // 5. BOOKING SECTION with date-based logic
+            const bookingInfo = this.getBookingLinkInfo(program);
+
+            if (bookingInfo.showButton) {
                 sections.push(`
                     <div class="hotel-section hotel-booking-section">
-                        <a href="${program.hotelBookingLink}"
-                           class="hotel-booking-btn"
+                        <a href="${bookingInfo.linkUrl}"
+                           class="cta-button cta-red"
                            target="_blank"
                            rel="noopener noreferrer">
-                            Book Your Room
+                            ${bookingInfo.buttonText}
                         </a>
+                        ${bookingInfo.cutoffMessage ? `
+                            <p class="hotel-cutoff-text">${bookingInfo.cutoffMessage}</p>
+                        ` : ''}
                     </div>
                 `);
             }
 
-            // If no sections were added, show a default message
-            if (sections.length === 0) {
+            // 6. ADDITIONAL NOTES (if catering notes exist)
+            if (program.cateringNotes) {
                 sections.push(`
                     <div class="hotel-section">
-                        <h3 class="hotel-section-title">Venue Information</h3>
-                        <p class="hotel-section-content">Venue details are being updated. Please contact the venue directly for the most current information.</p>
+                        <h3 class="hotel-section-title">Additional Information</h3>
+                        <p class="hotel-section-content">${this.formatText(program.cateringNotes)}</p>
                     </div>
                 `);
             }
 
-            const finalContent = sections.join('');
-            return finalContent;
+            return sections.join('');
         }
 
         /**
@@ -3768,6 +3956,54 @@ button#prev-btn {
                 style: 'currency',
                 currency: 'USD'
             }).format(numAmount);
+        }
+
+        /**
+         * Determine which booking link to use based on group rate cutoff date
+         */
+        getBookingLinkInfo(program) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+
+            let linkUrl = '';
+            let buttonText = 'Reserve Your Room';
+            let showButton = false;
+            let cutoffMessage = '';
+
+            // Parse cutoff date if provided
+            let cutoffDate = null;
+            if (program.groupRateCutoffDate) {
+                try {
+                    cutoffDate = new Date(program.groupRateCutoffDate);
+                    cutoffDate.setHours(0, 0, 0, 0);
+                } catch (e) {
+                    // Invalid date, proceed without cutoff
+                }
+            }
+
+            // Determine link and button text
+            if (cutoffDate && today <= cutoffDate) {
+                // Before cutoff: use room block link if available
+                linkUrl = program.roomBlockBookingLink || program.hotelBookingLink || '';
+                buttonText = 'Book Group Rate';
+
+                // Format cutoff message
+                const cutoffFormatted = cutoffDate.toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                cutoffMessage = `Group rate available until ${cutoffFormatted}`;
+
+            } else {
+                // After cutoff or no cutoff: use hotel booking link
+                linkUrl = program.hotelBookingLink || '';
+                buttonText = 'Reserve Your Room';
+            }
+
+            showButton = !!linkUrl;
+
+            return { linkUrl, buttonText, showButton, cutoffMessage };
         }
 
         /**
@@ -3864,14 +4100,45 @@ button#prev-btn {
               endDate: safeString(f['Session End Date'] || f['End Date'] || f['End']),
               city: safeString(f.City || f['Location']),
               state: safeString(f['State/Province'] || f.State),
-              venueName: safeString(f['Venue Name (1)'] || f['Venue Name Field'] || f['Venue Name'] || f['Venue'] || f['Location Name']),
-              venueDescription: safeString(f['Venue Description']),
-              venueAddress: safeString(f['Street Address (from Venue Name)'] || f['Venue Address'] || f['Address']),
-              phoneNumber: safeString(f['Phone Number (from Venue Name)'] || f['Phone Number'] || f['Phone']),
-              averageCost: safeString(f['Avergage Cost per Night'] || f['Average Cost per Night'] || f['Cost']),
-              selfParking: safeString(f['Self Parking'] || f['Parking']),
-              resortFee: safeString(f['Resort Fee'] || f['Fee']),
-              hotelBookingLink: safeString(f['Hotel Booking Link'] || f['Booking Link']),
+              // Venue Basic Info (from LOCATIONS lookups)
+              venueName: safeString(f['Venue Name (from Venue)'] || f['Venue Name (1)'] || f['Venue Name']),
+              streetAddress: safeString(f['Street Address (from Venue)']),
+              city: safeString(f['City (from Venue)'] || f['City']),
+              state: safeString(f['State (from Venue)'] || f['State/Province'] || f['State']),
+              zipCode: safeString(f['ZIP Code (from Venue)']),
+              country: safeString(f['Country (from Venue)']),
+              phoneNumber: safeString(f['Phone Number (from Venue)']),
+              website: safeString(f['Website (from Venue)']),
+              venueDescription: safeString(f['Description (from Venue)']),
+
+              // Venue Amenities (from LOCATIONS lookups - checkboxes)
+              parkingAvailable: !!f['Parking Available (from Venue)'],
+              parkingType: safeString(f['Parking Type (from Venue)']),
+              wifiAvailable: !!f['WiFi Available (from Venue)'],
+              businessCenter: !!f['Business Center (from Venue)'],
+              fitnessCenter: !!f['Fitness Center (from Venue)'],
+              restaurantOnSite: !!f['Restaurant On-Site (from Venue)'],
+              roomService: !!f['Room Service (from Venue)'],
+
+              // Program-Specific Pricing (from PROGRAM_INSTANCES)
+              roomRate: safeString(f['Room Rate'] || f['Avergage Cost per Night'] || f['Average Cost per Night']),
+              resortFee: safeString(f['Resort Fee']),
+              parkingFee: safeString(f['Parking Fee'] || f['Self Parking']),
+              wifiCost: safeString(f['WiFi Cost']),
+
+              // Booking Info (from PROGRAM_INSTANCES)
+              groupRateAvailable: !!f['Group Rate Available'],
+              groupRateCutoffDate: safeString(f['Group Rate Cutoff Date']),
+              roomBlockBookingLink: safeString(f['Room Block Booking Link']),
+              hotelBookingLink: safeString(f['Hotel Booking Link']),
+              reservationsPhone: safeString(f['Reservations Phone']),
+              groupSalesContact: safeString(f['Group Sales Contact']),
+              groupSalesEmail: safeString(f['Group Sales Email']),
+
+              // Other Program Details
+              avIncluded: !!f['AV Included'],
+              cateringMinimum: safeString(f['Food/Catering Minimum']),
+              cateringNotes: safeString(f['Catering Notes']),
             heroImageUrl: normalizeImageFromFields(f),
               block1Instructor: f['Block 1 Instructor'] || f['Instructor 1'],
               block2Instructor: f['Block 2 Instructor'] || f['Instructor 2'],
