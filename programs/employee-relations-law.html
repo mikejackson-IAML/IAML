@@ -4138,8 +4138,8 @@ button#prev-btn {
               // Booking Info (from PROGRAM_INSTANCES)
               groupRateAvailable: !!f['Group Rate Available'],
               groupRateCutoffDate: safeString(f['Group Rate Cutoff Date']),
-              roomBlockBookingLink: safeString(f['Room Block Booking Link']),
-              hotelBookingLink: safeString(f['Hotel Booking Link']),
+              roomBlockBookingLink: safeString(f['Room Block Booking Link (from Venue)'] || f['Room Block Booking Link']),
+              hotelBookingLink: safeString(f['Hotel Booking Link (from Venue)'] || f['Hotel Booking Link']),
               reservationsPhone: safeString(f['Reservations Phone']),
               groupSalesContact: safeString(f['Group Sales Contact']),
               groupSalesEmail: safeString(f['Group Sales Email']),
