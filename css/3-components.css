@@ -844,7 +844,7 @@
 }
 
 .testimonial-track {
-  max-height: 1125px;
+  min-height: 600px;
   overflow-y: auto;
   overflow-x: hidden;
   padding: 0.5rem;
@@ -1166,7 +1166,7 @@ hr.separator {
   }
 
   .testimonial-track {
-    max-height: 1000px;
+    min-height: 500px;
   }
 
   .content-section {

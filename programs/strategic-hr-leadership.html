@@ -1440,6 +1440,7 @@
 
       (function(){
         const track = document.querySelector(".testimonial-track");
+        const contentSection = document.querySelector(".content-section");
         let isScrolling = false;
 
         function escapeHtml(text){
@@ -1486,6 +1487,17 @@
           return h;
         }
 
+        function syncHeights(){
+          if(!contentSection || !track) return;
+
+          const contentHeight = contentSection.offsetHeight;
+          const isMobile = window.innerWidth < 900;
+          const minHeight = isMobile ? 500 : 600;
+          const targetHeight = Math.max(contentHeight + 100, minHeight);
+
+          track.style.maxHeight = targetHeight + 'px';
+        }
+
         function onScroll(){
           if(isScrolling) return;
 
@@ -1511,10 +1523,14 @@
             const b = blockHeight();
             const currentOffset = track.scrollTop % b;
             track.scrollTop = b + currentOffset;
+            syncHeights();
           }, 150);
         });
 
         buildLoop();
+        requestAnimationFrame(() => {
+          syncHeights();
+        });
         track.addEventListener("scroll", onScroll, {passive: true});
       })();
     </script>
