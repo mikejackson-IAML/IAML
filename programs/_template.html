@@ -3754,15 +3754,15 @@ button#prev-btn {
             const locationContactSection = [];
 
             // Address subsection
-            if (program.streetAddress || program.city || program.state) {
+            if (program.streetAddress || program.venueCity || program.venueState) {
                 const addressParts = [];
                 if (program.streetAddress) addressParts.push(program.streetAddress);
-                if (program.city && program.state) {
-                    addressParts.push(`${program.city}, ${program.state} ${program.zipCode || ''}`.trim());
-                } else if (program.city) {
-                    addressParts.push(program.city);
-                } else if (program.state) {
-                    addressParts.push(program.state);
+                if (program.venueCity && program.venueState) {
+                    addressParts.push(`${program.venueCity}, ${program.venueState} ${program.zipCode || ''}`.trim());
+                } else if (program.venueCity) {
+                    addressParts.push(program.venueCity);
+                } else if (program.venueState) {
+                    addressParts.push(program.venueState);
                 }
                 if (program.country && program.country !== 'USA' && program.country !== 'United States') {
                     addressParts.push(program.country);
@@ -4119,8 +4119,8 @@ button#prev-btn {
               // Venue Basic Info (from LOCATIONS lookups)
               venueName: safeString(f['Venue Name (from Venue)'] || f['Venue Name (1)'] || f['Venue Name']),
               streetAddress: safeString(f['Street Address (from Venue)']),
-              city: safeString(f['City (from Venue)'] || f['City']),
-              state: safeString(f['State (from Venue)'] || f['State/Province'] || f['State']),
+              venueCity: safeString(f['City (from Venue)'] || f['City']),
+              venueState: safeString(f['State (from Venue)'] || f['State/Province'] || f['State']),
               zipCode: safeString(f['ZIP Code (from Venue)']),
               country: safeString(f['Country (from Venue)']),
               phoneNumber: safeString(f['Phone Number (from Venue)']),
