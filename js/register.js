@@ -16,64 +16,188 @@
       code: 'ER',
       duration: '4.5 days',
       price: 2375,
-      blocks: ['Block 1', 'Block 2', 'Block 3'],
-      blockPrices: { 'Block 1': 1375, 'Block 2': 1375, 'Block 3': 575 }
+      blocks: {
+        'in-person': {
+          list: ['Comprehensive Labor Relations', 'Discrimination Prevention and Defense', 'Special Issues in Employment Law'],
+          prices: {
+            'Comprehensive Labor Relations': 1375,
+            'Discrimination Prevention and Defense': 1375,
+            'Special Issues in Employment Law': 575
+          }
+        },
+        'virtual': {
+          list: ['Comprehensive Labor Relations', 'Discrimination Prevention and Defense'],
+          prices: { 'Comprehensive Labor Relations': 1375, 'Discrimination Prevention and Defense': 1375 }
+        }
+      }
     },
     'Certificate in Employee Benefits Law': {
       code: 'EB',
       duration: '4.5 days',
       price: 2375,
-      blocks: ['Block 1', 'Block 2', 'Block 3'],
-      blockPrices: { 'Block 1': 1375, 'Block 2': 575, 'Block 3': 975 }
+      blocks: {
+        'in-person': {
+          list: ['Retirement Plans', 'Benefit Plan Claims, Appeals and Litigation', 'Welfare Benefits Plan Issues'],
+          prices: {
+            'Retirement Plans': 1375,
+            'Benefit Plan Claims, Appeals and Litigation': 575,
+            'Welfare Benefits Plan Issues': 975
+          }
+        }
+        // No virtual blocks for this program
+      }
     },
     'Certificate in Strategic HR Leadership': {
       code: 'SH',
       duration: '4.5 days',
       price: 2375,
-      blocks: ['Block 1', 'Block 2'],
-      blockPrices: { 'Block 1': 1375, 'Block 2': 1575 }
+      blocks: {
+        'in-person': {
+          list: ['HR Law Fundamentals', 'Strategic HR Management'],
+          prices: { 'HR Law Fundamentals': 1375, 'Strategic HR Management': 1575 }
+        },
+        'virtual': {
+          list: ['HR Law Fundamentals', 'Strategic HR Management'],
+          prices: { 'HR Law Fundamentals': 1375, 'Strategic HR Management': 1575 }
+        }
+      }
     },
     'Advanced Certificate in Strategic Employment Law': {
       code: 'SE',
       duration: '2 days',
       price: 1575
+      // No blocks for any format
     },
     'Certificate in Workplace Investigations': {
       code: 'WI',
       duration: '2 days',
       price: 1575
+      // No blocks for any format
     },
     'Advanced Certificate in Employee Benefits Law': {
       code: 'AB',
       duration: '2 days',
       price: 1575
-    },
-    'Comprehensive Labor Relations': {
-      code: 'CL',
-      duration: '2 days',
-      price: 1375
-    },
-    'Discrimination Prevention and Defense': {
-      code: 'DP',
-      duration: '2 days',
-      price: 1375
-    },
-    'HR Law Fundamentals': {
-      code: 'HF',
-      duration: '2 days',
-      price: 1375
-    },
-    'Strategic HR Management': {
-      code: 'SM',
-      duration: '2 days',
-      price: 1575
+      // No blocks for any format
     }
   };
+
+  // Certificate programs to display (in order)
+  const VISIBLE_PROGRAMS = [
+    'Certificate in Employee Relations Law',
+    'Advanced Certificate in Strategic Employment Law',
+    'Certificate in Workplace Investigations',
+    'Certificate in Strategic HR Leadership',
+    'Certificate in Employee Benefits Law',
+    'Advanced Certificate in Employee Benefits Law'
+  ];
 
   const FORMAT_MAP = {
     'in-person': 'In-Person',
     'virtual': 'Virtual',
     'on-demand': 'On-Demand'
+  };
+
+  // Airtable View IDs for session queries (Program Instances table)
+  const SESSION_VIEW_IDS = {
+    // Certificate programs (full program views)
+    'Certificate in Employee Relations Law': {
+      'in-person': 'viwfys9oVCU3gFsel'
+    },
+    'Certificate in Strategic HR Leadership': {
+      'in-person': 'viwjSrF7oSzlzYuIc'
+    },
+    'Advanced Certificate in Strategic Employment Law': {
+      'in-person': 'viwqyJc8gx3hOppAu'
+    },
+    'Certificate in Workplace Investigations': {
+      'in-person': 'viw3l8oabLZC5abrq'
+    },
+    'Certificate in Employee Benefits Law': {
+      'in-person': 'viwui1caJxkkGKXiO'
+    },
+    'Advanced Certificate in Employee Benefits Law': {
+      'in-person': 'viwlzVMIk78qDmL2W'
+    },
+
+    // Individual block views (for partial attendance)
+    'Comprehensive Labor Relations': {
+      'in-person': 'viwfRNxWVMk9nUxCc',
+      'virtual': 'viwkxehH3VECGQrVU'
+    },
+    'Discrimination Prevention and Defense': {
+      'in-person': 'viwgBsDDQfaHdPREf',
+      'virtual': 'viw5ydjKfvbDKMzaf'
+    },
+    'HR Law Fundamentals': {
+      'in-person': 'viwOR51HSgvqnvvtM',
+      'virtual': 'viwI0VscueaVxM4Vk'
+    },
+    'Strategic HR Management': {
+      'in-person': 'viwVZQi5IShScOoOP',
+      'virtual': 'viw3RC4Ti0v2Xi5VJ'
+    },
+    'Retirement Plans': {
+      'in-person': 'viwuXlg9Lk4I7AeCY'
+    },
+    'Benefit Plan Claims, Appeals and Litigation': {
+      'in-person': 'viw0LjpGuf6lGKLZu'
+    },
+    'Welfare Benefits Plan Issues': {
+      'in-person': 'viwa8yRYP99luXOQc'
+    },
+    'Special Issues in Employment Law': {
+      'in-person': 'viwfRNxWVMk9nUxCc'
+    }
+  };
+
+  // Left Panel Content Configuration
+  const LEFT_PANEL_CONTENT = {
+    'format': {
+      type: 'quote',
+      quote: '"My only wish is that I had attended this seminar earlier in my career!"',
+      attribution: {
+        name: 'Christina Lipetzky',
+        title: 'Human Resources Manager',
+        company: 'Montana Department of Environmental Quality'
+      }
+    },
+    'program': {
+      type: 'stats',
+      headline: 'Practicing Attorneys, Not Academics',
+      subtext: '45 years of training HR professionals who need answers they can use Monday morning.',
+      stats: [
+        { number: '45+', label: 'Years of Excellence' },
+        { number: '7,000+', label: 'HR Professionals Trained' },
+        { number: '9', label: 'Cities Nationwide' }
+      ]
+    },
+    'session': {
+      type: 'standard',
+      headline: 'Learn In-Person, Across the Country',
+      subtext: 'Experience immersive learning in professional settings designed to maximize engagement and networking opportunities with fellow HR leaders.'
+    },
+    'blocks': {
+      type: 'standard',
+      headline: 'Flexible Learning Options',
+      subtext: 'Attend the full program for the complete experience, or select specific blocks that address your immediate needs.'
+    },
+    'contact': {
+      type: 'standard',
+      headline: 'Join 7,000+ HR Professionals',
+      subtext: 'Who have advanced their careers with IAML certification programs. You\'re in good company.'
+    },
+    'payment-method': {
+      type: 'value-stack',
+      headline: 'Your Investment in Excellence',
+      values: [
+        { text: 'Intensive, practical training', dynamic: 'duration' },
+        { text: 'Expert faculty with real-world experience' },
+        { text: 'Comprehensive course materials' },
+        { text: 'Certificate of completion' },
+        { text: 'Networking with HR peers' }
+      ]
+    }
   };
 
   const CITY_ABBREVIATIONS = {
@@ -106,7 +230,7 @@
     sessionRecord: null,
 
     // Attendance (Block Programs)
-    attendanceType: 'Full', // 'Full' or 'Partial'
+    blockSelectionType: 'Full', // 'Full' or 'Partial'
     selectedBlocks: [], // ['Block 1', 'Block 2']
     blockDates: {},
     dynamicStartDate: null,
@@ -155,7 +279,10 @@
     stripe: null,
     cardElement: null,
     stripeClientSecret: '',
-    paymentIntentId: ''
+    paymentIntentId: '',
+
+    // Program Duration (fetched from Airtable)
+    programDuration: ''
   };
 
   // ============================================
@@ -178,12 +305,74 @@
     return start === end ? start : `${start} - ${end}`;
   }
 
+  // Smart date range formatter - consolidates month when same
+  // "October 20-24, 2026" for same month, "October 20 - November 2, 2026" for different
+  function formatSmartDateRange(startDate, endDate) {
+    if (!startDate || !endDate) return '—';
+
+    // Parse dates as UTC to avoid timezone shift issues
+    // Airtable sends dates like "2026-04-20" which JS interprets as midnight UTC
+    // Using UTC methods ensures we get the correct date regardless of local timezone
+    let start, end;
+    if (typeof startDate === 'string') {
+      const [y, m, d] = startDate.split('-').map(Number);
+      start = new Date(Date.UTC(y, m - 1, d));
+    } else {
+      start = startDate;
+    }
+    if (typeof endDate === 'string') {
+      const [y, m, d] = endDate.split('-').map(Number);
+      end = new Date(Date.UTC(y, m - 1, d));
+    } else {
+      end = endDate;
+    }
+
+    // Check if dates are valid
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) return '—';
+
+    const startMonth = start.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+    const endMonth = end.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+    const startDay = start.getUTCDate();
+    const endDay = end.getUTCDate();
+    const startYear = start.getUTCFullYear();
+    const endYear = end.getUTCFullYear();
+
+    // Same day
+    if (start.getTime() === end.getTime()) {
+      return `${startMonth} ${startDay}, ${startYear}`;
+    }
+
+    // Same month and year: "October 20-24, 2026"
+    if (startMonth === endMonth && startYear === endYear) {
+      return `${startMonth} ${startDay}-${endDay}, ${startYear}`;
+    }
+
+    // Same year, different months: "October 20 - November 2, 2026"
+    if (startYear === endYear) {
+      return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${startYear}`;
+    }
+
+    // Different years: "December 28, 2026 - January 2, 2027"
+    return `${startMonth} ${startDay}, ${startYear} - ${endMonth} ${endDay}, ${endYear}`;
+  }
+
   function formatCurrency(amount) {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   }
 
-  function isBlockProgram(programName) {
-    return PROGRAM_DATA[programName] && PROGRAM_DATA[programName].blocks;
+  function isBlockProgram(programName, format) {
+    const program = PROGRAM_DATA[programName];
+    if (!program || !program.blocks) return false;
+    // Check if blocks exist for this specific format
+    return program.blocks[format] && program.blocks[format].list && program.blocks[format].list.length > 0;
+  }
+
+  function getBlocksForFormat(programName, format) {
+    const program = PROGRAM_DATA[programName];
+    if (!program || !program.blocks || !program.blocks[format]) {
+      return { list: [], prices: {} };
+    }
+    return program.blocks[format];
   }
 
   function saveStateToSessionStorage() {
@@ -225,14 +414,13 @@
   function determineSteps() {
     const steps = ['format', 'program'];
 
-    // Skip session/attendance for on-demand
+    // Skip session/blocks for on-demand
     if (state.format !== 'on-demand') {
-      steps.push('session');
-
-      // Only add attendance for block programs
-      if (isBlockProgram(state.program)) {
-        steps.push('attendance');
+      // Add blocks step BEFORE session for block programs
+      if (isBlockProgram(state.program, state.format)) {
+        steps.push('blocks');
       }
+      steps.push('session');
     }
 
     steps.push('contact', 'payment-method');
@@ -244,15 +432,15 @@
   // ============================================
 
   function parseBlockDates(sessionRecord) {
-    if (!sessionRecord || !isBlockProgram(state.program)) {
+    if (!sessionRecord || !isBlockProgram(state.program, state.format)) {
       return {};
     }
 
-    const programData = PROGRAM_DATA[state.program];
+    const blockData = getBlocksForFormat(state.program, state.format);
     const fields = sessionRecord.fields;
     const blockDates = {};
 
-    programData.blocks.forEach(blockName => {
+    blockData.list.forEach(blockName => {
       const datesField = fields[`${blockName} Dates`];
       if (datesField) {
         const parts = datesField.split(' - ');
@@ -266,9 +454,9 @@
   }
 
   function calculateDynamicDates() {
-    if (state.attendanceType === 'Full') {
-      state.dynamicStartDate = new Date(state.sessionRecord.fields['Session Start Date']);
-      state.dynamicEndDate = new Date(state.sessionRecord.fields['Session End Date']);
+    if (state.blockSelectionType === 'Full') {
+      state.dynamicStartDate = new Date(state.sessionRecord.fields['Start Date']);
+      state.dynamicEndDate = new Date(state.sessionRecord.fields['End Date']);
     } else if (state.selectedBlocks.length > 0) {
       const selectedBlockDates = state.selectedBlocks.map(block => state.blockDates[block]).filter(Boolean);
       if (selectedBlockDates.length > 0) {
@@ -283,10 +471,10 @@
   // ============================================
 
   function getDisabledBlocks(currentSelection) {
-    if (!isBlockProgram(state.program)) return [];
+    if (!isBlockProgram(state.program, state.format)) return [];
 
-    const programData = PROGRAM_DATA[state.program];
-    const blocks = programData.blocks;
+    const blockData = getBlocksForFormat(state.program, state.format);
+    const blocks = blockData.list;
 
     if (currentSelection.length === 0) return [];
 
@@ -308,12 +496,12 @@
     return disabled;
   }
 
-  function validateConsecutiveBlocks(blocks) {
-    if (blocks.length <= 1) return true;
+  function validateConsecutiveBlocks(selectedBlocks) {
+    if (selectedBlocks.length <= 1) return true;
 
-    const programData = PROGRAM_DATA[state.program];
-    const blockList = programData.blocks;
-    const indices = blocks.map(b => blockList.indexOf(b)).sort((a, b) => a - b);
+    const blockData = getBlocksForFormat(state.program, state.format);
+    const blockList = blockData.list;
+    const indices = selectedBlocks.map(b => blockList.indexOf(b)).sort((a, b) => a - b);
 
     for (let i = 1; i < indices.length; i++) {
       if (indices[i] !== indices[i - 1] + 1) {
@@ -342,7 +530,7 @@
       cityCode = 'VIR';
     }
 
-    const date = state.dynamicStartDate || new Date(state.sessionRecord.fields['Session Start Date']);
+    const date = state.dynamicStartDate || new Date(state.sessionRecord.fields['Start Date']);
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const year = String(date.getFullYear()).slice(-2);
 
@@ -354,8 +542,8 @@
   // ============================================
 
   function generateICSContent() {
-    const startDate = state.dynamicStartDate || new Date(state.sessionRecord.fields['Session Start Date']);
-    const endDate = state.dynamicEndDate || new Date(state.sessionRecord.fields['Session End Date']);
+    const startDate = state.dynamicStartDate || new Date(state.sessionRecord.fields['Start Date']);
+    const endDate = state.dynamicEndDate || new Date(state.sessionRecord.fields['End Date']);
 
     const formatYYYYMMDD = (date) => {
       const year = date.getFullYear();
@@ -378,7 +566,7 @@
     const description = [
       `Program: ${state.program}`,
       `Format: ${FORMAT_MAP[state.format]}`,
-      state.attendanceType !== 'Full' ? `Attendance: ${state.attendanceType}` : '',
+      state.blockSelectionType !== 'Full' ? `Attendance: ${state.blockSelectionType}` : '',
       `Registration Code: ${state.registrationCode}`,
       '',
       'For more information, visit https://iaml.com or contact info@iaml.com'
@@ -475,7 +663,12 @@
     saveStateToSessionStorage();
     updateStepperUI();
     updateNavigationButtons();
-    updateSidebar();
+    updateLeftPanel();
+
+    // Load blocks when navigating to blocks step
+    if (stepName === 'blocks' && isBlockProgram(state.program, state.format)) {
+      loadBlocksOptions();
+    }
 
     // Load sessions when navigating to session step
     if (stepName === 'session' && state.format !== 'on-demand' && state.program) {
@@ -541,9 +734,9 @@
       case 'session':
         hasValidSelection = !!state.sessionId;
         break;
-      case 'attendance':
-        hasValidSelection = state.attendanceType === 'Full' ||
-                           (state.attendanceType === 'Partial' && state.selectedBlocks.length > 0);
+      case 'blocks':
+        hasValidSelection = state.blockSelectionType === 'Full' ||
+                           (state.blockSelectionType === 'Partial' && state.selectedBlocks.length > 0);
         break;
       default:
         hasValidSelection = true;
@@ -559,60 +752,94 @@
     }
   }
 
-  function updateSidebar() {
-    const sidebar = qs('#registerSidebar');
+  /**
+   * Updates the left panel content based on current step
+   */
+  function updateLeftPanel() {
+    const leftPanel = qs('#registerLeftPanel');
+    const panelContent = qs('#leftPanelContent');
 
-    // Program
-    qs('#sidebarProgram').textContent = state.program || '—';
+    if (!leftPanel || !panelContent) return;
 
-    // Format badge
-    const formatBadge = qs('#sidebarFormatBadge');
-    if (state.format) {
-      formatBadge.textContent = FORMAT_MAP[state.format].toUpperCase();
-      formatBadge.className = `format-badge ${state.format}`;
+    const content = LEFT_PANEL_CONTENT[state.currentStep];
+
+    // Hide left panel for confirmation steps
+    if (!content || state.currentStep.startsWith('confirm')) {
+      leftPanel.classList.add('hidden');
+      qs('.register-right-panel')?.classList.add('confirmation-active');
+      return;
     }
 
-    // Attendance section
-    const attendanceSection = qs('#sidebarAttendanceSection');
-    if (isBlockProgram(state.program) && state.format !== 'on-demand') {
-      attendanceSection.style.display = 'block';
-      const attendanceText = state.attendanceType === 'Full'
-        ? 'Full Program'
-        : `Partial: ${state.selectedBlocks.join(', ')}`;
-      qs('#sidebarAttendance').textContent = attendanceText;
-    } else {
-      attendanceSection.style.display = 'none';
+    // Show left panel
+    leftPanel.classList.remove('hidden');
+    qs('.register-right-panel')?.classList.remove('confirmation-active');
+
+    // Generate HTML based on content type
+    let html = '';
+
+    switch (content.type) {
+      case 'quote':
+        html = `
+          <div class="panel-logo">
+            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML" height="60">
+          </div>
+          <blockquote class="panel-quote">${content.quote}</blockquote>
+          ${content.attribution ? `
+            <div class="quote-attribution">
+              <span class="attribution-name">${content.attribution.name}</span>
+              <span class="attribution-title">${content.attribution.title}</span>
+              <span class="attribution-company">${content.attribution.company}</span>
+            </div>
+          ` : ''}
+          ${content.subtext ? `<p class="panel-subtext">${content.subtext}</p>` : ''}
+        `;
+        break;
+
+      case 'stats':
+        html = `
+          <h2 class="panel-headline">${content.headline}</h2>
+          <p class="panel-subtext">${content.subtext}</p>
+          <div class="panel-stats">
+            ${content.stats.map(stat => `
+              <div class="stat-item">
+                <span class="stat-number">${stat.number}</span>
+                <span class="stat-label">${stat.label}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+        break;
+
+      case 'standard':
+        html = `
+          <h2 class="panel-headline">${content.headline}</h2>
+          <p class="panel-subtext">${content.subtext}</p>
+        `;
+        break;
+
+      case 'value-stack':
+        html = `
+          <h2 class="panel-headline">${content.headline}</h2>
+          <div class="value-stack">
+            ${content.values.map(value => {
+              let text = value.text;
+              // Handle dynamic duration text
+              if (value.dynamic === 'duration' && state.programDuration) {
+                text = `${state.programDuration} of intensive, practical training`;
+              }
+              return `
+                <div class="value-item">
+                  <span class="value-icon">✓</span>
+                  <span class="value-text">${text}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+        `;
+        break;
     }
 
-    // Session section
-    const sessionSection = qs('#sidebarSessionSection');
-    if (state.format !== 'on-demand' && state.sessionRecord) {
-      sessionSection.style.display = 'block';
-      const datesText = formatDateRange(state.dynamicStartDate, state.dynamicEndDate);
-      qs('#sidebarDates').textContent = datesText;
-    } else {
-      sessionSection.style.display = 'none';
-    }
-
-    // Location section
-    const locationSection = qs('#sidebarLocationSection');
-    if (state.format === 'in-person' && state.city) {
-      locationSection.style.display = 'block';
-      qs('#sidebarLocation').textContent = `${state.city}, ${state.stateProvince}`;
-    } else {
-      locationSection.style.display = 'none';
-    }
-
-    // Pricing
-    qs('#sidebarListPrice').textContent = formatCurrency(state.listPrice);
-    const discountRow = qs('#sidebarDiscountRow');
-    if (state.couponDiscount > 0) {
-      discountRow.style.display = 'block';
-      qs('#sidebarDiscount').textContent = `-${formatCurrency(state.couponDiscount)}`;
-    } else {
-      discountRow.style.display = 'none';
-    }
-    qs('#sidebarTotal').textContent = formatCurrency(state.finalPrice);
+    panelContent.innerHTML = html;
   }
 
   // ============================================
@@ -644,8 +871,8 @@
         }
         return true;
 
-      case 'attendance':
-        if (state.attendanceType === 'Partial' && state.selectedBlocks.length === 0) {
+      case 'blocks':
+        if (state.blockSelectionType === 'Partial' && state.selectedBlocks.length === 0) {
           showErrorMessage('Please select at least one block');
           return false;
         }
@@ -790,7 +1017,7 @@
         state.format = e.target.value;
         state.program = '';
         state.sessionId = '';
-        state.attendanceType = 'Full';
+        state.blockSelectionType = 'Full';
         state.selectedBlocks = [];
         state.steps = determineSteps();
         buildStepperUI();
@@ -878,13 +1105,8 @@
     const container = qs('#programOptions');
     container.innerHTML = '';
 
-    // Filter programs by format
-    let programs = Object.keys(PROGRAM_DATA);
-
-    if (state.format === 'on-demand') {
-      // TODO: Query Airtable to see which programs have on-demand versions
-      // For now, show all
-    }
+    // Use ordered list of certificate programs
+    let programs = VISIBLE_PROGRAMS;
 
     programs.forEach(programName => {
       const programData = PROGRAM_DATA[programName];
@@ -893,18 +1115,14 @@
 
       card.innerHTML = `
         <input type="radio" name="program" value="${programName}">
-        <div class="program-card">
-          <div class="program-name">${programName}</div>
-          <div class="program-duration">${programData.duration}</div>
-          <div class="program-price">${formatCurrency(programData.price)}</div>
-        </div>
+        <span class="program-name">${programName}</span>
       `;
 
       card.addEventListener('change', (e) => {
         if (e.target.checked) {
           state.program = programName;
           state.sessionId = '';
-          state.attendanceType = 'Full';
+          state.blockSelectionType = 'Full';
           state.selectedBlocks = [];
           state.steps = determineSteps();
           buildStepperUI();
@@ -923,6 +1141,46 @@
   }
 
   // ============================================
+  // PROGRAM DURATION (FROM AIRTABLE)
+  // ============================================
+
+  /**
+   * Fetches program duration from Airtable after session is selected
+   * Used to display dynamic duration in the payment step value stack
+   */
+  async function fetchProgramDuration() {
+    if (!state.sessionId) return;
+
+    try {
+      // Fetch the Program Instance record to get Program Duration
+      const response = await fetch(
+        `/api/airtable-programs?table=Program%20Instances&recordId=${state.sessionId}`
+      );
+
+      if (!response.ok) {
+        console.warn('Failed to fetch program duration');
+        return;
+      }
+
+      const data = await response.json();
+
+      // Extract Program Duration field
+      const duration = data.fields?.['Program Duration'] ||
+                       data.fields?.['Duration'] ||
+                       '';
+
+      if (duration) {
+        state.programDuration = duration;
+        saveStateToSessionStorage();
+      }
+
+    } catch (error) {
+      console.warn('Error fetching program duration:', error);
+      // Fallback handled by default text in left panel content
+    }
+  }
+
+  // ============================================
   // SESSION LOADING
   // ============================================
 
@@ -937,17 +1195,25 @@
     emptyDiv.classList.add('hidden');
 
     try {
-      // Query sessions from Airtable
-      const filter = `AND(
-        {Program} = '${state.program}',
-        {Format} = '${FORMAT_MAP[state.format]}',
-        OR(
-          IS_AFTER({End Date}, TODAY()),
-          IS_SAME({End Date}, TODAY())
-        )
-      )`;
+      // Determine which view to use based on program/format/blocks
+      let viewId;
 
-      const response = await fetch(`/api/airtable-programs?table=tblympiL1p6PmQz9i&filterByFormula=${encodeURIComponent(filter)}&sort[0][field]=Start%20Date&sort[0][direction]=asc`);
+      if (state.blockSelectionType === 'Full' || !isBlockProgram(state.program, state.format)) {
+        // Full program or non-block program - use program view
+        viewId = SESSION_VIEW_IDS[state.program]?.[state.format];
+      } else {
+        // Partial attendance - use first selected block's view
+        // (All selected blocks should have same sessions since consecutive)
+        const firstBlock = state.selectedBlocks[0];
+        viewId = SESSION_VIEW_IDS[firstBlock]?.[state.format];
+      }
+
+      if (!viewId) {
+        console.error(`No view configured for ${state.program} / ${state.format}`);
+        throw new Error('Session configuration not available');
+      }
+
+      const response = await fetch(`/api/airtable-programs?table=tblympiL1p6PmQz9i&view=${viewId}`);
 
       if (!response.ok) {
         throw new Error('Failed to load sessions');
@@ -963,13 +1229,19 @@
         return;
       }
 
+      // Sort sessions by start date (chronological order)
+      sessions.sort((a, b) => {
+        const dateA = a.fields['Start Date'] || '';
+        const dateB = b.fields['Start Date'] || '';
+        return dateA.localeCompare(dateB);
+      });
+
       sessions.forEach(session => {
         const fields = session.fields;
         const card = document.createElement('label');
         card.className = 'session-option';
 
-        const startDate = formatDate(fields['Session Start Date']);
-        const endDate = formatDate(fields['Session End Date']);
+        const dateRange = formatSmartDateRange(fields['Start Date'], fields['End Date']);
         const location = state.format === 'in-person'
           ? `${fields['City']}, ${fields['State/Province']}`
           : fields['Virtual Platform'] || 'Virtual';
@@ -977,7 +1249,7 @@
         card.innerHTML = `
           <input type="radio" name="session" value="${session.id}">
           <div class="session-card">
-            <div class="session-dates">${startDate} - ${endDate}</div>
+            <div class="session-dates">${dateRange}</div>
             <div class="session-location">${location}</div>
           </div>
         `;
@@ -990,16 +1262,18 @@
             state.stateProvince = fields['State/Province'] || '';
             state.venueName = fields['Venue Name'] || '';
 
-            // Parse block dates if applicable
-            if (isBlockProgram(state.program)) {
+            // Parse block dates if applicable (for displaying dates after selection)
+            if (isBlockProgram(state.program, state.format)) {
               state.blockDates = parseBlockDates(session);
               calculateDynamicDates();
             }
 
+            // Fetch program duration for Step 6 value stack (async, non-blocking)
+            fetchProgramDuration();
+
             saveStateToSessionStorage();
             updateNextButtonVisibility();
-            showStep('attendance');
-            loadAttendanceOptions();
+            // Don't auto-navigate - let user click Next
           }
         });
 
@@ -1013,141 +1287,145 @@
   }
 
   // ============================================
-  // ATTENDANCE OPTIONS
+  // BLOCKS SELECTION
   // ============================================
 
-  function loadAttendanceOptions() {
-    const container = qs('#attendanceOptions');
+  function loadBlocksOptions() {
+    const container = qs('#blocksOptions');
     container.innerHTML = '';
 
-    if (!isBlockProgram(state.program)) {
-      showStep('contact');
+    if (!isBlockProgram(state.program, state.format)) {
+      // Skip blocks step - shouldn't happen but safety check
       return;
     }
 
     const programData = PROGRAM_DATA[state.program];
-    const blocks = programData.blocks;
-    const blockPrices = programData.blockPrices;
+    const blockData = getBlocksForFormat(state.program, state.format);
+    const blocks = blockData.list;
+    const blockPrices = blockData.prices;
 
-    // Full program option
+    // ===== FULL PROGRAM OPTION (Radio) =====
     const fullOption = document.createElement('div');
-    fullOption.className = 'attendance-option';
+    fullOption.className = 'block-selection-option';
     fullOption.innerHTML = `
-      <label class="attendance-radio">
-        <input type="radio" name="attendance" value="Full" ${state.attendanceType === 'Full' ? 'checked' : ''}>
-        <div class="attendance-card">
-          <div class="attendance-type">Full Program</div>
-          <div class="attendance-blocks">All ${blocks.length} blocks</div>
-          <div class="attendance-price">${formatCurrency(programData.full || programData.price)}</div>
+      <label class="block-selection-radio">
+        <input type="radio" name="blockSelection" value="Full" ${state.blockSelectionType === 'Full' ? 'checked' : ''}>
+        <div class="full-program-card">
+          <div class="block-selection-indicator"></div>
+          <div class="block-selection-content">
+            <div class="block-selection-header">
+              <span class="block-selection-title">Full Program</span>
+              <span class="block-selection-badge">Best Value</span>
+            </div>
+            <div class="block-selection-meta">Includes all ${blocks.length} blocks</div>
+          </div>
+          <div class="block-selection-price">${formatCurrency(programData.price)}</div>
         </div>
       </label>
     `;
 
-    fullOption.addEventListener('change', () => {
-      state.attendanceType = 'Full';
-      state.selectedBlocks = [];
-      calculateDynamicDates();
-      state.listPrice = programData.full || programData.price;
+    fullOption.querySelector('input').addEventListener('change', () => {
+      state.blockSelectionType = 'Full';
+      state.selectedBlocks = [...blocks]; // All blocks selected
+      state.listPrice = programData.price;
       state.finalPrice = state.listPrice - state.couponDiscount;
       saveStateToSessionStorage();
       updateNextButtonVisibility();
-      updateSidebar();
-      updateBlockCheckboxes();
+      updateBlockCheckboxStates();
     });
 
     container.appendChild(fullOption);
 
-    // Partial selection option
-    const partialOption = document.createElement('div');
-    partialOption.className = 'attendance-option';
-    partialOption.innerHTML = `
-      <div class="attendance-partial">
-        <div class="attendance-header">
-          <label class="attendance-radio">
-            <input type="radio" name="attendance" value="Partial" ${state.attendanceType === 'Partial' ? 'checked' : ''}>
-            <div class="attendance-title">Select Specific Blocks</div>
-          </label>
-        </div>
-        <div class="blocks-selection" id="blocksSelection"></div>
+    // ===== INDIVIDUAL BLOCKS SECTION =====
+    const individualSection = document.createElement('div');
+    individualSection.className = 'block-selection-individual';
+    individualSection.innerHTML = `
+      <div class="block-selection-divider">
+        <span>or select individual blocks</span>
       </div>
+      <div class="individual-blocks-list" id="individualBlocksList"></div>
     `;
+    container.appendChild(individualSection);
 
-    container.appendChild(partialOption);
-
-    // Update blocks selection when Partial is selected
-    const partialInput = partialOption.querySelector('input[value="Partial"]');
-    partialInput.addEventListener('change', () => {
-      state.attendanceType = 'Partial';
-      saveStateToSessionStorage();
-      updateNextButtonVisibility();
-      updateBlockCheckboxes();
-    });
-
-    // Add block checkboxes
-    const blocksContainer = qs('#blocksSelection');
-    blocks.forEach(blockName => {
+    // ===== INDIVIDUAL BLOCK CHECKBOXES =====
+    const blocksList = qs('#individualBlocksList');
+    blocks.forEach((blockName, index) => {
       const blockDiv = document.createElement('div');
-      blockDiv.className = 'block-checkbox';
-      const isSelected = state.selectedBlocks.includes(blockName);
-
-      const blockDates = state.blockDates[blockName];
-      const datesText = blockDates ? formatDateRange(blockDates.start, blockDates.end) : '—';
+      blockDiv.className = 'individual-block-item';
+      const isSelected = state.blockSelectionType === 'Partial' &&
+                         state.selectedBlocks.includes(blockName);
 
       blockDiv.innerHTML = `
-        <label>
-          <input type="checkbox" name="block" value="${blockName}" ${isSelected ? 'checked' : ''}>
-          <div class="block-info">
-            <div class="block-name">${blockName} - ${datesText}</div>
-            <div class="block-price">${formatCurrency(blockPrices[blockName] || 0)}</div>
+        <label class="individual-block-label">
+          <input type="checkbox" name="individualBlock" value="${blockName}" ${isSelected ? 'checked' : ''}>
+          <div class="individual-block-card">
+            <div class="individual-block-checkbox"></div>
+            <div class="individual-block-info">
+              <span class="individual-block-name">${blockName}</span>
+              <span class="individual-block-order">Block ${index + 1}</span>
+            </div>
+            <div class="individual-block-price">${formatCurrency(blockPrices[blockName] || 0)}</div>
           </div>
         </label>
       `;
 
-      blockDiv.addEventListener('change', (e) => {
-        if (state.attendanceType !== 'Partial') {
-          partialInput.checked = true;
-          state.attendanceType = 'Partial';
-        }
-
-        const selectedBlocks = Array.from(qsa('#blocksSelection input[type="checkbox"]:checked'))
-          .map(cb => cb.value);
-
-        if (!validateConsecutiveBlocks(selectedBlocks)) {
-          e.target.checked = false;
-          showErrorMessage('Must select consecutive blocks only');
-          return;
-        }
-
-        state.selectedBlocks = selectedBlocks;
-        calculateDynamicDates();
-
-        // Recalculate pricing
-        const totalBlockPrice = selectedBlocks.reduce((sum, block) => sum + (blockPrices[block] || 0), 0);
-        state.listPrice = totalBlockPrice;
-        state.finalPrice = state.listPrice - state.couponDiscount;
-
-        saveStateToSessionStorage();
-        updateNextButtonVisibility();
-        updateSidebar();
-        updateBlockCheckboxes();
+      blockDiv.querySelector('input').addEventListener('change', (e) => {
+        handleBlockCheckboxChange(e, blocks, blockPrices, programData);
       });
 
-      blocksContainer.appendChild(blockDiv);
+      blocksList.appendChild(blockDiv);
     });
 
-    updateBlockCheckboxes();
+    updateBlockCheckboxStates();
   }
 
-  function updateBlockCheckboxes() {
+  function handleBlockCheckboxChange(e, blocks, blockPrices, programData) {
+    // Uncheck Full Program radio when individual blocks are selected
+    const fullRadio = qs('input[name="blockSelection"][value="Full"]');
+    if (fullRadio) fullRadio.checked = false;
+
+    state.blockSelectionType = 'Partial';
+
+    // Get currently selected blocks
+    const selectedBlocks = Array.from(qsa('#individualBlocksList input[type="checkbox"]:checked'))
+      .map(cb => cb.value);
+
+    // Validate consecutive blocks
+    if (!validateConsecutiveBlocks(selectedBlocks)) {
+      e.target.checked = false;
+      showErrorMessage('Please select consecutive blocks only');
+      return;
+    }
+
+    state.selectedBlocks = selectedBlocks;
+
+    // Recalculate pricing
+    if (selectedBlocks.length === blocks.length) {
+      // All blocks selected = full program price
+      state.listPrice = programData.price;
+    } else {
+      // Sum of individual block prices
+      const totalBlockPrice = selectedBlocks.reduce((sum, block) =>
+        sum + (blockPrices[block] || 0), 0);
+      state.listPrice = totalBlockPrice;
+    }
+    state.finalPrice = state.listPrice - state.couponDiscount;
+
+    saveStateToSessionStorage();
+    updateNextButtonVisibility();
+    updateBlockCheckboxStates();
+  }
+
+  function updateBlockCheckboxStates() {
     const disabledBlocks = getDisabledBlocks(state.selectedBlocks);
-    const checkboxes = qsa('#blocksSelection input[type="checkbox"]');
+    const checkboxes = qsa('#individualBlocksList input[type="checkbox"]');
 
     checkboxes.forEach(checkbox => {
-      if (state.attendanceType === 'Full') {
-        checkbox.disabled = true;
+      // Only disable non-consecutive blocks (for consecutive validation)
+      checkbox.disabled = disabledBlocks.includes(checkbox.value);
+      // Uncheck if Full is selected, but keep clickable
+      if (state.blockSelectionType === 'Full') {
         checkbox.checked = false;
-      } else {
-        checkbox.disabled = disabledBlocks.includes(checkbox.value);
       }
     });
   }
@@ -1240,7 +1518,7 @@
       couponMessage.className = 'coupon-message success';
 
       // Update sidebar with new pricing
-      updateSidebar();
+      updateLeftPanel();
 
       // Save state
       saveStateToSessionStorage();
@@ -1480,9 +1758,9 @@
         company_name: state.contactCompany,
         selected_program: state.program,
         program_format: FORMAT_MAP[state.format],
-        session_start_date: formatDate(state.dynamicStartDate || state.sessionRecord.fields['Session Start Date']),
-        session_end_date: formatDate(state.dynamicEndDate || state.sessionRecord.fields['Session End Date']),
-        attendance_type: state.attendanceType,
+        session_start_date: formatDate(state.dynamicStartDate || state.sessionRecord.fields['Start Date']),
+        session_end_date: formatDate(state.dynamicEndDate || state.sessionRecord.fields['End Date']),
+        attendance_type: state.blockSelectionType,
         selected_blocks: state.selectedBlocks.join(', '),
         city: state.city,
         state: state.stateProvince,
@@ -1635,7 +1913,7 @@
     }
 
     setupEventListeners();
-    updateSidebar();
+    updateLeftPanel();
   }
 
   // Initialize Stripe Elements

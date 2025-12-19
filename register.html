@@ -34,27 +34,27 @@
   <!-- Skip Link for Accessibility -->
   <a href="#main-content" class="skip-link">Skip to main content</a>
 
-  <!-- Simple Header -->
-  <header class="register-header">
-    <a href="/" class="register-logo">
-      <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML - Institute for Applied Management & Law" height="50">
-    </a>
-    <a href="/" class="register-back-link">← Back to Home</a>
-  </header>
-
   <main id="main-content" class="register-main">
-    <div class="register-container">
-      <!-- Left Column: Form -->
-      <div class="register-form-column">
-        <!-- Progress Stepper -->
-        <nav class="register-stepper" aria-label="Registration progress">
-          <ol class="stepper-list" id="stepperList">
-            <!-- Steps dynamically generated based on format/program -->
-          </ol>
-        </nav>
+    <div class="register-split-container">
+      <!-- LEFT PANEL: Dynamic Messaging -->
+      <div class="register-left-panel" id="registerLeftPanel">
+        <div class="left-panel-content" id="leftPanelContent">
+          <!-- Content injected by JS per step -->
+        </div>
+      </div>
 
-        <!-- Step Cards -->
-        <div class="register-steps">
+      <!-- RIGHT PANEL: Form Card -->
+      <div class="register-right-panel">
+        <div class="register-form-card">
+          <!-- Progress Stepper -->
+          <nav class="register-stepper" aria-label="Registration progress">
+            <ol class="stepper-list" id="stepperList">
+              <!-- Steps dynamically generated based on format/program -->
+            </ol>
+          </nav>
+
+          <!-- Step Cards -->
+          <div class="register-steps">
           <!-- Step 1: Format Selection -->
           <section id="step-format" class="register-step" data-step="format" aria-labelledby="step-format-title">
             <h2 id="step-format-title" class="step-title">Select Your Program Format</h2>
@@ -118,12 +118,12 @@
             </div>
           </section>
 
-          <!-- Step 4: Attendance Selection (only for block programs) -->
-          <section id="step-attendance" class="register-step hidden" data-step="attendance" aria-labelledby="step-attendance-title">
-            <h2 id="step-attendance-title" class="step-title">Select Your Attendance</h2>
+          <!-- Step 3: Blocks Selection (only for block programs, before session) -->
+          <section id="step-blocks" class="register-step hidden" data-step="blocks" aria-labelledby="step-blocks-title">
+            <h2 id="step-blocks-title" class="step-title">Select Your Blocks</h2>
             <p class="step-subtitle">Choose to attend the full program or select specific blocks</p>
-            <div class="attendance-options" id="attendanceOptions">
-              <!-- Attendance options populated by JS -->
+            <div class="blocks-options" id="blocksOptions">
+              <!-- Block options populated by JS -->
             </div>
           </section>
 
@@ -398,70 +398,16 @@
               </div>
             </div>
           </section>
-        </div>
+          </div>
 
-        <!-- Navigation Buttons -->
-        <div class="register-nav">
-          <button type="button" id="backBtn" class="btn btn-secondary">← Back</button>
-          <div class="nav-spacer"></div>
-          <button type="button" id="nextBtn" class="btn btn-primary">Next →</button>
+          <!-- Navigation Buttons -->
+          <div class="register-nav">
+            <button type="button" id="backBtn" class="btn btn-secondary">← Back</button>
+            <div class="nav-spacer"></div>
+            <button type="button" id="nextBtn" class="btn btn-primary">Next →</button>
+          </div>
         </div>
       </div>
-
-      <!-- Right Column: Sidebar Summary -->
-      <aside class="register-sidebar" id="registerSidebar" aria-label="Registration summary">
-        <div class="sidebar-content">
-          <h3 class="sidebar-title">Registration Summary</h3>
-
-          <!-- Program Info -->
-          <div class="sidebar-section">
-            <span class="sidebar-label">Program:</span>
-            <span class="sidebar-value" id="sidebarProgram">—</span>
-          </div>
-
-          <!-- Format Badge -->
-          <div class="sidebar-section">
-            <span id="sidebarFormatBadge" class="format-badge">—</span>
-          </div>
-
-          <!-- Attendance Info (for block programs) -->
-          <div class="sidebar-section" id="sidebarAttendanceSection" style="display: none;">
-            <span class="sidebar-label">Attendance:</span>
-            <span class="sidebar-value" id="sidebarAttendance">—</span>
-          </div>
-
-          <!-- Session Info (for in-person/virtual) -->
-          <div class="sidebar-section" id="sidebarSessionSection" style="display: none;">
-            <span class="sidebar-label">Dates:</span>
-            <span class="sidebar-value" id="sidebarDates">—</span>
-          </div>
-
-          <!-- Location Info (for in-person only) -->
-          <div class="sidebar-section" id="sidebarLocationSection" style="display: none;">
-            <span class="sidebar-label">Location:</span>
-            <span class="sidebar-value" id="sidebarLocation">—</span>
-          </div>
-
-          <!-- Divider -->
-          <div class="sidebar-divider"></div>
-
-          <!-- Pricing -->
-          <div class="sidebar-section pricing">
-            <div class="pricing-row">
-              <span class="pricing-label">Program Price:</span>
-              <span class="pricing-value" id="sidebarListPrice">—</span>
-            </div>
-            <div class="pricing-row" id="sidebarDiscountRow" style="display: none;">
-              <span class="pricing-label">Discount:</span>
-              <span class="pricing-value discount" id="sidebarDiscount">—</span>
-            </div>
-            <div class="pricing-row total">
-              <span class="pricing-label">Total:</span>
-              <span class="pricing-value" id="sidebarTotal">—</span>
-            </div>
-          </div>
-        </div>
-      </aside>
     </div>
   </main>
 
