@@ -5457,6 +5457,19 @@ button#prev-btn {
         }
 
         /**
+         * Ensure URL has proper protocol
+         */
+        ensureProtocol(url) {
+            if (!url) return '';
+            url = url.trim();
+            // If URL doesn't start with http:// or https://, add https://
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                return 'https://' + url;
+            }
+            return url;
+        }
+
+        /**
          * Determine which booking link to use based on group rate cutoff date
          */
         getBookingLinkInfo(program) {
@@ -5509,7 +5522,10 @@ button#prev-btn {
                 buttonText = 'Reserve Your Room';
             }
 
-            showButton = !!linkUrl;
+            // Ensure URL has proper protocol
+            linkUrl = this.ensureProtocol(linkUrl);
+
+            showButton = !!linkUrl && linkUrl !== '';
 
             console.log('Final linkUrl:', linkUrl);
             console.log('Button text:', buttonText);
