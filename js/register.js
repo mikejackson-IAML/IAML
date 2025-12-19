@@ -173,9 +173,8 @@
       ]
     },
     'session': {
-      type: 'standard',
-      headline: 'Learn In-Person, Across the Country',
-      subtext: 'Experience immersive learning in professional settings designed to maximize engagement and networking opportunities with fellow HR leaders.'
+      type: 'program-takeaways',
+      headline: 'Great choice! After this program, you\'ll be able to...'
     },
     'blocks': {
       type: 'standard',
@@ -198,6 +197,56 @@
         { text: 'Networking with HR peers' }
       ]
     }
+  };
+
+  // Program-specific takeaways for session step
+  const PROGRAM_TAKEAWAYS = {
+    'Certificate in Employee Relations Law': [
+      'Handle employee terminations with confidence, knowing exactly what documentation you need',
+      'Navigate FMLA/ADA intersection issues that trip up even experienced HR professionals',
+      'Spot wage-hour compliance gaps before they become class action exposure',
+      'Conduct workplace investigations that hold up under legal scrutiny',
+      'Advise managers on discipline situations without second-guessing yourself',
+      'Draft separation agreements and releases that actually protect your organization'
+    ],
+    'Certificate in Strategic HR Leadership': [
+      'Move from tactical HR execution to strategic business partnership',
+      'Build and develop high-performing HR teams that operate independently',
+      'Create measurable HR metrics that demonstrate department value to leadership',
+      'Handle complex employee situations without escalating everything upward',
+      'Design performance management systems that actually improve performance',
+      'Position yourself for advancement from manager to director-level roles'
+    ],
+    'Certificate in Employee Benefits Law': [
+      'Navigate ACA, COBRA, and ERISA compliance without outside counsel for routine issues',
+      'Manage HIPAA requirements across your benefits administration',
+      'Handle Section 125 cafeteria plans and FSA administration confidently',
+      'Complete Form 5500 filings accurately and on time',
+      'Design benefits packages that attract talent while managing fiduciary risk',
+      'Advise leadership on benefits strategy with credibility'
+    ],
+    'Advanced Certificate in Strategic Employment Law': [
+      'Apply the latest case law developments to your organization\'s policies',
+      'Anticipate regulatory changes before they impact your compliance posture',
+      'Handle emerging issues like AI in hiring, pay transparency, and remote work compliance',
+      'Network with peers facing similar challenges across industries',
+      'Update your employment law knowledge in a concentrated format'
+    ],
+    'Certificate in Workplace Investigations': [
+      'Conduct investigations from intake to final report using legally defensible methodology',
+      'Interview witnesses effectively while maintaining neutrality and documentation',
+      'Write investigation reports that withstand legal challenge',
+      'Know when to bring in outside investigators vs. handle internally',
+      'Preserve evidence and maintain confidentiality throughout the process',
+      'Make credibility determinations you can defend'
+    ],
+    'Advanced Certificate in Employee Benefits Law': [
+      'Handle complex multi-state benefits compliance across your organization',
+      'Navigate ERISA fiduciary responsibilities with confidence',
+      'Manage retirement plan administration and audit preparation',
+      'Address sophisticated benefits questions without defaulting to outside counsel',
+      'Design executive compensation arrangements that comply with regulatory requirements'
+    ]
   };
 
   const CITY_ABBREVIATIONS = {
@@ -357,7 +406,23 @@
   }
 
   function formatCurrency(amount) {
-    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(amount);
+  }
+
+  function formatPhoneNumber(value) {
+    // Remove all non-digits
+    const digits = value.replace(/\D/g, '');
+
+    // Format based on length: (xxx) xxx-xxxx
+    if (digits.length === 0) return '';
+    if (digits.length <= 3) return `(${digits}`;
+    if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`;
+    return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6, 10)}`;
   }
 
   function isBlockProgram(programName, format) {
@@ -675,6 +740,11 @@
       loadSessions();
     }
 
+    // Update order summary when showing payment step
+    if (stepName === 'payment-method') {
+      updateOrderSummary();
+    }
+
     // Scroll to top
     window.scrollTo(0, 0);
   }
@@ -707,6 +777,54 @@
 
     // Update button visibility
     updateNextButtonVisibility();
+  }
+
+  function updateOrderSummary() {
+    // Program name
+    qs('#summaryProgram').textContent = state.program || '—';
+
+    // Location
+    let location = '—';
+    if (state.format === 'in-person' && state.city) {
+      location = state.stateProvince ? `${state.city}, ${state.stateProvince}` : state.city;
+    } else if (state.format === 'virtual') {
+      location = 'Virtual';
+    } else if (state.format === 'on-demand') {
+      location = 'On-Demand';
+    }
+    qs('#summaryLocation').textContent = location;
+
+    // Dates
+    let dates = '—';
+    if (state.sessionRecord) {
+      const fields = state.sessionRecord.fields;
+      dates = formatSmartDateRange(fields['Start Date'], fields['End Date']);
+    } else if (state.format === 'on-demand') {
+      dates = 'Self-paced';
+    }
+    qs('#summaryDates').textContent = dates;
+
+    // Price and Discount rows - only show if discount applied
+    const priceRow = qs('#summaryPriceRow');
+    const discountRow = qs('#summaryDiscountRow');
+    const priceDivider = qs('#summaryPriceDivider');
+
+    if (state.couponDiscount > 0) {
+      // Show price breakdown when discount is applied
+      priceRow.classList.remove('hidden');
+      discountRow.classList.remove('hidden');
+      priceDivider.classList.remove('hidden');
+      qs('#summaryPrice').textContent = formatCurrency(state.listPrice);
+      qs('#summaryDiscount').textContent = `-${formatCurrency(state.couponDiscount)}`;
+    } else {
+      // Hide price breakdown, only show total
+      priceRow.classList.add('hidden');
+      discountRow.classList.add('hidden');
+      priceDivider.classList.add('hidden');
+    }
+
+    // Total
+    qs('#summaryTotal').textContent = formatCurrency(state.finalPrice);
   }
 
   function updateNextButtonVisibility() {
@@ -797,6 +915,9 @@
 
       case 'stats':
         html = `
+          <div class="panel-logo">
+            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML" height="60">
+          </div>
           <h2 class="panel-headline">${content.headline}</h2>
           <p class="panel-subtext">${content.subtext}</p>
           <div class="panel-stats">
@@ -812,13 +933,45 @@
 
       case 'standard':
         html = `
+          <div class="panel-logo">
+            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML" height="60">
+          </div>
           <h2 class="panel-headline">${content.headline}</h2>
           <p class="panel-subtext">${content.subtext}</p>
         `;
         break;
 
+      case 'program-takeaways':
+        // Get takeaways for current program and randomly select 4
+        const allTakeaways = PROGRAM_TAKEAWAYS[state.program] || [];
+        const shuffled = [...allTakeaways].sort(() => Math.random() - 0.5);
+        const selectedTakeaways = shuffled.slice(0, 4);
+
+        html = `
+          <div class="panel-logo">
+            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML" height="60">
+          </div>
+          <h2 class="panel-headline">${content.headline}</h2>
+          <div class="value-stack">
+            ${selectedTakeaways.map(text => `
+              <div class="value-item">
+                <span class="value-icon">✓</span>
+                <span class="value-text">${text}</span>
+              </div>
+            `).join('')}
+            <div class="value-item">
+              <span class="value-icon">✓</span>
+              <span class="value-text">...and much more!</span>
+            </div>
+          </div>
+        `;
+        break;
+
       case 'value-stack':
         html = `
+          <div class="panel-logo">
+            <img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg" alt="IAML" height="60">
+          </div>
           <h2 class="panel-headline">${content.headline}</h2>
           <div class="value-stack">
             ${content.values.map(value => {
@@ -891,7 +1044,7 @@
           return false;
         }
         if (state.paymentMethod === 'invoice') {
-          return validateBillingForm();
+          return true;  // No billing form needed for invoice
         }
         return true;
 
@@ -941,55 +1094,6 @@
     state.contactPhone = qs('#phone').value.trim();
     state.contactTitle = qs('#contactTitle').value.trim();
     state.contactCompany = qs('#company').value.trim();
-
-    return true;
-  }
-
-  function validateBillingForm() {
-    let hasError = false;
-
-    const fields = [
-      { id: 'billingContactName', errorId: 'billingContactNameError', message: 'Billing contact name is required' },
-      { id: 'billingContactEmail', errorId: 'billingContactEmailError', message: 'Valid email is required', type: 'email' },
-      { id: 'billingAddress', errorId: 'billingAddressError', message: 'Billing address is required' },
-      { id: 'billingCity', errorId: 'billingCityError', message: 'City is required' },
-      { id: 'billingState', errorId: 'billingStateError', message: 'State is required' },
-      { id: 'billingZip', errorId: 'billingZipError', message: 'ZIP code is required' }
-    ];
-
-    fields.forEach(field => {
-      const input = qs(`#${field.id}`);
-      const errorEl = qs(`#${field.errorId}`);
-      let isValid = input.value.trim().length > 0;
-
-      if (isValid && field.type === 'email') {
-        isValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value);
-      }
-
-      if (!isValid) {
-        errorEl.textContent = field.message;
-        errorEl.classList.add('visible');
-        hasError = true;
-      } else {
-        errorEl.textContent = '';
-        errorEl.classList.remove('visible');
-      }
-    });
-
-    if (hasError) {
-      showErrorMessage('Please fill in all billing information');
-      return false;
-    }
-
-    // Save billing info
-    state.billingContactName = qs('#billingContactName').value.trim();
-    state.billingContactEmail = qs('#billingContactEmail').value.trim();
-    state.billingAddress = qs('#billingAddress').value.trim();
-    state.billingCity = qs('#billingCity').value.trim();
-    state.billingState = qs('#billingState').value.trim();
-    state.billingZip = qs('#billingZip').value.trim();
-    state.billingPO = qs('#billingPO').value.trim();
-    state.billingNotes = qs('#billingNotes').value.trim();
 
     return true;
   }
@@ -1048,7 +1152,7 @@
         const stripeForm = qs('#stripePaymentForm');
 
         if (e.target.value === 'invoice') {
-          invoiceForm.classList.remove('hidden');
+          invoiceForm.classList.add('hidden');  // No billing form for invoice
           stripeForm.classList.add('hidden');
         } else {
           invoiceForm.classList.add('hidden');
@@ -1063,6 +1167,14 @@
     const applyCouponBtn = qs('#applyCouponBtn');
     if (applyCouponBtn) {
       applyCouponBtn.addEventListener('click', handleApplyCoupon);
+    }
+
+    // Phone number auto-formatting
+    const phoneInput = qs('#phone');
+    if (phoneInput) {
+      phoneInput.addEventListener('input', (e) => {
+        e.target.value = formatPhoneNumber(e.target.value);
+      });
     }
 
     // Error banner close

@@ -5008,11 +5008,11 @@
 .register-left-panel {
   flex: 0 0 50%;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
   background: transparent;
   color: var(--gray-900);
-  padding: var(--space-3xl) var(--space-2xl) var(--space-3xl) var(--space-4xl);
+  padding: 120px var(--space-2xl) var(--space-3xl) var(--space-4xl);
   position: relative;
   height: auto;
   min-height: 100vh;
@@ -5027,7 +5027,7 @@
 /* Panel Headlines */
 .panel-headline {
   font-family: var(--font-heading);
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 600;
   line-height: 1.1;
   margin-bottom: var(--space-lg);
@@ -5051,7 +5051,7 @@
   font-family: var(--font-heading);
   font-size: clamp(1.5rem, 2.5vw, 2rem);
   font-weight: 500;
-  font-style: normal;
+  font-style: italic;
   line-height: 1.2;
   margin: 0 0 var(--space-xl) 0;
   padding: 0;
@@ -5069,7 +5069,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 1px;
   margin-top: var(--space-lg);
   text-align: center;
 }
@@ -5148,7 +5148,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: var(--blue-primary);
+  background: var(--blue-dark);
   border-radius: 50%;
   font-size: var(--text-sm);
   color: var(--white);
@@ -5224,15 +5224,15 @@
   border: none;
 }
 
-/* Active dot - filled blue */
+/* Active dot - filled dark blue */
 .register-form-card .stepper-item.active .stepper-number {
-  background: var(--blue-primary);
+  background: var(--blue-dark);
   box-shadow: none;
 }
 
 /* Completed dot */
 .register-form-card .stepper-item.completed .stepper-number {
-  background: var(--blue-primary);
+  background: var(--blue-dark);
 }
 
 /* Connecting lines between dots */
@@ -5245,7 +5245,7 @@
 }
 
 .register-form-card .stepper-item.completed:not(:last-child)::after {
-  background: var(--blue-primary);
+  background: var(--blue-dark);
 }
 
 /* Steps inside card - remove individual card styling */
@@ -5819,6 +5819,10 @@ input[type="radio"].session-radio {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 20px;
+}
+
+.form-row + .form-row {
+  margin-top: var(--space-lg);
 }
 
 .form-field {
@@ -6963,6 +6967,80 @@ input[type="radio"].session-radio {
 }
 
 /* ========================================
+   ORDER SUMMARY STYLES
+   ======================================== */
+
+.order-summary {
+  background: var(--gray-50);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-lg);
+  margin-bottom: var(--space-xl);
+}
+
+.order-summary-title {
+  font-family: var(--font-heading);
+  font-size: var(--text-lg);
+  font-weight: 600;
+  color: var(--gray-900);
+  margin: 0 0 var(--space-md) 0;
+}
+
+.order-summary-details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+.order-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md);
+}
+
+.order-label {
+  color: var(--gray-600);
+  font-size: var(--text-sm);
+}
+
+.order-value {
+  color: var(--gray-900);
+  font-weight: 500;
+  text-align: right;
+  max-width: 60%;
+}
+
+.order-summary-divider {
+  height: 1px;
+  background: var(--gray-200);
+  margin: var(--space-sm) 0;
+}
+
+.order-summary-row.discount-row .order-value {
+  color: #16a34a;
+}
+
+.order-summary-row.total-row {
+  padding-top: var(--space-xs);
+}
+
+.order-summary-row.total-row .order-label,
+.order-summary-row.total-row .order-value {
+  font-size: var(--text-lg);
+  font-weight: 600;
+}
+
+.order-summary-row.total-row .order-value {
+  color: var(--gray-900);
+}
+
+.order-summary-row.hidden,
+.order-summary-divider.hidden {
+  display: none;
+}
+
+/* ========================================
    PAYMENT METHOD SELECTION STYLES
    ======================================== */
 
@@ -7006,18 +7084,27 @@ input[type="radio"].session-radio {
 }
 
 .payment-icon {
-  font-size: 2.5rem;
-  line-height: 1;
+  color: var(--gray-400);
+  margin-bottom: var(--space-sm);
 }
 
-.payment-info strong {
+.payment-icon svg {
+  display: block;
+}
+
+.payment-title {
+  display: block;
   font-size: var(--text-lg);
-  color: var(--color-dark);
+  font-weight: 600;
+  color: var(--gray-900);
+  text-align: center;
 }
 
-.payment-info span {
+.payment-description {
+  display: block;
   font-size: var(--text-sm);
-  color: var(--color-muted);
+  color: var(--gray-500);
+  text-align: center;
 }
 
 /* Invoice & Stripe Forms */

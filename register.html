@@ -179,6 +179,39 @@
 
           <!-- Step 6: Payment Method Selection -->
           <section id="step-payment-method" class="register-step hidden" data-step="payment-method" aria-labelledby="step-payment-method-title">
+            <!-- Order Summary -->
+            <div class="order-summary" id="orderSummary">
+              <h3 class="order-summary-title">Order Summary</h3>
+              <div class="order-summary-details">
+                <div class="order-summary-row">
+                  <span class="order-label">Program</span>
+                  <span class="order-value" id="summaryProgram">—</span>
+                </div>
+                <div class="order-summary-row">
+                  <span class="order-label">Location</span>
+                  <span class="order-value" id="summaryLocation">—</span>
+                </div>
+                <div class="order-summary-row">
+                  <span class="order-label">Dates</span>
+                  <span class="order-value" id="summaryDates">—</span>
+                </div>
+                <div class="order-summary-divider hidden" id="summaryPriceDivider"></div>
+                <div class="order-summary-row hidden" id="summaryPriceRow">
+                  <span class="order-label">Price</span>
+                  <span class="order-value" id="summaryPrice">—</span>
+                </div>
+                <div class="order-summary-row discount-row hidden" id="summaryDiscountRow">
+                  <span class="order-label">Discount</span>
+                  <span class="order-value discount" id="summaryDiscount">—</span>
+                </div>
+                <div class="order-summary-divider"></div>
+                <div class="order-summary-row total-row">
+                  <span class="order-label">Total</span>
+                  <span class="order-value total" id="summaryTotal">—</span>
+                </div>
+              </div>
+            </div>
+
             <h2 id="step-payment-method-title" class="step-title">Payment Method</h2>
             <p class="step-subtitle">Choose how you'd like to pay</p>
 
@@ -186,21 +219,30 @@
               <label class="payment-method-option">
                 <input type="radio" name="paymentMethod" value="invoice">
                 <div class="payment-method-card">
-                  <div class="payment-icon">📄</div>
-                  <div class="payment-info">
-                    <strong>Request Invoice</strong>
-                    <span>We'll send you an invoice within 24 hours</span>
+                  <div class="payment-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                      <polyline points="14 2 14 8 20 8"></polyline>
+                      <line x1="16" y1="13" x2="8" y2="13"></line>
+                      <line x1="16" y1="17" x2="8" y2="17"></line>
+                      <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
                   </div>
+                  <strong class="payment-title">Request Invoice</strong>
+                  <span class="payment-description">We'll send you an invoice within 24 hours</span>
                 </div>
               </label>
               <label class="payment-method-option">
                 <input type="radio" name="paymentMethod" value="stripe">
                 <div class="payment-method-card">
-                  <div class="payment-icon">💳</div>
-                  <div class="payment-info">
-                    <strong>Pay Now with Card</strong>
-                    <span>Complete your registration today via secure payment</span>
+                  <div class="payment-icon">
+                    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+                      <line x1="1" y1="10" x2="23" y2="10"></line>
+                    </svg>
                   </div>
+                  <strong class="payment-title">Pay Now with Card</strong>
+                  <span class="payment-description">Complete your registration today via secure payment</span>
                 </div>
               </label>
             </div>
