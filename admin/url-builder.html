@@ -345,11 +345,21 @@
     (function() {
       'use strict';
 
-      // Program configuration - which programs have blocks
+      // Program configuration - which programs have blocks (by format)
+      // Matches PROGRAM_DATA in register.js
       const BLOCK_PROGRAMS = {
-        'employee-relations-law': ['Block I', 'Block II', 'Block III'],
-        'strategic-employment-law': ['Block I', 'Block II', 'Block III'],
-        'workplace-investigations': ['Block I', 'Block II']
+        'employee-relations-law': {
+          'in-person': ['Comprehensive Labor Relations', 'Discrimination Prevention and Defense', 'Special Issues in Employment Law'],
+          'virtual': ['Comprehensive Labor Relations', 'Discrimination Prevention and Defense']
+        },
+        'strategic-hr': {
+          'in-person': ['HR Law Fundamentals', 'Strategic HR Management'],
+          'virtual': ['HR Law Fundamentals', 'Strategic HR Management']
+        },
+        'employee-benefits-law': {
+          'in-person': ['Retirement Plans', 'Benefit Plan Claims, Appeals and Litigation', 'Welfare Benefits Plan Issues']
+          // No virtual blocks for this program
+        }
       };
 
       // Elements
@@ -390,9 +400,24 @@
         if (format === 'on-demand') {
           sessionGroup.classList.add('hidden');
           sessionEl.value = '';
+          // Also hide blocks for on-demand
+          blocksGroup.classList.add('hidden');
+          blocksContainer.innerHTML = '';
         } else if (format && program) {
           sessionGroup.classList.remove('hidden');
           loadSessions();
+
+          // Refresh blocks when format changes (blocks vary by format)
+          const programBlocks = BLOCK_PROGRAMS[program];
+          const formatBlocks = programBlocks && programBlocks[format];
+
+          if (formatBlocks && formatBlocks.length > 0) {
+            populateBlocks(formatBlocks);
+            blocksGroup.classList.remove('hidden');
+          } else {
+            blocksGroup.classList.add('hidden');
+            blocksContainer.innerHTML = '';
+          }
         }
 
         updateURL();
@@ -402,9 +427,12 @@
         const program = programEl.value;
         const format = formatEl.value;
 
-        // Handle blocks
-        if (BLOCK_PROGRAMS[program]) {
-          populateBlocks(BLOCK_PROGRAMS[program]);
+        // Handle blocks - check if program has blocks for this format
+        const programBlocks = BLOCK_PROGRAMS[program];
+        const formatBlocks = programBlocks && programBlocks[format];
+
+        if (formatBlocks && formatBlocks.length > 0) {
+          populateBlocks(formatBlocks);
           blocksGroup.classList.remove('hidden');
         } else {
           blocksGroup.classList.add('hidden');

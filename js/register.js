@@ -92,6 +92,16 @@
     'Advanced Certificate in Employee Benefits Law'
   ];
 
+  // Map URL slugs to full program names for deep linking
+  const PROGRAM_SLUG_MAP = {
+    'employee-relations-law': 'Certificate in Employee Relations Law',
+    'strategic-employment-law': 'Advanced Certificate in Strategic Employment Law',
+    'strategic-hr': 'Certificate in Strategic HR Leadership',
+    'workplace-investigations': 'Certificate in Workplace Investigations',
+    'employee-benefits-law': 'Certificate in Employee Benefits Law',
+    'advanced-benefits-law': 'Advanced Certificate in Employee Benefits Law'
+  };
+
   const FORMAT_MAP = {
     'in-person': 'In-Person',
     'virtual': 'Virtual',
@@ -331,7 +341,10 @@
     paymentIntentId: '',
 
     // Program Duration (fetched from Airtable)
-    programDuration: ''
+    programDuration: '',
+
+    // URL Pre-selection flag
+    preselectedFromURL: false
   };
 
   // ============================================
@@ -340,6 +353,24 @@
 
   const qs = (selector) => document.querySelector(selector);
   const qsa = (selector) => document.querySelectorAll(selector);
+
+  // Parse URL parameters for deep linking
+  function parseURLParams() {
+    const params = new URLSearchParams(window.location.search);
+    return {
+      format: params.get('format'),
+      program: params.get('program'),
+      session: params.get('session'),
+      blocks: params.get('blocks')
+    };
+  }
+
+  // Clear URL params after processing (prevents re-processing on refresh)
+  function clearURLParams() {
+    const url = new URL(window.location);
+    url.search = '';
+    window.history.replaceState({}, '', url.toString());
+  }
 
   function formatDate(date) {
     if (!date) return '—';
@@ -745,8 +776,88 @@
       updateOrderSummary();
     }
 
+    // Show pre-selection summary on contact step if came from URL deep link
+    if (stepName === 'contact' && state.preselectedFromURL) {
+      showPreSelectionSummary();
+    }
+
     // Scroll to top
     window.scrollTo(0, 0);
+  }
+
+  // Show summary banner when user arrives via URL pre-selection
+  function showPreSelectionSummary() {
+    const contactStep = qs('#step-contact');
+    if (!contactStep) return;
+
+    // Remove existing summary if any
+    const existingSummary = qs('#preSelectionSummary');
+    if (existingSummary) existingSummary.remove();
+
+    // Build location/dates display
+    let locationDisplay = '';
+    let datesDisplay = '';
+
+    if (state.format === 'on-demand') {
+      locationDisplay = 'On-Demand';
+      datesDisplay = 'Start anytime';
+    } else if (state.format === 'virtual') {
+      locationDisplay = 'Virtual (Live Online)';
+      if (state.sessionRecord?.fields) {
+        const fields = state.sessionRecord.fields;
+        datesDisplay = formatSmartDateRange(fields['Start Date'], fields['End Date']);
+      }
+    } else {
+      // In-person
+      locationDisplay = state.city && state.stateProvince
+        ? `${state.city}, ${state.stateProvince}`
+        : state.city || 'Location TBD';
+      if (state.sessionRecord?.fields) {
+        const fields = state.sessionRecord.fields;
+        datesDisplay = formatSmartDateRange(fields['Start Date'], fields['End Date']);
+      }
+    }
+
+    // Build blocks info if partial attendance
+    let blocksNote = '';
+    if (state.blockSelectionType === 'Partial' && state.selectedBlocks.length > 0) {
+      blocksNote = `<span class="preselection-blocks">Attending: ${state.selectedBlocks.join(', ')}</span>`;
+    }
+
+    // Create summary element
+    const summaryEl = document.createElement('div');
+    summaryEl.id = 'preSelectionSummary';
+    summaryEl.className = 'preselection-summary';
+    summaryEl.innerHTML = `
+      <div class="preselection-header">
+        <span class="preselection-badge">${FORMAT_MAP[state.format] || state.format}</span>
+        <button type="button" class="preselection-change-btn" id="changeSelectionBtn">Change</button>
+      </div>
+      <div class="preselection-details">
+        <strong class="preselection-program">${state.program}</strong>
+        <span class="preselection-location-dates">${locationDisplay}${datesDisplay ? ' • ' + datesDisplay : ''}</span>
+        ${blocksNote}
+      </div>
+    `;
+
+    // Insert at the top of contact step, before the title
+    const stepTitle = contactStep.querySelector('.step-title');
+    if (stepTitle) {
+      contactStep.insertBefore(summaryEl, stepTitle);
+    } else {
+      contactStep.insertBefore(summaryEl, contactStep.firstChild);
+    }
+
+    // Add change button handler
+    const changeBtn = qs('#changeSelectionBtn');
+    if (changeBtn) {
+      changeBtn.addEventListener('click', () => {
+        // Reset pre-selection flag and go back to format step
+        state.preselectedFromURL = false;
+        summaryEl.remove();
+        showStep('format');
+      });
+    }
   }
 
   function updateStepperUI() {
@@ -1398,6 +1509,23 @@
     }
   }
 
+  // Fetch a single session by Airtable record ID (for URL pre-selection)
+  async function fetchSessionById(sessionId) {
+    try {
+      const response = await fetch(
+        `/api/airtable-programs?table=tblympiL1p6PmQz9i&recordId=${encodeURIComponent(sessionId)}`
+      );
+      if (!response.ok) {
+        console.error('Failed to fetch session:', response.status);
+        return null;
+      }
+      return await response.json();
+    } catch (error) {
+      console.error('Error fetching session by ID:', error);
+      return null;
+    }
+  }
+
   // ============================================
   // BLOCKS SELECTION
   // ============================================
@@ -1873,46 +2001,43 @@
   }
 
   async function submitToGoHighLevel(source) {
+    // Get dates in YYYY-MM-DD format
+    const startDate = state.dynamicStartDate || state.sessionRecord?.fields['Start Date'];
+    const endDate = state.dynamicEndDate || state.sessionRecord?.fields['End Date'];
+
+    // Determine location based on format
+    let selectedLocation;
+    if (state.format === 'in-person') {
+      selectedLocation = `${state.city}, ${state.stateProvince}`;
+    } else if (state.format === 'virtual') {
+      selectedLocation = 'Virtual Classroom';
+    } else {
+      selectedLocation = 'Online (Self-Paced)';
+    }
+
     const ghlData = {
       type: 'registration',
       data: {
+        unique_identifier: crypto.randomUUID(),
         first_name: state.contactFirstName,
         last_name: state.contactLastName,
-        email: state.contactEmail,
+        title: state.contactTitle || '',
+        company_name: state.contactCompany || '',
         phone: state.contactPhone,
-        job_title: state.contactTitle,
-        company_name: state.contactCompany,
+        email: state.contactEmail,
         selected_program: state.program,
         program_format: FORMAT_MAP[state.format],
-        session_start_date: formatDate(state.dynamicStartDate || state.sessionRecord.fields['Start Date']),
-        session_end_date: formatDate(state.dynamicEndDate || state.sessionRecord.fields['End Date']),
-        attendance_type: state.blockSelectionType,
-        selected_blocks: state.selectedBlocks.join(', '),
-        city: state.city,
-        state: state.stateProvince,
-        venue_name: state.venueName,
-        list_price: state.listPrice,
-        coupon_code: state.couponCode,
-        discount_amount: state.couponDiscount,
-        final_price: state.finalPrice,
-        payment_method: state.paymentMethod === 'invoice' ? 'Invoice' : 'Credit Card',
-        payment_status: source === 'stripe' ? 'Paid' : 'Pending Payment',
+        selected_location: selectedLocation,
+        program_start_date: startDate,
+        program_end_date: endDate,
+        attendance_type__3_block_programs: state.blockSelectionType || 'Full',
+        coupon_code_used: state.couponCode || '',
+        discount_amount: state.couponDiscount || 0,
         registration_code: state.registrationCode,
-        registration_date: new Date().toISOString()
+        amount_due: state.finalPrice,
+        tags: ['new_registration']
       }
     };
-
-    // Add billing info for invoices
-    if (state.paymentMethod === 'invoice') {
-      ghlData.data.billing_contact_name = state.billingContactName;
-      ghlData.data.billing_contact_email = state.billingContactEmail;
-      ghlData.data.billing_address = state.billingAddress;
-      ghlData.data.billing_city = state.billingCity;
-      ghlData.data.billing_state = state.billingState;
-      ghlData.data.billing_zip = state.billingZip;
-      ghlData.data.billing_po_number = state.billingPO;
-      ghlData.data.billing_notes = state.billingNotes;
-    }
 
     try {
       const response = await fetch('/api/ghl-webhook', {
@@ -2016,13 +2141,155 @@
   }
 
   // ============================================
+  // URL PRE-SELECTION (Deep Linking)
+  // ============================================
+
+  // Map block indices (1-based) to actual block names for the program/format
+  function mapBlockIndicesToNames(blockIndices, programName, format) {
+    const blockData = getBlocksForFormat(programName, format);
+    if (!blockData.list || blockData.list.length === 0) return [];
+
+    return blockIndices
+      .map(index => blockData.list[index - 1])  // Convert 1-based to 0-based
+      .filter(Boolean);  // Remove undefined entries for invalid indices
+  }
+
+  // Process URL parameters for pre-selection
+  async function processURLPreSelection() {
+    const urlParams = parseURLParams();
+    const { format, program, session, blocks } = urlParams;
+
+    // Need at minimum format and program
+    if (!format || !program) {
+      return false;
+    }
+
+    // Validate format
+    if (!['in-person', 'virtual', 'on-demand'].includes(format)) {
+      console.warn('Invalid format parameter:', format);
+      return false;
+    }
+
+    // Map program slug to full name
+    const programName = PROGRAM_SLUG_MAP[program];
+    if (!programName) {
+      console.warn('Unknown program slug:', program);
+      return false;
+    }
+
+    // Validate program exists in PROGRAM_DATA
+    if (!PROGRAM_DATA[programName]) {
+      console.warn('Program not found:', programName);
+      return false;
+    }
+
+    // Set format and program
+    state.format = format;
+    state.program = programName;
+
+    // Set initial pricing
+    const programData = PROGRAM_DATA[programName];
+    state.listPrice = programData.price;
+    state.finalPrice = programData.price;
+
+    // Process blocks if provided and applicable
+    if (blocks && isBlockProgram(programName, format)) {
+      const blockIndices = blocks.split(',').map(b => parseInt(b.trim(), 10)).filter(n => !isNaN(n));
+      const blockNames = mapBlockIndicesToNames(blockIndices, programName, format);
+
+      if (blockNames.length > 0) {
+        state.blockSelectionType = 'Partial';
+        state.selectedBlocks = blockNames;
+
+        // Recalculate pricing for partial attendance
+        const blockData = getBlocksForFormat(programName, format);
+        const totalBlockPrice = blockNames.reduce((sum, block) =>
+          sum + (blockData.prices[block] || 0), 0);
+        state.listPrice = totalBlockPrice;
+        state.finalPrice = totalBlockPrice;
+      }
+    } else if (isBlockProgram(programName, format)) {
+      // Default to full program for block programs
+      state.blockSelectionType = 'Full';
+      const blockData = getBlocksForFormat(programName, format);
+      state.selectedBlocks = [...blockData.list];
+    }
+
+    // Determine steps for this configuration
+    state.steps = determineSteps();
+
+    // Handle session pre-selection
+    if (session && format !== 'on-demand') {
+      // Show loading state
+      const loadingOverlay = qs('#loadingOverlay');
+      const loadingText = loadingOverlay?.querySelector('p');
+      if (loadingText) loadingText.textContent = 'Loading your selection...';
+      if (loadingOverlay) loadingOverlay.classList.remove('hidden');
+
+      // Fetch session data
+      const sessionRecord = await fetchSessionById(session);
+
+      // Hide loading
+      if (loadingOverlay) loadingOverlay.classList.add('hidden');
+      if (loadingText) loadingText.textContent = 'Processing your registration...';
+
+      if (sessionRecord && sessionRecord.fields) {
+        state.sessionId = session;
+        state.sessionRecord = sessionRecord;
+        state.city = sessionRecord.fields['City'] || '';
+        state.stateProvince = sessionRecord.fields['State/Province'] || '';
+        state.venueName = sessionRecord.fields['Venue Name'] || '';
+
+        // Parse block dates if applicable
+        if (isBlockProgram(programName, format)) {
+          state.blockDates = parseBlockDates(sessionRecord);
+          calculateDynamicDates();
+        }
+
+        // Fetch program duration (async, non-blocking)
+        fetchProgramDuration();
+
+        // All selections complete - skip to contact step
+        buildStepperUI();
+        showStep('contact');
+        state.preselectedFromURL = true;
+
+        // Clear URL params to prevent re-processing on refresh
+        clearURLParams();
+
+        return true;
+      } else {
+        // Session not found - show session step to let user select
+        console.warn('Pre-selected session not found:', session);
+      }
+    }
+
+    // Determine which step to show based on what's pre-selected
+    buildStepperUI();
+
+    if (format === 'on-demand') {
+      // On-demand: skip to contact step
+      showStep('contact');
+      state.preselectedFromURL = true;
+    } else if (isBlockProgram(programName, format) && !blocks) {
+      // Block program without blocks specified: show blocks step
+      showStep('blocks');
+    } else {
+      // Show session step to let user select
+      showStep('session');
+    }
+
+    // Clear URL params
+    clearURLParams();
+
+    return true;
+  }
+
+  // ============================================
   // INITIALIZATION
   // ============================================
 
   async function init() {
-    // Try to restore state
-    const hasState = restoreStateFromSessionStorage();
-
     // Initialize Stripe if needed
     if (window.ENV_CONFIG && window.ENV_CONFIG.STRIPE_PUBLISHABLE_KEY) {
       const stripe = Stripe(window.ENV_CONFIG.STRIPE_PUBLISHABLE_KEY);
@@ -2032,15 +2299,22 @@
       initializeStripeElements();
     }
 
-    // Determine initial steps
-    if (hasState) {
-      state.steps = determineSteps();
-      buildStepperUI();
-      showStep(state.currentStep);
-    } else {
-      state.steps = determineSteps();
-      buildStepperUI();
-      showStep('format');
+    // Check for URL parameters FIRST (deep linking)
+    const hasURLPreSelection = await processURLPreSelection();
+
+    // If no URL pre-selection, try to restore from sessionStorage or start fresh
+    if (!hasURLPreSelection) {
+      const hasState = restoreStateFromSessionStorage();
+
+      if (hasState) {
+        state.steps = determineSteps();
+        buildStepperUI();
+        showStep(state.currentStep);
+      } else {
+        state.steps = determineSteps();
+        buildStepperUI();
+        showStep('format');
+      }
     }
 
     setupEventListeners();

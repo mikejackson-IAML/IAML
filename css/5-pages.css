@@ -5438,6 +5438,74 @@
   margin-bottom: 32px;
 }
 
+/* ===== PRE-SELECTION SUMMARY BANNER ===== */
+/* Shown when user arrives via URL deep link with pre-selected session */
+.preselection-summary {
+  background: linear-gradient(135deg, #f0f7ff 0%, #e8f4fd 100%);
+  border: 1px solid var(--blue-primary, #0066cc);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+}
+
+.preselection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.preselection-badge {
+  background: var(--blue-primary, #0066cc);
+  color: white;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+.preselection-change-btn {
+  background: transparent;
+  border: 1px solid var(--blue-primary, #0066cc);
+  color: var(--blue-primary, #0066cc);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.preselection-change-btn:hover {
+  background: var(--blue-primary, #0066cc);
+  color: white;
+}
+
+.preselection-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.preselection-program {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.preselection-location-dates {
+  font-size: 14px;
+  color: var(--gray-600);
+}
+
+.preselection-blocks {
+  font-size: 13px;
+  color: var(--gray-500);
+  font-style: italic;
+}
+
 /* Progress Stepper List Container */
 .stepper-list {
   display: flex;
