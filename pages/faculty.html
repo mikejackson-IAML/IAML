@@ -282,8 +282,8 @@
     // AIRTABLE CONFIGURATION
     // ============================================================================
     const AIRTABLE_CONFIG = {
-      instructorsTableId: 'tblKAY2APl6AGqW7S',
-      testimonialsTableId: 'tblsu840FYsWbNJRC'
+      facultyTableId: 'tblVz9VPGhZgE4jBD',
+      testimonialsTableId: 'tbl6zcJf1KWGICwvy'
     };
 
     // Cache configuration
@@ -309,25 +309,17 @@
      * Get instructor headshot URL from Airtable field
      */
     function getInstructorHeadshot(record) {
-      // Check for the "Headshot URL" field (text field with direct URL)
-      if (record.fields['Headshot URL'] && typeof record.fields['Headshot URL'] === 'string') {
-        const url = record.fields['Headshot URL'].trim();
-        if (url.startsWith('http://') || url.startsWith('https://')) {
-          return url;
-        }
-      }
-
-      // Fallback: Check for the "Headshot" field
-      if (record.fields['Headshot'] && typeof record.fields['Headshot'] === 'string') {
-        const url = record.fields['Headshot'].trim();
+      // Check for the "Headshot Photo" field (text field with direct URL)
+      if (record.fields['Headshot Photo'] && typeof record.fields['Headshot Photo'] === 'string') {
+        const url = record.fields['Headshot Photo'].trim();
         if (url.startsWith('http://') || url.startsWith('https://')) {
           return url;
         }
       }
 
       // Fallback: Check for attachment field
-      if (record.fields['Headshot'] && Array.isArray(record.fields['Headshot']) && record.fields['Headshot'].length > 0) {
-        return record.fields['Headshot'][0]?.url;
+      if (record.fields['Headshot Photo'] && Array.isArray(record.fields['Headshot Photo']) && record.fields['Headshot Photo'].length > 0) {
+        return record.fields['Headshot Photo'][0]?.url;
       }
 
       return null;
@@ -502,8 +494,8 @@
       const instructorsByPractice = {};
 
       instructorRecords.forEach(record => {
-        let instructorName = record.fields['Name'] || '';
-        let instructorTitle = record.fields['Title'] || '';
+        let instructorName = record.fields['Full Name'] || '';
+        let instructorTitle = record.fields['Current Title'] || '';
 
         // If name is empty but title contains both, split them
         if (!instructorName && instructorTitle) {
@@ -535,7 +527,7 @@
           practiceAreas: Array.isArray(record.fields['Practice Areas'])
             ? record.fields['Practice Areas']
             : (record.fields['Practice Areas'] ? [record.fields['Practice Areas']] : []),
-          bio: record.fields['Bio'] || '',
+          bio: record.fields['Full Bio'] || '',
           education: record.fields['Education'] || '',
           barAdmissions: record.fields['Bar Admissions'] || '',
           headshot: getInstructorHeadshot(record),
@@ -630,7 +622,7 @@
      */
     async function loadInstructorData() {
       try {
-        const records = await fetchAllAirtableRecords(AIRTABLE_CONFIG.instructorsTableId);
+        const records = await fetchAllAirtableRecords(AIRTABLE_CONFIG.facultyTableId);
         populateFacultyCards(records);
 
         // Handle deep linking after cards are populated
@@ -699,11 +691,11 @@
       const testimonialsByInstructor = {};
 
       testimonialRecords.forEach(record => {
-        const instructorIds = record.fields['Instructors'] || [];
-        const quoteText = record.fields['Quote Text'] || '';
-        const participantName = record.fields['Participant Name'] || '';
-        const participantTitle = record.fields['Participant Title'] || '';
-        const participantCompany = record.fields['Participant Company'] || '';
+        const instructorIds = record.fields['FACULTY'] || [];
+        const quoteText = record.fields['Testimonial Text'] || '';
+        const participantName = record.fields['Author Name'] || '';
+        const participantTitle = record.fields['Author Title'] || '';
+        const participantCompany = record.fields['Author Comp'] || '';
 
         // Skip if no quote text
         if (!quoteText.trim()) return;
@@ -737,13 +729,13 @@
         // Build single testimonial card HTML
         const testimonialCardHtml = `
           <div class="testimonial-card">
+            <div class="testimonial-stars"><img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/68d667936fe1a53fe6603670.png" alt="5 stars" class="stars-img"></div>
             <p class="testimonial-text">"${escapeHtml(t.quote)}"</p>
             <div class="testimonial-attribution">
               <div class="testimonial-author">${escapeHtml(t.name)}</div>
               ${t.title ? `<div class="testimonial-role">${escapeHtml(t.title)}</div>` : ''}
               ${t.company ? `<div class="testimonial-company">${escapeHtml(t.company)}</div>` : ''}
             </div>
-            <div class="testimonial-stars"><img src="https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/68d667936fe1a53fe6603670.png" alt="5 stars" class="stars-img"></div>
           </div>
         `;
 
@@ -757,15 +749,15 @@
      */
     async function loadInstructorDataWithMapping() {
       try {
-        const records = await fetchAllAirtableRecords(AIRTABLE_CONFIG.instructorsTableId);
+        const records = await fetchAllAirtableRecords(AIRTABLE_CONFIG.facultyTableId);
 
         // Build mapping of Airtable record IDs to faculty IDs
         records.forEach(record => {
-          let instructorName = record.fields['Name'] || '';
+          let instructorName = record.fields['Full Name'] || '';
 
           // Handle case where name is in title field
-          if (!instructorName && record.fields['Title']) {
-            let titleField = record.fields['Title'];
+          if (!instructorName && record.fields['Current Title']) {
+            let titleField = record.fields['Current Title'];
             let separators = [' – ', ' - ', ' — ', ' | ', '  '];
             for (let separator of separators) {
               if (titleField.includes(separator)) {
