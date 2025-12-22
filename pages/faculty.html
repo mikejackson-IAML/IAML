@@ -283,7 +283,8 @@
     // ============================================================================
     const AIRTABLE_CONFIG = {
       facultyTableId: 'tblVz9VPGhZgE4jBD',
-      testimonialsTableId: 'tbl6zcJf1KWGICwvy'
+      testimonialsTableId: 'tbl6zcJf1KWGICwvy',
+      programInstancesTableId: 'tblympiL1p6PmQz9i'
     };
 
     // Cache configuration
@@ -434,6 +435,12 @@
             ${formatBioText(instructor.bio)}
           </div>
 
+          <!-- Credentials Section (Education & Bar Admissions) -->
+          <div class="credentials-section">
+            ${instructor.education ? `<div class="education">${formatEducation(instructor.education)}</div>` : ''}
+            ${instructor.barAdmissions ? `<div class="bar-admissions">${formatBarAdmissions(instructor.barAdmissions)}</div>` : ''}
+          </div>
+
           <!-- Teaching Programs Section -->
           <div class="teaching-programs" style="display: none;">
             <div class="programs-list" id="programs-${instructor.facultyId}">
@@ -451,12 +458,6 @@
           <!-- Testimonial Section -->
           <div class="testimonial-section" id="testimonials-${instructor.facultyId}" style="display: none;">
             <!-- Testimonials will be populated dynamically -->
-          </div>
-
-          <!-- Credentials Section -->
-          <div class="credentials-section">
-            ${instructor.barAdmissions ? `<div class="bar-admissions">${formatBarAdmissions(instructor.barAdmissions)}</div>` : ''}
-            ${instructor.education ? `<div class="education">${formatEducation(instructor.education)}</div>` : ''}
           </div>
         </div>
       `;
@@ -494,8 +495,12 @@
       const instructorsByPractice = {};
 
       instructorRecords.forEach(record => {
-        let instructorName = record.fields['Full Name'] || '';
+        // Full Name (without credentials) for ID generation - keeps IDs consistent
+        const fullName = record.fields['Full Name'] || '';
+        // Full Name with Credentials for display
+        let instructorName = record.fields['Full Name with Credentials'] || fullName;
         let instructorTitle = record.fields['Current Title'] || '';
+        const organization = record.fields['Current Firm/Organization'] || '';
 
         // If name is empty but title contains both, split them
         if (!instructorName && instructorTitle) {
@@ -518,10 +523,15 @@
           }
         }
 
+        // Combine title and organization: "Job Title, Organization"
+        const displayTitle = instructorTitle && organization
+          ? `${instructorTitle}, ${organization}`
+          : instructorTitle || organization;
+
         const instructor = {
           id: record.id,
           name: instructorName,
-          title: instructorTitle,
+          title: displayTitle,
           lastName: record.fields['Last Name'] || '',
           firstName: record.fields['First Name'] || '',
           practiceAreas: Array.isArray(record.fields['Practice Areas'])
@@ -531,7 +541,7 @@
           education: record.fields['Education'] || '',
           barAdmissions: record.fields['Bar Admissions'] || '',
           headshot: getInstructorHeadshot(record),
-          facultyId: instructorName.toLowerCase()
+          facultyId: (fullName || instructorName).toLowerCase()
             .replace(/[^a-z0-9\s]/g, '')
             .replace(/\s+/g, '-')
             .replace(/^-+|-+$/g, '')
@@ -665,6 +675,204 @@
     }
 
     // ============================================================================
+    // UPCOMING PROGRAMS
+    // ============================================================================
+
+    // Store faculty name -> facultyId mapping for program matching
+    let facultyNameToIdMap = {};
+
+    /**
+     * Format date for display (e.g., "Jan 15, 2025")
+     */
+    function formatProgramDate(dateString) {
+      if (!dateString) return '';
+      const date = new Date(dateString);
+      return date.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+    }
+
+    // Program name to page slug mapping
+    const PROGRAM_PAGE_SLUGS = {
+      'certificate in employer relations law': 'employee-relations-law',
+      'certificate in strategic hr leadership': 'strategic-hr-leadership',
+      'advanced certificate in strategic employment law': 'strategic-employment-law',
+      'certificate in workplace investigations': 'workplace-investigations',
+      'certificate in employee benefits law': 'employee-benefits-law',
+      'advanced certificate in employee benefits law': 'employee-benefits-law-advanced',
+      'employment law update': 'employment-law-update'
+    };
+
+    /**
+     * Create HTML for a single program card
+     */
+    function createProgramCardHtml(program) {
+      const name = escapeHtml(program.name);
+      const startDate = formatProgramDate(program.startDate);
+      const endDate = formatProgramDate(program.endDate);
+      const dateRange = endDate ? `${startDate} - ${endDate}` : startDate;
+
+      let location = 'Virtual';
+      if (program.format && program.format.toLowerCase().includes('in-person')) {
+        location = program.city && program.state
+          ? `${escapeHtml(program.city)}, ${escapeHtml(program.state)}`
+          : program.city || program.state || 'In-Person';
+      }
+
+      // Get program page URL from mapping
+      const programSlug = PROGRAM_PAGE_SLUGS[program.name.toLowerCase()];
+      const learnMoreUrl = programSlug ? `/programs/${programSlug}` : '/program-schedule';
+
+      // Use Registration URL from Airtable, fallback to program schedule
+      const registerUrl = program.registrationUrl || '/program-schedule';
+
+      return `
+        <div class="program-card">
+          <div class="program-card-name">${name}</div>
+          <div class="program-card-details">
+            <span class="program-card-dates">${dateRange}</span>
+            <span class="program-card-location">${location}</span>
+          </div>
+          <div class="program-card-actions">
+            <a href="${escapeHtml(learnMoreUrl)}" class="program-card-learn-more">LEARN MORE</a>
+            <a href="${escapeHtml(registerUrl)}" class="program-card-register">REGISTER</a>
+          </div>
+        </div>
+      `;
+    }
+
+    /**
+     * Load upcoming programs from Airtable and populate on faculty cards
+     */
+    async function loadFacultyPrograms() {
+      try {
+        // Fetch all program instances (no filter - we'll filter in JS)
+        const records = await fetchAllAirtableRecords(
+          AIRTABLE_CONFIG.programInstancesTableId
+        );
+        // Filter in JavaScript: Show on Website = true, Start Date >= today, AND is allowed program
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        const filteredRecords = records.filter(record => {
+          const showOnWebsite = record.fields['Show on Website'];
+          const startDate = record.fields['Start Date'];
+          // Program Name might be an array (linked record) or string - handle both
+          let programNameRaw = record.fields['Program Name'];
+          if (Array.isArray(programNameRaw)) {
+            programNameRaw = programNameRaw[0] || '';
+          }
+          const programName = (programNameRaw || '').toLowerCase();
+
+          // Must be marked to show on website
+          if (!showOnWebsite) return false;
+
+          // Must have a future start date
+          if (!startDate) return false;
+          const programDate = new Date(startDate);
+          if (programDate < today) return false;
+
+          // Must be a certificate program OR Employment Law Update
+          const isAllowed = programName.includes('certificate') || programName.includes('employment law update');
+          return isAllowed;
+        });
+
+        populateFacultyPrograms(filteredRecords);
+      } catch (error) {
+        console.error('Error loading faculty programs:', error);
+        // Silently fail - programs section just won't show
+      }
+    }
+
+    /**
+     * Populate programs on faculty cards based on Block Instructor fields
+     */
+    function populateFacultyPrograms(programRecords) {
+      // Group programs by faculty ID
+      const programsByFaculty = {};
+
+      programRecords.forEach(record => {
+        // Program Name might be an array (linked record) or string - handle both
+        let programNameRaw = record.fields['Program Name'];
+        if (Array.isArray(programNameRaw)) {
+          programNameRaw = programNameRaw[0];
+        }
+        const program = {
+          name: programNameRaw || record.fields['Instance Name'] || 'Program',
+          startDate: record.fields['Start Date'],
+          endDate: record.fields['End Date'],
+          format: record.fields['Format'] || '',
+          city: record.fields['City'] || '',
+          state: record.fields['State/Province'] || '',
+          registrationUrl: record.fields['Registration URL'] || ''
+        };
+
+        // Check Block 1, 2, 3 Instructors - these are linked record fields containing record IDs
+        const instructorFields = [
+          'Block 1 Instructor',
+          'Block 2 Instructor',
+          'Block 3 Instructor'
+        ];
+
+        instructorFields.forEach(field => {
+          const instructorRecordIds = record.fields[field];
+          if (!instructorRecordIds) return;
+
+          // Handle both array and single value (linked records are arrays)
+          const recordIds = Array.isArray(instructorRecordIds) ? instructorRecordIds : [instructorRecordIds];
+
+          recordIds.forEach(recordId => {
+            if (!recordId) return;
+            // Match record ID against instructorRecordMap (recordId → facultyId)
+            const facultyId = instructorRecordMap[recordId];
+            if (facultyId) {
+              if (!programsByFaculty[facultyId]) {
+                programsByFaculty[facultyId] = [];
+              }
+              // Avoid duplicates (same program, same faculty)
+              const isDuplicate = programsByFaculty[facultyId].some(
+                p => p.name === program.name && p.startDate === program.startDate
+              );
+              if (!isDuplicate) {
+                programsByFaculty[facultyId].push(program);
+              }
+            }
+          });
+        });
+      });
+
+      // Populate programs on each faculty card
+      Object.entries(programsByFaculty).forEach(([facultyId, programs]) => {
+        const programsContainer = document.getElementById(`programs-${facultyId}`);
+        if (!programsContainer) return;
+
+        // Sort by start date
+        programs.sort((a, b) => new Date(a.startDate) - new Date(b.startDate));
+
+        // Generate HTML
+        const programsHtml = programs.map(p => createProgramCardHtml(p)).join('');
+
+        programsContainer.innerHTML = `
+          <div class="teaching-programs-header">
+            <span class="teaching-programs-title">Upcoming Programs</span>
+            <span class="teaching-programs-count">${programs.length}</span>
+          </div>
+          <div class="programs-cards">
+            ${programsHtml}
+          </div>
+        `;
+
+        // Show the teaching-programs container
+        const teachingProgramsDiv = programsContainer.closest('.teaching-programs');
+        if (teachingProgramsDiv) {
+          teachingProgramsDiv.style.display = 'block';
+        }
+      });
+    }
+
+    // ============================================================================
     // TESTIMONIALS
     // ============================================================================
 
@@ -695,7 +903,11 @@
         const quoteText = record.fields['Testimonial Text'] || '';
         const participantName = record.fields['Author Name'] || '';
         const participantTitle = record.fields['Author Title'] || '';
-        const participantCompany = record.fields['Author Comp'] || '';
+        // Use lookup field for company name (linked record returns ID, lookup returns text)
+        let participantCompany = record.fields['Company Name'] || '';
+        if (Array.isArray(participantCompany)) {
+          participantCompany = participantCompany[0] || '';
+        }
 
         // Skip if no quote text
         if (!quoteText.trim()) return;
@@ -774,13 +986,27 @@
             .replace(/^-+|-+$/g, '');
 
           instructorRecordMap[record.id] = facultyId;
+
+          // Build name-to-ID mapping for program matching
+          // Use "Full Name with Credentials" field which matches the lookup in Program Instances
+          const fullNameWithCredentials = record.fields['Full Name with Credentials'];
+          if (fullNameWithCredentials) {
+            facultyNameToIdMap[fullNameWithCredentials.trim()] = facultyId;
+          }
+          // Also map by "Full Name" as fallback
+          if (instructorName) {
+            facultyNameToIdMap[instructorName.trim()] = facultyId;
+          }
         });
 
         populateFacultyCards(records);
         handleDeepLink();
 
-        // Load testimonials after faculty cards are populated
-        await loadTestimonials();
+        // Load programs and testimonials after faculty cards are populated
+        await Promise.all([
+          loadFacultyPrograms(),
+          loadTestimonials()
+        ]);
 
       } catch (error) {
         console.error('Error loading instructor data:', error);

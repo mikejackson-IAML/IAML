@@ -4714,12 +4714,12 @@
 /* ===== FACULTY HERO SECTION ===== */
 .faculty-hero-section {
   width: 100%;
-  min-height: 70vh;
+  min-height: 100vh;
   background: var(--black);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 150px 20px 80px;
+  padding: var(--space-4xl) 20px;
 }
 
 .faculty-hero-content {
@@ -4735,7 +4735,8 @@
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  margin-bottom: 30px;
+  margin-top: 80px;
+  margin-bottom: 32px;
 }
 
 .faculty-main-headline {
@@ -4749,6 +4750,7 @@
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 .faculty-hero-description {
@@ -4969,18 +4971,24 @@
 /* ===== TESTIMONIAL SECTION ===== */
 .testimonial-section {
   margin-top: 24px;
-  padding: 32px;
-  background: #f8f9fa;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 .testimonial-card {
   position: relative;
+  padding: 16px 24px;
+  background: #f8f9fa;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
 .testimonial-stars {
-  margin-bottom: 16px;
+  margin-bottom: 4px;
 }
 
 .testimonial-stars .stars-img {
@@ -4993,8 +5001,8 @@
   font-size: 1.125rem;
   font-style: italic;
   color: #4b5563;
-  line-height: 1.8;
-  margin-bottom: 20px;
+  line-height: 1.6;
+  margin: 8px 0 12px 0;
 }
 
 .testimonial-attribution {
@@ -5024,21 +5032,201 @@
   color: #6b7280;
 }
 
+/* ===== FACULTY PAGE TESTIMONIAL OVERRIDES ===== */
+.faculty-page .testimonial-card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  padding: 24px;
+  min-height: auto;
+  height: auto;
+  justify-content: flex-start;
+  gap: 8px;
+  background: #f5f3f0;
+}
+
+.faculty-page .testimonial-stars {
+  order: 1;
+  margin: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.faculty-page .testimonial-text {
+  order: 2;
+  margin: 0;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.faculty-page .testimonial-attribution {
+  order: 3;
+  align-items: center;
+  margin: 0;
+}
+
 /* ===== TEACHING PROGRAMS ===== */
 .teaching-programs {
   margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
 }
 
 .programs-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  flex-direction: column;
+  gap: 0;
 }
 
 .loading-skeleton {
   color: #9ca3af;
   font-style: italic;
   font-size: 0.9rem;
+}
+
+/* Teaching Programs Header */
+.teaching-programs-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.teaching-programs-title {
+  font-family: "Lato", sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #374151;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.teaching-programs-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2563eb;
+  border-radius: 10px;
+}
+
+/* Program Cards Container */
+.programs-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* Individual Program Card */
+.program-card {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+  padding: 12px 16px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.program-card:hover {
+  border-color: #2563eb;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.1);
+}
+
+.program-card-name {
+  flex: 1 1 200px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.program-card-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.85rem;
+  color: #6b7280;
+}
+
+/* Program Card Actions Container */
+.program-card-actions {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Learn More Button (outline style) */
+.program-card-learn-more {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #2563eb;
+  background-color: transparent;
+  border: 1px solid #2563eb;
+  border-radius: 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.program-card-learn-more:hover {
+  background-color: #2563eb;
+  color: #fff;
+}
+
+/* Register Button (filled style) */
+.program-card-register {
+  display: inline-block;
+  padding: 6px 14px;
+  font-family: "Lato", sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  background-color: #2563eb;
+  border-radius: 4px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease;
+}
+
+.program-card-register:hover {
+  background-color: #1d4ed8;
+  color: #fff;
+}
+
+/* Mobile adjustments for program cards */
+@media (max-width: 640px) {
+  .program-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .program-card-name {
+    flex: none;
+    width: 100%;
+  }
+
+  .program-card-actions {
+    width: 100%;
+    margin-top: 4px;
+  }
+
+  .program-card-learn-more,
+  .program-card-register {
+    flex: 1;
+    text-align: center;
+  }
 }
 
 /* ===== FACULTY PAGE RESPONSIVE ===== */
