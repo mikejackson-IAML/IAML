@@ -5054,7 +5054,7 @@
 
 .faculty-page .testimonial-text {
   order: 2;
-  margin: 0;
+  margin: 8px 0 12px 0;
   text-align: center;
   line-height: 1.5;
 }
@@ -5063,6 +5063,7 @@
   order: 3;
   align-items: center;
   margin: 0;
+  gap: 2px;
 }
 
 /* ===== TEACHING PROGRAMS ===== */
