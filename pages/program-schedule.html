@@ -35,7 +35,7 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
 
   <!-- Main CSS -->
-  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="../css/main.css">
 
   <!-- Google Analytics (Replace with your GA4 ID) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
@@ -56,6 +56,7 @@
       margin: 0 auto;
       padding: 40px 20px;
       padding-top: 140px; /* Accounts for 100px header + 40px spacing */
+      padding-bottom: 96px; /* Match homepage: var(--space-4xl) */
     }
 
     .program-schedule-hero .trusted-text {
@@ -64,7 +65,7 @@
       font-weight: 600;
       letter-spacing: 2px;
       text-transform: uppercase;
-      margin-bottom: 30px;
+      margin-bottom: 32px; /* Match homepage */
     }
 
     .program-schedule-hero .main-headline {
@@ -73,7 +74,7 @@
       font-weight: 400;
       color: white;
       line-height: 1.1;
-      margin-bottom: 40px;
+      margin-bottom: 24px; /* Match homepage: var(--space-lg) */
       text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
       max-width: 1200px;
       margin-left: auto;
@@ -85,7 +86,7 @@
       font-size: 1.25rem;
       color: rgba(255, 255, 255, 0.9);
       line-height: 1.6;
-      margin-bottom: 50px;
+      margin-bottom: 48px; /* Match homepage: var(--space-2xl) */
       max-width: 850px;
       margin-left: auto;
       margin-right: auto;
@@ -460,34 +461,32 @@
       overflow: hidden;
       padding: 8px 28px 8px 12px;
       white-space: nowrap;
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid #d1d5db;
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.1);
+      background: #ffffff;
       font-size: 0.85rem;
       min-width: 60px;
-      color: rgba(255, 255, 255, 0.9);
+      color: #28528c;
       max-width: fit-content;
       transition: all var(--transition-fast);
       cursor: pointer;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .iaml-calendar-widget .filter-select:hover {
-      background: rgba(255, 255, 255, 0.8);
-      border-color: rgba(255, 255, 255, 0.5);
-      color: white;
+      background: #f8fafc;
+      border-color: #28528c;
+      color: #28528c;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     .iaml-calendar-widget .filter-select:focus {
       outline: none;
-      background: rgba(255, 255, 255, 0.8);
-      border-color: rgba(255, 255, 255, 0.6);
-      color: white;
-      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+      background: #ffffff;
+      border-color: #28528c;
+      color: #28528c;
+      box-shadow: 0 0 0 3px rgba(40, 82, 140, 0.2);
     }
 
     /* Dropdown options styling */
@@ -500,11 +499,11 @@
     /* Filter Actions */
     .btn-clear {
       padding: 6px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #d1d5db;
+      background: #ffffff;
       font-size: 0.85rem;
       min-width: 60px;
-      color: rgba(255, 255, 255, 0.9);
+      color: #28528c;
       border-radius: 8px;
       font-weight: 600;
       cursor: pointer;
@@ -513,17 +512,15 @@
       letter-spacing: 0.5px;
       white-space: nowrap;
       flex-shrink: 0;
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
 
     .btn-clear:hover {
-      background: rgba(255, 255, 255, 0.8);
-      border-color: rgba(255, 255, 255, 0.5);
-      color: white;
+      background: #f8fafc;
+      border-color: #28528c;
+      color: #28528c;
       transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     }
 
     /* Loading State */
@@ -894,6 +891,31 @@
       box-shadow: 0 6px 20px rgba(40, 82, 140, 0.4);
     }
 
+    /* Learn More Button - Single CTA for cards */
+    .card-actions .btn-learn-more {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+      border: none;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-family: 'Lato', sans-serif;
+      background: linear-gradient(135deg, #28528c 0%, #1e3a8a 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(40, 82, 140, 0.25);
+    }
+
+    .card-actions .btn-learn-more:hover {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(40, 82, 140, 0.4);
+    }
+
     /* Professional Credits Badges - Glass Morphism Pills */
     .credit-badge {
       display: inline-block;
@@ -1011,7 +1033,7 @@
       background: #28528c !important;
       color: white;
       display: grid;
-      grid-template-columns: 200px 1.7fr 1.3fr 1.5fr 220px;
+      grid-template-columns: 200px 1.7fr 1.3fr 180px;
       gap: 0;
       padding: 18px 16px;
       font-weight: 700;
@@ -1045,7 +1067,7 @@
       border-bottom: none;
       transition: all 0.3s ease;
       display: grid;
-      grid-template-columns: 200px 1.7fr 1.3fr 1.5fr 220px;
+      grid-template-columns: 200px 1.7fr 1.3fr 180px;
       gap: 0;
       padding: 18px 16px;
       margin: 0;
@@ -1233,6 +1255,7 @@
       align-items: center;
       justify-content: center;
       padding: 0 16px;
+      gap: 8px;
     }
 
     .list-actions .btn-primary {
@@ -1260,6 +1283,51 @@
 
     .list-actions .btn-primary:active {
       transform: translateY(0);
+    }
+
+    .list-actions .btn-secondary {
+      background: transparent;
+      color: #28528c;
+      border: 2px solid #28528c;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 80px;
+    }
+
+    .list-actions .btn-secondary:hover {
+      background: #28528c;
+      color: white;
+      transform: translateY(-2px);
+    }
+
+    /* Learn More Button - List View */
+    .list-actions .btn-learn-more {
+      background: linear-gradient(135deg, #28528c 0%, #1e3a8a 100%);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(40, 82, 140, 0.25);
+    }
+
+    .list-actions .btn-learn-more:hover {
+      background: linear-gradient(135deg, #1e3a8a 0%, #1e293b 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(40, 82, 140, 0.4);
     }
 
     /* Responsive Styles - Mobile & Tablet */
@@ -1291,13 +1359,8 @@
 
       .list-header,
       .list-item {
-        grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr;
+        grid-template-columns: 2fr 1.2fr 1fr 150px;
         font-size: 0.8rem;
-      }
-
-      .list-credits .credit-badge {
-        font-size: 9px;
-        padding: 1px 4px;
       }
     }
 
@@ -1567,31 +1630,47 @@
     .iaml-calendar-widget .btn-clear,
     .iaml-calendar-widget .view-btn,
     .filter-select,
-    .btn-clear,
+    .btn-clear {
+      color: #28528c !important;
+      border-color: #d1d5db !important;
+      font-weight: 500 !important;
+    }
+
     .view-btn {
-      color: #fff !important;
+      color: #28528c !important;
       border-color: rgba(40, 82, 140, 0.3) !important;
       font-weight: 500 !important;
     }
 
     .iaml-calendar-widget .filter-select:hover,
     .iaml-calendar-widget .btn-clear:hover,
-    .iaml-calendar-widget .view-btn:hover,
     .filter-select:hover,
-    .btn-clear:hover,
+    .btn-clear:hover {
+      color: #28528c !important;
+      border-color: #28528c !important;
+      background: #f8fafc !important;
+    }
+
+    .iaml-calendar-widget .view-btn:hover,
     .view-btn:hover {
-      color: #fff !important;
+      color: #28528c !important;
       border-color: rgba(40, 82, 140, 0.5) !important;
       background: rgba(40, 82, 140, 0.05) !important;
     }
 
     .iaml-calendar-widget .filter-select:focus,
     .iaml-calendar-widget .btn-clear:focus,
-    .iaml-calendar-widget .view-btn:focus,
     .filter-select:focus,
-    .btn-clear:focus,
+    .btn-clear:focus {
+      color: #28528c !important;
+      border-color: #28528c !important;
+      outline: 2px solid rgba(40, 82, 140, 0.2) !important;
+      outline-offset: 2px !important;
+    }
+
+    .iaml-calendar-widget .view-btn:focus,
     .view-btn:focus {
-      color: #fff !important;
+      color: #28528c !important;
       border-color: rgba(40, 82, 140, 0.6) !important;
       outline: 2px solid rgba(40, 82, 140, 0.2) !important;
       outline-offset: 2px !important;
@@ -1803,6 +1882,303 @@
     .countdown-progress { stroke-dasharray: 138.23; stroke-dashoffset: 0; transition: stroke-dashoffset 1s linear; }
     .countdown-number { position: absolute; font-size: 20px; font-weight: 700; color: #28528c; z-index: 2; }
     .phone-icon-small { position: absolute; width: 20px; height: 20px; fill: #fff; background: #28528c; border-radius: 6px; padding: 4px; z-index: 1; bottom: 8px; right: 8px; }
+
+    /* ===== PROGRAM DETAILS MODAL ===== */
+    .programModal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      overflow-y: auto;
+      padding: 40px 20px;
+    }
+
+    .programModal-overlay.active {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .programModal-content {
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 24px 48px rgba(0, 0, 0, 0.2);
+      max-width: 700px;
+      width: 100%;
+      max-height: none;
+      overflow: visible;
+      transform: scale(0.9) translateY(20px);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
+      margin: auto;
+    }
+
+    .programModal-overlay.active .programModal-content {
+      transform: scale(1) translateY(0);
+    }
+
+    .programModal-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255, 255, 255, 0.9);
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #374151;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      z-index: 10;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .programModal-close:hover {
+      background: #fff;
+      color: #1f2937;
+      transform: scale(1.1);
+    }
+
+    .programModal-image {
+      width: 100%;
+      height: 220px;
+      background-size: cover;
+      background-position: center;
+      border-radius: 16px 16px 0 0;
+      position: relative;
+    }
+
+    .programModal-image::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 50%, rgba(0, 0, 0, 0.4) 100%);
+      border-radius: 16px 16px 0 0;
+    }
+
+    .programModal-body {
+      padding: 32px;
+    }
+
+    .programModal-format-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .programModal-format-badge.in-person {
+      background: linear-gradient(135deg, #28528c 0%, #1e3a5f 100%);
+      color: #fff;
+    }
+
+    .programModal-format-badge.virtual {
+      background: linear-gradient(135deg, #059669 0%, #047857 100%);
+      color: #fff;
+    }
+
+    .programModal-format-badge.on-demand {
+      background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%);
+      color: #fff;
+    }
+
+    .programModal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.75rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin: 0 0 20px 0;
+      line-height: 1.3;
+    }
+
+    .programModal-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      padding: 20px;
+      background: #f8fafc;
+      border-radius: 12px;
+      margin-bottom: 24px;
+    }
+
+    .programModal-meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .programModal-meta-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #6b7280;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .programModal-meta-value {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1f2937;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .programModal-blocks {
+      margin-bottom: 24px;
+    }
+
+    .programModal-blocks-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #374151;
+      margin-bottom: 16px;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .programModal-block {
+      background: #f8fafc;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .programModal-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .programModal-block-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .programModal-block-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1f2937;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .programModal-block-number {
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      background: #28528c;
+      padding: 2px 8px;
+      border-radius: 10px;
+      font-family: 'Lato', sans-serif;
+    }
+
+    .programModal-block-meta {
+      font-size: 13px;
+      color: #6b7280;
+      font-family: 'Lato', sans-serif;
+      line-height: 1.5;
+    }
+
+    .programModal-block-meta span {
+      display: block;
+    }
+
+    .programModal-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .programModal-btn {
+      flex: 1;
+      padding: 14px 24px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      text-decoration: none;
+      text-align: center;
+      transition: all 0.2s ease;
+      font-family: 'Lato', sans-serif;
+      cursor: pointer;
+      border: none;
+    }
+
+    .programModal-btn-primary {
+      background: linear-gradient(135deg, #e93d3d 0%, #c42e2e 100%);
+      color: #fff;
+      box-shadow: 0 4px 12px rgba(233, 61, 61, 0.3);
+    }
+
+    .programModal-btn-primary:hover {
+      background: linear-gradient(135deg, #c42e2e 0%, #a52525 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(233, 61, 61, 0.4);
+    }
+
+    .programModal-btn-secondary {
+      background: #fff;
+      color: #28528c;
+      border: 2px solid #28528c;
+    }
+
+    .programModal-btn-secondary:hover {
+      background: #28528c;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 600px) {
+      .programModal-overlay {
+        padding: 20px 12px;
+      }
+
+      .programModal-content {
+        border-radius: 12px;
+      }
+
+      .programModal-image {
+        height: 180px;
+        border-radius: 12px 12px 0 0;
+      }
+
+      .programModal-body {
+        padding: 20px;
+      }
+
+      .programModal-title {
+        font-size: 1.4rem;
+      }
+
+      .programModal-meta {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
+      .programModal-actions {
+        flex-direction: column;
+      }
+
+      .programModal-btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1939,6 +2315,39 @@
       </div>
       <div class="connectPopup-body" id="connectPopup_Content">
         <!-- dynamic content injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Program Details Modal -->
+  <div class="programModal-overlay" id="programModal" onclick="closeProgramModal(event)">
+    <div class="programModal-content" onclick="event.stopPropagation();">
+      <button class="programModal-close" onclick="closeProgramModal()" aria-label="Close">&times;</button>
+      <div class="programModal-image" id="programModal-image"></div>
+      <div class="programModal-body">
+        <div class="programModal-format-badge" id="programModal-format"></div>
+        <h2 class="programModal-title" id="programModal-title"></h2>
+        <div class="programModal-meta">
+          <div class="programModal-meta-item">
+            <span class="programModal-meta-label">Dates</span>
+            <span class="programModal-meta-value" id="programModal-dates"></span>
+          </div>
+          <div class="programModal-meta-item">
+            <span class="programModal-meta-label">Duration</span>
+            <span class="programModal-meta-value" id="programModal-duration"></span>
+          </div>
+          <div class="programModal-meta-item">
+            <span class="programModal-meta-label">Location</span>
+            <span class="programModal-meta-value" id="programModal-location"></span>
+          </div>
+        </div>
+        <div class="programModal-blocks" id="programModal-blocks">
+          <!-- Blocks will be injected here -->
+        </div>
+        <div class="programModal-actions">
+          <a href="#" class="programModal-btn programModal-btn-primary" id="programModal-register">Register Now</a>
+          <a href="#" class="programModal-btn programModal-btn-secondary" id="programModal-details">View Full Details</a>
+        </div>
       </div>
     </div>
   </div>
@@ -2220,48 +2629,269 @@
       document.getElementById('formatFilter').value = '';
       document.getElementById('programFilter').value = '';
       document.getElementById('locationFilter').value = '';
-      // Trigger filter update if you have data loaded
+      // Reset to default view (exclude on-demand and in-person standalone blocks)
+      renderPrograms(getDefaultFilteredPrograms());
     });
 
     // ============================================================================
-    // SAMPLE DATA - Replace with Airtable integration
+    // AIRTABLE DATA LOADING
     // ============================================================================
-    const samplePrograms = [
-      {
-        id: 1,
-        title: 'Certificate in Employee Relations Law',
-        location: 'Las Vegas, NV',
-        venue: 'The Venetian Resort',
-        startDate: 'January 13, 2025',
-        endDate: 'January 17, 2025',
-        format: 'in-person',
-        image: 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800',
-        credits: { shrm: '40 PDCs', hrci: '40 Credits', cle: 'Pending' }
-      },
-      {
-        id: 2,
-        title: 'Certificate in Workplace Investigations',
-        location: 'San Diego, CA',
-        venue: 'Manchester Grand Hyatt',
-        startDate: 'February 3, 2025',
-        endDate: 'February 7, 2025',
-        format: 'in-person',
-        image: 'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800',
-        credits: { shrm: '32 PDCs', hrci: '32 Credits', cle: '32 Hours' }
-      },
-      {
-        id: 3,
-        title: 'Advanced Certificate in Strategic Employment Law',
-        location: 'Virtual',
-        venue: 'Online Live Sessions',
-        startDate: 'February 24, 2025',
-        endDate: 'February 28, 2025',
-        format: 'virtual',
-        image: 'https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=800',
-        credits: { shrm: '40 PDCs', hrci: '40 Credits', cle: '40 Hours' }
+    const TABLE_ID = 'tblympiL1p6PmQz9i';
+    let allPrograms = [];
+
+    async function loadProgramsFromAirtable() {
+      const display = document.getElementById('calendarDisplay');
+
+      try {
+        // Fetch from API proxy with filter and sort
+        const filterFormula = encodeURIComponent("{Show on Website}=TRUE()");
+        const response = await fetch(
+          `/api/airtable-programs?table=${TABLE_ID}&filterByFormula=${filterFormula}&sort[0][field]=Start Date&sort[0][direction]=asc`
+        );
+
+        if (!response.ok) throw new Error('Failed to load programs');
+
+        const data = await response.json();
+        const records = data.records || [];
+
+        // Transform Airtable records to UI format and filter to allowed programs only
+        allPrograms = records
+          .map(transformRecord)
+          .filter(p => ALLOWED_PROGRAMS.includes(p.title));
+
+        // Populate filter dropdowns from actual data
+        populateFilters(allPrograms);
+
+        // Render initial view (exclude on-demand and in-person standalone blocks by default)
+        renderPrograms(getDefaultFilteredPrograms());
+
+      } catch (error) {
+        console.error('Error loading programs:', error);
+        display.innerHTML = `
+          <div class="error-container">
+            <p>Unable to load program schedule. Please try again later.</p>
+          </div>
+        `;
       }
+    }
+
+    // Whitelist of programs to display on schedule page
+    const ALLOWED_PROGRAMS = [
+      // Certificate Programs
+      'Certificate in Employee Relations Law',
+      'Advanced Certificate in Strategic Employment Law',
+      'Certificate in Workplace Investigations',
+      'Certificate in Strategic HR Leadership',
+      'Certificate in Employee Benefits Law',
+      'Advanced Certificate in Employee Benefits Law',
+      // Virtual Programs (standalone blocks)
+      'Comprehensive Labor Relations',
+      'Discrimination Prevention & Defense',
+      'HR Law Fundamentals',
+      'Strategic HR Management'
     ];
 
+    // Programs to show for in-person format (certificates only, no standalone blocks)
+    const IN_PERSON_PROGRAMS = [
+      'Certificate in Employee Relations Law',
+      'Advanced Certificate in Strategic Employment Law',
+      'Certificate in Workplace Investigations',
+      'Certificate in Strategic HR Leadership',
+      'Certificate in Employee Benefits Law',
+      'Advanced Certificate in Employee Benefits Law'
+    ];
+
+    // Program name to slug mapping
+    const PROGRAM_SLUG_MAP = {
+      'Certificate in Employee Relations Law': 'employee-relations-law',
+      'Advanced Certificate in Strategic Employment Law': 'strategic-employment-law',
+      'Certificate in Strategic HR Leadership': 'strategic-hr',
+      'Certificate in Workplace Investigations': 'workplace-investigations',
+      'Certificate in Employee Benefits Law': 'employee-benefits-law',
+      'Advanced Certificate in Employee Benefits Law': 'advanced-benefits-law'
+    };
+
+    // Block days mapping by program
+    const BLOCK_DAYS_MAP = {
+      'Certificate in Employee Relations Law': {
+        1: 'Monday - Tuesday',
+        2: 'Wednesday - Thursday',
+        3: 'Friday'
+      },
+      'Certificate in Strategic HR Leadership': {
+        1: 'Monday - Tuesday',
+        2: 'Wednesday - Friday'
+      },
+      'Certificate in Employee Benefits Law': {
+        1: 'Monday - Tuesday',
+        2: 'Wednesday',
+        3: 'Thursday - Friday'
+      }
+    };
+
+    function transformRecord(record) {
+      const f = record.fields;
+      // Program Name is a linked record lookup, which returns as an array
+      const rawProgramName = f['Program Name'];
+      const programName = Array.isArray(rawProgramName) ? rawProgramName[0] : (rawProgramName || f['Instance Name'] || 'Untitled Program');
+
+      // Build blocks array if block data exists
+      const blocks = [];
+      if (f['Block 1 Title']) {
+        blocks.push({
+          number: 1,
+          title: f['Block 1 Title'],
+          dates: f['Block 1 Dates'] || '',
+          times: f['Block 1 Times'] || '',
+          instructor: f['Full Name with Credentials (from Block 1 Instructor)']?.[0] || f['Block 1 Instructor'] || ''
+        });
+      }
+      if (f['Block 2 Title']) {
+        blocks.push({
+          number: 2,
+          title: f['Block 2 Title'],
+          dates: f['Block 2 Dates'] || '',
+          times: f['Block 2 Times'] || '',
+          instructor: f['Full Name with Credentials (from Block 2 Instructor)']?.[0] || f['Block 2 Instructor'] || ''
+        });
+      }
+      if (f['Block 3 Title']) {
+        blocks.push({
+          number: 3,
+          title: f['Block 3 Title'],
+          dates: f['Block 3 Dates'] || '',
+          times: f['Block 3 Times'] || '',
+          instructor: f['Full Name with Credentials (from Block 3 Instructor)']?.[0] || f['Block 3 Instructor'] || ''
+        });
+      }
+
+      return {
+        id: record.id,
+        title: programName,
+        slug: PROGRAM_SLUG_MAP[programName] || programName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        location: f['City'] ? `${f['City']}, ${f['State/Province'] || ''}`.trim().replace(/,\s*$/, '') : 'Virtual',
+        venue: f['Location'] || (f['Format']?.toLowerCase().includes('virtual') ? 'Online Live Sessions' : ''),
+        startDate: formatDisplayDate(f['Start Date']),
+        endDate: formatDisplayDate(f['End Date']),
+        rawStartDate: f['Start Date'],
+        rawEndDate: f['End Date'],
+        format: normalizeFormat(f['Format']),
+        formatDisplay: f['Format'] || 'In-Person',
+        image: f['Hero Image URL'] || 'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800',
+        registrationUrl: f['Registration URL'] || '/register',
+        enrollmentStatus: f['Enrollment Status'],
+        duration: f['Duration (Days)'] || '',
+        blocks: blocks
+      };
+    }
+
+    function formatDisplayDate(dateStr) {
+      if (!dateStr) return '';
+      const [y, m, d] = dateStr.split('-').map(Number);
+      const date = new Date(Date.UTC(y, m - 1, d));
+      return date.toLocaleDateString('en-US', {
+        month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'
+      });
+    }
+
+    function normalizeFormat(format) {
+      if (!format) return 'in-person';
+      const lower = format.toLowerCase();
+      if (lower.includes('virtual')) return 'virtual';
+      if (lower.includes('demand')) return 'on-demand';
+      return 'in-person';
+    }
+
+    function formatDateRange(rawStart, rawEnd) {
+      if (!rawStart || !rawEnd) return '';
+
+      const [sy, sm, sd] = rawStart.split('-').map(Number);
+      const [ey, em, ed] = rawEnd.split('-').map(Number);
+
+      const startMonth = new Date(Date.UTC(sy, sm - 1, sd))
+        .toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+      const endMonth = new Date(Date.UTC(ey, em - 1, ed))
+        .toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+
+      // Same month and year - compact format: "April 20 - 24, 2026"
+      if (sy === ey && sm === em) {
+        return `${startMonth} ${sd} - ${ed}, ${sy}`;
+      }
+
+      // Different months - full format: "April 20, 2026 - May 3, 2026"
+      return `${startMonth} ${sd}, ${sy} - ${endMonth} ${ed}, ${ey}`;
+    }
+
+    // ============================================================================
+    // FILTER LOGIC
+    // ============================================================================
+    function populateFilters(programs) {
+      // Get unique values
+      const titles = [...new Set(programs.map(p => p.title))].sort();
+      const locations = [...new Set(programs.map(p => p.location))].sort();
+
+      // Populate Program filter
+      const programSelect = document.getElementById('programFilter');
+      programSelect.innerHTML = '<option value="">All Programs</option>';
+      titles.forEach(t => {
+        programSelect.innerHTML += `<option value="${t}">${t}</option>`;
+      });
+
+      // Populate Location filter
+      const locationSelect = document.getElementById('locationFilter');
+      locationSelect.innerHTML = '<option value="">All Locations</option>';
+      locations.forEach(l => {
+        locationSelect.innerHTML += `<option value="${l}">${l}</option>`;
+      });
+    }
+
+    // Helper to get default filtered programs (excludes on-demand and in-person standalone blocks)
+    function getDefaultFilteredPrograms() {
+      return allPrograms.filter(p => {
+        if (p.format === 'on-demand') return false;
+        if (p.format === 'in-person' && !IN_PERSON_PROGRAMS.includes(p.title)) return false;
+        return true;
+      });
+    }
+
+    function filterPrograms() {
+      const format = document.getElementById('formatFilter').value;
+      const program = document.getElementById('programFilter').value;
+      const location = document.getElementById('locationFilter').value;
+
+      const filtered = allPrograms.filter(p => {
+        // Hide on-demand unless explicitly selected
+        if (!format && p.format === 'on-demand') return false;
+
+        // For in-person (default or selected), only show certificate programs
+        if (!format && p.format === 'in-person' && !IN_PERSON_PROGRAMS.includes(p.title)) return false;
+        if (format === 'in-person' && !IN_PERSON_PROGRAMS.includes(p.title)) return false;
+
+        if (format && p.format !== format) return false;
+        if (program && p.title !== program) return false;
+        if (location && p.location !== location) return false;
+        return true;
+      });
+
+      renderPrograms(filtered);
+    }
+
+    function renderPrograms(programs) {
+      const display = document.getElementById('calendarDisplay');
+      if (programs.length === 0) {
+        display.innerHTML = '<div class="empty-state"><p>No programs match your filters.</p></div>';
+        return;
+      }
+      if (display.classList.contains('cards-view')) {
+        display.innerHTML = renderCards(programs);
+      } else {
+        display.innerHTML = renderList(programs);
+      }
+    }
+
+    // ============================================================================
+    // RENDER FUNCTIONS
+    // ============================================================================
     function renderCards(programs) {
       return programs.map(program => `
         <div class="seminar-card">
@@ -2271,23 +2901,16 @@
               <div class="overlay-top"></div>
               <div class="overlay-bottom">
                 <div class="overlay-location">${program.location}</div>
-                <div class="overlay-date">${program.startDate} - ${program.endDate}</div>
+                <div class="overlay-date">${formatDateRange(program.rawStartDate, program.rawEndDate)}</div>
               </div>
             </div>
           </div>
           <div class="card-content">
             <div class="card-title">
               <span class="program-name">${program.title}</span>
-              <a href="#" class="grid-program-details-link">Program Details</a>
-            </div>
-            <div class="credits-container">
-              ${program.credits.shrm ? `<span class="credit-badge shrm-badge">SHRM: ${program.credits.shrm}</span>` : ''}
-              ${program.credits.hrci ? `<span class="credit-badge hrci-badge">HRCI: ${program.credits.hrci}</span>` : ''}
-              ${program.credits.cle ? `<span class="credit-badge cle-badge">CLE: ${program.credits.cle}</span>` : ''}
             </div>
             <div class="card-actions">
-              <button class="btn-primary">Register</button>
-              <button class="btn-secondary">Learn More</button>
+              <button class="btn-learn-more" onclick="openProgramModal('${program.id}')">Learn More</button>
             </div>
           </div>
         </div>
@@ -2300,34 +2923,24 @@
           <div>Program Dates</div>
           <div>Program</div>
           <div>Location & Venue</div>
-          <div>Professional Credits</div>
-          <div>Register</div>
+          <div></div>
         </div>
       `;
 
       const rows = programs.map(program => `
         <div class="list-item">
           <div class="list-date">
-            <div class="grid-date-range">${program.startDate}</div>
-            <div class="grid-date-details">to ${program.endDate}</div>
+            <div class="grid-date-range">${formatDateRange(program.rawStartDate, program.rawEndDate)}</div>
           </div>
           <div class="list-program">
             <span class="program-name">${program.title}</span>
-            <a href="#" class="program-details-link">Program Details</a>
           </div>
           <div class="list-location">
             <div class="location-city">${program.location}</div>
             <div class="venue-name">${program.venue}</div>
           </div>
-          <div class="list-credits">
-            <div class="credits-container">
-              ${program.credits.shrm ? `<span class="credit-badge shrm-badge">SHRM: ${program.credits.shrm}</span>` : ''}
-              ${program.credits.hrci ? `<span class="credit-badge hrci-badge">HRCI: ${program.credits.hrci}</span>` : ''}
-              ${program.credits.cle ? `<span class="credit-badge cle-badge">CLE: ${program.credits.cle}</span>` : ''}
-            </div>
-          </div>
           <div class="list-actions">
-            <button class="btn-primary">Register</button>
+            <button class="btn-learn-more" onclick="openProgramModal('${program.id}')">Learn More</button>
           </div>
         </div>
       `).join('');
@@ -2335,31 +2948,108 @@
       return header + rows;
     }
 
-    // Initial render with sample data
-    document.addEventListener('DOMContentLoaded', () => {
-      // Simulate loading delay
-      setTimeout(() => {
-        const display = document.getElementById('calendarDisplay');
-        if (display.classList.contains('cards-view')) {
-          display.innerHTML = renderCards(samplePrograms);
-        } else {
-          display.innerHTML = renderList(samplePrograms);
-        }
-      }, 500);
+    // ============================================================================
+    // EVENT HANDLERS
+    // ============================================================================
+    // Filter change listeners
+    ['formatFilter', 'programFilter', 'locationFilter'].forEach(id => {
+      document.getElementById(id).addEventListener('change', filterPrograms);
     });
 
-    // Update display when view changes
+    // Update view switcher to re-render with current filters
     viewButtons.forEach(btn => {
       btn.addEventListener('click', () => {
-        const display = document.getElementById('calendarDisplay');
-        setTimeout(() => {
-          if (display.classList.contains('cards-view')) {
-            display.innerHTML = renderCards(samplePrograms);
-          } else {
-            display.innerHTML = renderList(samplePrograms);
-          }
-        }, 100);
+        setTimeout(filterPrograms, 50);
       });
+    });
+
+    // Load data on page ready
+    document.addEventListener('DOMContentLoaded', loadProgramsFromAirtable);
+
+    // ============================================================================
+    // PROGRAM DETAILS MODAL
+    // ============================================================================
+    function openProgramModal(programId) {
+      // Find the program by ID
+      const program = allPrograms.find(p => p.id === programId);
+      if (!program) {
+        console.error('Program not found:', programId);
+        return;
+      }
+
+      // Populate modal content
+      document.getElementById('programModal-image').style.backgroundImage = `url('${program.image}')`;
+      document.getElementById('programModal-title').textContent = program.title;
+      document.getElementById('programModal-dates').textContent = formatDateRange(program.rawStartDate, program.rawEndDate);
+      document.getElementById('programModal-duration').textContent = program.duration ? `${program.duration} days` : 'Contact for details';
+      document.getElementById('programModal-location').textContent = program.venue ? `${program.location} • ${program.venue}` : program.location;
+
+      // Set format badge
+      const formatBadge = document.getElementById('programModal-format');
+      formatBadge.textContent = program.formatDisplay;
+      formatBadge.className = `programModal-format-badge ${program.format}`;
+
+      // Render blocks if they exist
+      const blocksContainer = document.getElementById('programModal-blocks');
+      if (program.blocks && program.blocks.length > 0) {
+        const programDays = BLOCK_DAYS_MAP[program.title] || {};
+        blocksContainer.innerHTML = `
+          <h3 class="programModal-blocks-title">Program Schedule</h3>
+          ${program.blocks.map(block => {
+            const blockDays = programDays[block.number] || '';
+            return `
+            <div class="programModal-block">
+              <div class="programModal-block-header">
+                <span class="programModal-block-number">Block ${block.number}</span>
+                <span class="programModal-block-title">${block.title}</span>
+              </div>
+              <div class="programModal-block-details">
+                ${blockDays ? `<div class="programModal-block-days">${blockDays}</div>` : ''}
+              </div>
+            </div>
+          `}).join('')}
+        `;
+        blocksContainer.style.display = 'block';
+      } else {
+        blocksContainer.innerHTML = '';
+        blocksContainer.style.display = 'none';
+      }
+
+      // Set button URLs
+      document.getElementById('programModal-register').href = program.registrationUrl;
+      document.getElementById('programModal-details').href = `/programs/${program.slug}?format=${program.format}`;
+
+      // Show modal
+      const modal = document.getElementById('programModal');
+      modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+
+      // Track event
+      if (typeof gtag === 'function') {
+        gtag('event', 'program_modal_open', {
+          program_title: program.title,
+          program_format: program.format
+        });
+      }
+    }
+
+    function closeProgramModal(event) {
+      // If called from overlay click, only close if clicking the overlay itself
+      if (event && event.target !== event.currentTarget) return;
+
+      const modal = document.getElementById('programModal');
+      modal.classList.remove('active');
+      document.body.style.overflow = 'auto';
+    }
+
+    // Add escape key handler for program modal
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        const programModal = document.getElementById('programModal');
+        if (programModal.classList.contains('active')) {
+          closeProgramModal();
+        }
+      }
     });
   </script>
 
