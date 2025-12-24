@@ -122,12 +122,12 @@ function initializeRevealObserver() {
             if (heroSubtext) heroSubtext.classList.add('animate-in');
             if (heroButton) heroButton.classList.add('animate-in');
             
-            // Show testimonials after button animation completes
+            // Show testimonials slightly after button animation completes
             const testimonialSection = document.querySelector('.hero-testimonial-section');
             if (testimonialSection) {
               setTimeout(() => {
                 testimonialSection.classList.add('show');
-              }, 4500);
+              }, 5000);
             }
           }
           
