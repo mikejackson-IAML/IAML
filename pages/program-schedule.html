@@ -2220,58 +2220,33 @@
       </div>
     </section>
 
-    <!-- Seminar Calendar Widget -->
-    <section class="seminar-calendar-section">
-      <div class="iaml-calendar-widget">
-        <div class="calendar-container">
-          <!-- Control Bar -->
-          <div class="calendar-controls">
-            <div class="filter-section">
-              <div class="filter-controls">
-                <div class="filter-group">
-                  <select class="filter-select" id="formatFilter" aria-label="Filter by format">
-                    <option value="">All Formats</option>
-                    <option value="in-person">In-Person</option>
-                    <option value="virtual">Virtual</option>
-                    <option value="on-demand">On-Demand</option>
-                  </select>
-                </div>
-                <div class="filter-group">
-                  <select class="filter-select" id="programFilter" aria-label="Filter by program">
-                    <option value="">All Programs</option>
-                    <option value="employee-relations-law">Employee Relations Law</option>
-                    <option value="workplace-investigations">Workplace Investigations</option>
-                    <option value="strategic-hr">Strategic HR Management</option>
-                    <option value="employee-benefits">Employee Benefits Law</option>
-                  </select>
-                </div>
-                <div class="filter-group">
-                  <select class="filter-select" id="locationFilter" aria-label="Filter by location">
-                    <option value="">All Locations</option>
-                    <option value="las-vegas">Las Vegas, NV</option>
-                    <option value="san-diego">San Diego, CA</option>
-                    <option value="chicago">Chicago, IL</option>
-                    <option value="virtual">Virtual</option>
-                  </select>
-                </div>
-              </div>
-              <div class="filter-actions">
-                <button class="btn-clear" id="clearFilters">Clear</button>
-              </div>
-            </div>
-            <div class="view-switcher">
-              <button class="view-btn active" data-view="cards" aria-label="Grid view">Grid</button>
-              <button class="view-btn" data-view="list" aria-label="List view">List</button>
-            </div>
-          </div>
+    <!-- Schedule Section -->
+    <section class="schedule-section">
+      <div class="schedule-v2b-container">
+        <!-- Filters -->
+        <div class="schedule-v2b-filters">
+          <select class="schedule-v2b-filter" id="programTypeFilter" aria-label="Filter by program type">
+            <option value="">All Types</option>
+            <option value="employment-law">Employment Law</option>
+            <option value="benefits-law">Benefits Law</option>
+            <option value="hr-management">HR Management</option>
+          </select>
+          <select class="schedule-v2b-filter" id="formatFilter" aria-label="Filter by format">
+            <option value="">All Formats</option>
+            <option value="in-person">In-Person</option>
+            <option value="virtual">Virtual</option>
+          </select>
+          <select class="schedule-v2b-filter" id="programFilter" aria-label="Filter by program">
+            <option value="">All Programs</option>
+          </select>
+          <button class="schedule-v2b-clear" id="clearFilters">Clear</button>
+        </div>
 
-          <!-- Calendar Display -->
-          <div class="calendar-display cards-view" id="calendarDisplay">
-            <!-- Loading State -->
-            <div class="loading-container">
-              <div class="loading-spinner"></div>
-              <p class="loading-text">Loading programs...</p>
-            </div>
+        <!-- Program List -->
+        <div class="schedule-v2b-list" id="programList">
+          <div class="schedule-v2-loading">
+            <div class="schedule-v2-loading-spinner"></div>
+            <p>Loading programs...</p>
           </div>
         </div>
       </div>
@@ -2634,65 +2609,12 @@
     });
 
     // ============================================================================
-    // AIRTABLE DATA LOADING
+    // CONFIGURATION
     // ============================================================================
     const TABLE_ID = 'tblympiL1p6PmQz9i';
     let allPrograms = [];
 
-    async function loadProgramsFromAirtable() {
-      const display = document.getElementById('calendarDisplay');
-
-      try {
-        // Fetch from API proxy with filter and sort
-        const filterFormula = encodeURIComponent("{Show on Website}=TRUE()");
-        const response = await fetch(
-          `/api/airtable-programs?table=${TABLE_ID}&filterByFormula=${filterFormula}&sort[0][field]=Start Date&sort[0][direction]=asc`
-        );
-
-        if (!response.ok) throw new Error('Failed to load programs');
-
-        const data = await response.json();
-        const records = data.records || [];
-
-        // Transform Airtable records to UI format and filter to allowed programs only
-        allPrograms = records
-          .map(transformRecord)
-          .filter(p => ALLOWED_PROGRAMS.includes(p.title));
-
-        // Populate filter dropdowns from actual data
-        populateFilters(allPrograms);
-
-        // Render initial view (exclude on-demand and in-person standalone blocks by default)
-        renderPrograms(getDefaultFilteredPrograms());
-
-      } catch (error) {
-        console.error('Error loading programs:', error);
-        display.innerHTML = `
-          <div class="error-container">
-            <p>Unable to load program schedule. Please try again later.</p>
-          </div>
-        `;
-      }
-    }
-
-    // Whitelist of programs to display on schedule page
     const ALLOWED_PROGRAMS = [
-      // Certificate Programs
-      'Certificate in Employee Relations Law',
-      'Advanced Certificate in Strategic Employment Law',
-      'Certificate in Workplace Investigations',
-      'Certificate in Strategic HR Leadership',
-      'Certificate in Employee Benefits Law',
-      'Advanced Certificate in Employee Benefits Law',
-      // Virtual Programs (standalone blocks)
-      'Comprehensive Labor Relations',
-      'Discrimination Prevention & Defense',
-      'HR Law Fundamentals',
-      'Strategic HR Management'
-    ];
-
-    // Programs to show for in-person format (certificates only, no standalone blocks)
-    const IN_PERSON_PROGRAMS = [
       'Certificate in Employee Relations Law',
       'Advanced Certificate in Strategic Employment Law',
       'Certificate in Workplace Investigations',
@@ -2701,7 +2623,47 @@
       'Advanced Certificate in Employee Benefits Law'
     ];
 
-    // Program name to slug mapping
+    // Virtual component programs to fetch (these form virtual certificates when paired)
+    const VIRTUAL_COMPONENT_PROGRAMS = [
+      'Comprehensive Labor Relations',
+      'Discrimination Prevention & Defense',
+      'HR Law Fundamentals',
+      'Strategic HR Management'
+    ];
+
+    // Virtual certificate definitions - which component programs combine to form a certificate
+    const VIRTUAL_CERTIFICATE_DEFS = {
+      'Certificate in Employee Relations Law': {
+        components: ['Comprehensive Labor Relations', 'Discrimination Prevention & Defense'],
+        slug: 'employee-relations-law',
+        description: 'Earn your Certificate in Employee Relations Law through two virtual sessions. Complete both components within the program window to receive your full certificate.',
+        image: 'https://storage.googleapis.com/iaml-images-public/programs/employee-relations-law-hero.jpg'
+      },
+      'Certificate in Strategic HR Leadership': {
+        components: ['HR Law Fundamentals', 'Strategic HR Management'],
+        slug: 'strategic-hr',
+        description: 'Earn your Certificate in Strategic HR Leadership through two virtual sessions. Master HR fundamentals and strategic management to receive your full certificate.',
+        image: 'https://storage.googleapis.com/iaml-images-public/programs/strategic-hr-hero.jpg'
+      }
+    };
+
+    // Virtual program image library - rotate to avoid duplication across instances
+    const VIRTUAL_IMAGES = {
+      'Certificate in Employee Relations Law': [
+        'https://i.imgur.com/sSzeD5U.jpg',
+        'https://i.imgur.com/kGiKVzl.jpg',
+        'https://i.imgur.com/r81GZTG.jpg'
+      ],
+      'Certificate in Strategic HR Leadership': [
+        'https://i.imgur.com/CY3t9Ye.jpg',
+        'https://i.imgur.com/Mb3eS71.jpg',
+        'https://i.imgur.com/Vv4iODE.jpg'
+      ]
+      // Reserved for future use:
+      // 'https://i.imgur.com/TDMN3ZX.jpg'
+      // 'https://i.imgur.com/3wSERSo.jpg'
+    };
+
     const PROGRAM_SLUG_MAP = {
       'Certificate in Employee Relations Law': 'employee-relations-law',
       'Advanced Certificate in Strategic Employment Law': 'strategic-employment-law',
@@ -2711,7 +2673,6 @@
       'Advanced Certificate in Employee Benefits Law': 'advanced-benefits-law'
     };
 
-    // Block days mapping by program
     const BLOCK_DAYS_MAP = {
       'Certificate in Employee Relations Law': {
         1: 'Monday - Tuesday',
@@ -2729,13 +2690,207 @@
       }
     };
 
+    // Program type categories - programs can belong to multiple types
+    const PROGRAM_TYPE_MAP = {
+      'employment-law': [
+        'Certificate in Employee Relations Law',
+        'Certificate in Strategic HR Leadership',
+        'Certificate in Workplace Investigations',
+        'Advanced Certificate in Strategic Employment Law'
+      ],
+      'benefits-law': [
+        'Certificate in Employee Benefits Law',
+        'Advanced Certificate in Employee Benefits Law'
+      ],
+      'hr-management': [
+        'Certificate in Workplace Investigations',
+        'Certificate in Strategic HR Leadership'
+      ]
+    };
+
+    // Descriptions for non-block programs
+    const PROGRAM_DESCRIPTIONS = {
+      'Certificate in Workplace Investigations': 'Master the essential skills for conducting thorough, legally defensible workplace investigations. This intensive program covers investigation planning, interviewing techniques, evidence gathering, credibility assessment, and documentation best practices.',
+      'Advanced Certificate in Strategic Employment Law': 'Elevate your expertise with advanced strategies for navigating complex employment law challenges. Designed for experienced HR professionals and attorneys seeking to deepen their knowledge of cutting-edge legal issues and emerging trends.',
+      'Advanced Certificate in Employee Benefits Law': 'Build on your benefits knowledge with advanced topics including complex compliance issues, plan design strategies, and fiduciary responsibilities. Ideal for professionals ready to tackle sophisticated benefits challenges.'
+    };
+
+    // ============================================================================
+    // HELPER FUNCTIONS
+    // ============================================================================
+
+    // Format date range smartly: same month = "February 24–25, 2026", different = "February 24 – March 4, 2026"
+    function formatSmartDateRange(rawStartDate, rawEndDate) {
+      if (!rawStartDate) return '';
+
+      const start = new Date(rawStartDate);
+      const end = rawEndDate ? new Date(rawEndDate) : null;
+
+      const months = ['January', 'February', 'March', 'April', 'May', 'June',
+                      'July', 'August', 'September', 'October', 'November', 'December'];
+
+      const startMonth = months[start.getMonth()];
+      const startDay = start.getDate();
+      const startYear = start.getFullYear();
+
+      if (!end || start.getTime() === end.getTime()) {
+        // Single day
+        return `${startMonth} ${startDay}, ${startYear}`;
+      }
+
+      const endMonth = months[end.getMonth()];
+      const endDay = end.getDate();
+      const endYear = end.getFullYear();
+
+      if (startMonth === endMonth && startYear === endYear) {
+        // Same month and year: "February 24–25, 2026"
+        return `${startMonth} ${startDay}–${endDay}, ${startYear}`;
+      } else if (startYear === endYear) {
+        // Different month, same year: "February 24 – March 4, 2026"
+        return `${startMonth} ${startDay} – ${endMonth} ${endDay}, ${startYear}`;
+      } else {
+        // Different year: "December 28, 2025 – January 2, 2026"
+        return `${startMonth} ${startDay}, ${startYear} – ${endMonth} ${endDay}, ${endYear}`;
+      }
+    }
+
+    // ============================================================================
+    // DATA LOADING
+    // ============================================================================
+    async function loadProgramsFromAirtable() {
+      const listEl = document.getElementById('programList');
+
+      try {
+        const filterFormula = encodeURIComponent("{Show on Website}=TRUE()");
+        const response = await fetch(
+          `/api/airtable-programs?table=${TABLE_ID}&filterByFormula=${filterFormula}&sort[0][field]=Start Date&sort[0][direction]=asc`
+        );
+
+        if (!response.ok) throw new Error('Failed to load programs');
+
+        const data = await response.json();
+        const records = data.records || [];
+
+        // Transform all records
+        const allTransformed = records.map(transformRecord);
+
+        // Filter regular certificate programs (in-person and virtual non-component)
+        allPrograms = allTransformed
+          .filter(p => ALLOWED_PROGRAMS.includes(p.title) && p.format !== 'on-demand');
+
+        // Get virtual component sessions for building virtual certificate pairs
+        const virtualComponents = allTransformed
+          .filter(p => VIRTUAL_COMPONENT_PROGRAMS.includes(p.title) && p.format === 'virtual');
+
+        // Build virtual certificate pairs and add to allPrograms
+        const virtualCertificates = buildVirtualCertificatePairs(virtualComponents);
+        allPrograms = [...allPrograms, ...virtualCertificates];
+
+        // Sort all programs by start date
+        allPrograms.sort((a, b) => {
+          if (!a.rawStartDate) return 1;
+          if (!b.rawStartDate) return -1;
+          return new Date(a.rawStartDate) - new Date(b.rawStartDate);
+        });
+
+        populateFilters(allPrograms);
+        renderPrograms(allPrograms);
+
+      } catch (error) {
+        console.error('Error loading programs:', error);
+        listEl.innerHTML = `
+          <div class="schedule-v2-empty">
+            <p>Unable to load program schedule. Please try again later.</p>
+          </div>
+        `;
+      }
+    }
+
+    // Build virtual certificate pairs from component sessions
+    function buildVirtualCertificatePairs(virtualComponents) {
+      const pairs = [];
+      const PAIR_WINDOW_DAYS = 28; // Components must be within 28 days of each other
+      const imageIndexes = {}; // Track which image to use next per certificate type
+
+      for (const [certName, def] of Object.entries(VIRTUAL_CERTIFICATE_DEFS)) {
+        const [comp1Name, comp2Name] = def.components;
+
+        // Initialize image index for this certificate type
+        if (imageIndexes[certName] === undefined) imageIndexes[certName] = 0;
+
+        // Get sessions for each component, sorted by date
+        const comp1Sessions = virtualComponents
+          .filter(p => p.title === comp1Name)
+          .sort((a, b) => new Date(a.rawStartDate) - new Date(b.rawStartDate));
+
+        const comp2Sessions = virtualComponents
+          .filter(p => p.title === comp2Name)
+          .sort((a, b) => new Date(a.rawStartDate) - new Date(b.rawStartDate));
+
+        // Find valid pairs (comp2 starts within 28 days after comp1)
+        for (const s1 of comp1Sessions) {
+          const s1Start = new Date(s1.rawStartDate);
+
+          for (const s2 of comp2Sessions) {
+            const s2Start = new Date(s2.rawStartDate);
+            const daysDiff = (s2Start - s1Start) / (1000 * 60 * 60 * 24);
+
+            // s2 must start after s1 and within the window
+            if (daysDiff >= 0 && daysDiff <= PAIR_WINDOW_DAYS) {
+              // Get rotating image from VIRTUAL_IMAGES library
+              const images = VIRTUAL_IMAGES[certName] || [];
+              const imageIndex = imageIndexes[certName] % (images.length || 1);
+              const image = images[imageIndex] || def.image || s1.image;
+              imageIndexes[certName]++;
+
+              pairs.push({
+                id: `virtual-cert-${certName.replace(/\s+/g, '-')}-${s1.rawStartDate}`,
+                title: certName,
+                slug: def.slug,
+                isVirtualCertificate: true,
+                format: 'virtual',
+                formatDisplay: 'Virtual',
+                image: image,
+                location: 'Virtual',
+                venue: 'Online Live Sessions',
+                rawStartDate: s1.rawStartDate,
+                rawEndDate: s2.rawEndDate || s2.rawStartDate,
+                startDate: s1.startDate,
+                endDate: s2.endDate,
+                registrationUrl: s1.registrationUrl || '/register',
+                description: def.description,
+                blocks: [],
+                // Store component session info for display
+                virtualComponents: [
+                  {
+                    number: 1,
+                    title: comp1Name,
+                    dates: formatSmartDateRange(s1.rawStartDate, s1.rawEndDate),
+                    rawStart: s1.rawStartDate,
+                    rawEnd: s1.rawEndDate
+                  },
+                  {
+                    number: 2,
+                    title: comp2Name,
+                    dates: formatSmartDateRange(s2.rawStartDate, s2.rawEndDate),
+                    rawStart: s2.rawStartDate,
+                    rawEnd: s2.rawEndDate
+                  }
+                ]
+              });
+            }
+          }
+        }
+      }
+
+      return pairs;
+    }
+
     function transformRecord(record) {
       const f = record.fields;
-      // Program Name is a linked record lookup, which returns as an array
       const rawProgramName = f['Program Name'];
       const programName = Array.isArray(rawProgramName) ? rawProgramName[0] : (rawProgramName || f['Instance Name'] || 'Untitled Program');
 
-      // Build blocks array if block data exists
       const blocks = [];
       if (f['Block 1 Title']) {
         blocks.push({
@@ -2804,192 +2959,169 @@
 
     function formatDateRange(rawStart, rawEnd) {
       if (!rawStart || !rawEnd) return '';
-
       const [sy, sm, sd] = rawStart.split('-').map(Number);
       const [ey, em, ed] = rawEnd.split('-').map(Number);
-
-      const startMonth = new Date(Date.UTC(sy, sm - 1, sd))
-        .toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
-      const endMonth = new Date(Date.UTC(ey, em - 1, ed))
-        .toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
-
-      // Same month and year - compact format: "April 20 - 24, 2026"
+      const startMonth = new Date(Date.UTC(sy, sm - 1, sd)).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+      const endMonth = new Date(Date.UTC(ey, em - 1, ed)).toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
       if (sy === ey && sm === em) {
         return `${startMonth} ${sd} - ${ed}, ${sy}`;
       }
-
-      // Different months - full format: "April 20, 2026 - May 3, 2026"
       return `${startMonth} ${sd}, ${sy} - ${endMonth} ${ed}, ${ey}`;
     }
 
     // ============================================================================
-    // FILTER LOGIC
+    // FILTERS
     // ============================================================================
     function populateFilters(programs) {
-      // Get unique values
       const titles = [...new Set(programs.map(p => p.title))].sort();
-      const locations = [...new Set(programs.map(p => p.location))].sort();
-
-      // Populate Program filter
       const programSelect = document.getElementById('programFilter');
       programSelect.innerHTML = '<option value="">All Programs</option>';
       titles.forEach(t => {
         programSelect.innerHTML += `<option value="${t}">${t}</option>`;
       });
-
-      // Populate Location filter
-      const locationSelect = document.getElementById('locationFilter');
-      locationSelect.innerHTML = '<option value="">All Locations</option>';
-      locations.forEach(l => {
-        locationSelect.innerHTML += `<option value="${l}">${l}</option>`;
-      });
-    }
-
-    // Helper to get default filtered programs (excludes on-demand and in-person standalone blocks)
-    function getDefaultFilteredPrograms() {
-      return allPrograms.filter(p => {
-        if (p.format === 'on-demand') return false;
-        if (p.format === 'in-person' && !IN_PERSON_PROGRAMS.includes(p.title)) return false;
-        return true;
-      });
     }
 
     function filterPrograms() {
+      const programType = document.getElementById('programTypeFilter').value;
       const format = document.getElementById('formatFilter').value;
       const program = document.getElementById('programFilter').value;
-      const location = document.getElementById('locationFilter').value;
 
       const filtered = allPrograms.filter(p => {
-        // Hide on-demand unless explicitly selected
-        if (!format && p.format === 'on-demand') return false;
-
-        // For in-person (default or selected), only show certificate programs
-        if (!format && p.format === 'in-person' && !IN_PERSON_PROGRAMS.includes(p.title)) return false;
-        if (format === 'in-person' && !IN_PERSON_PROGRAMS.includes(p.title)) return false;
-
+        // Filter by program type (check if program is in the selected type's array)
+        if (programType && PROGRAM_TYPE_MAP[programType]) {
+          if (!PROGRAM_TYPE_MAP[programType].includes(p.title)) return false;
+        }
+        // Filter by format
         if (format && p.format !== format) return false;
+        // Filter by specific program
         if (program && p.title !== program) return false;
-        if (location && p.location !== location) return false;
         return true;
       });
 
       renderPrograms(filtered);
     }
 
+    // ============================================================================
+    // RENDER - VERSION B (Card-Row Hybrid)
+    // ============================================================================
     function renderPrograms(programs) {
-      const display = document.getElementById('calendarDisplay');
+      const listEl = document.getElementById('programList');
+
       if (programs.length === 0) {
-        display.innerHTML = '<div class="empty-state"><p>No programs match your filters.</p></div>';
+        listEl.innerHTML = '<div class="schedule-v2-empty"><p>No programs match your filters.</p></div>';
         return;
       }
-      if (display.classList.contains('cards-view')) {
-        display.innerHTML = renderCards(programs);
-      } else {
-        display.innerHTML = renderList(programs);
-      }
-    }
 
-    // ============================================================================
-    // RENDER FUNCTIONS
-    // ============================================================================
-    function renderCards(programs) {
-      return programs.map(program => `
-        <div class="seminar-card">
-          <div class="card-image-container">
-            <img src="${program.image}" alt="${program.title}" class="card-hero-image">
-            <div class="card-overlay">
-              <div class="overlay-top"></div>
-              <div class="overlay-bottom">
-                <div class="overlay-location">${program.location}</div>
-                <div class="overlay-date">${formatDateRange(program.rawStartDate, program.rawEndDate)}</div>
+      listEl.innerHTML = programs.map(program => {
+        const programDays = BLOCK_DAYS_MAP[program.title] || {};
+        const programDescription = PROGRAM_DESCRIPTIONS[program.title] || '';
+
+        // Handle virtual certificate pairs differently
+        let contentHtml;
+        if (program.isVirtualCertificate && program.virtualComponents) {
+          // Virtual certificate with component sessions
+          contentHtml = `
+            <table class="schedule-v2c-blocks-table" aria-label="Virtual sessions for ${program.title}">
+              <thead>
+                <tr>
+                  <th>Session</th>
+                  <th>Topic</th>
+                  <th>Dates</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${program.virtualComponents.map(comp => `
+                  <tr>
+                    <td data-label="Session"><span class="schedule-v2c-block-num">${comp.number}</span></td>
+                    <td data-label="Topic">${comp.title}</td>
+                    <td data-label="Dates">${comp.dates}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+            <p class="schedule-v2b-blocks-footnote">*Complete both sessions to earn your certificate</p>
+          `;
+        } else if (program.blocks.length > 0) {
+          // Regular program with blocks
+          contentHtml = `
+            <table class="schedule-v2c-blocks-table" aria-label="Program blocks for ${program.title}">
+              <thead>
+                <tr>
+                  <th>Block</th>
+                  <th>Topic</th>
+                  <th>Days</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${program.blocks.map(block => {
+                  const blockDays = programDays[block.number] || '';
+                  return `
+                    <tr>
+                      <td data-label="Block"><span class="schedule-v2c-block-num">${block.number}</span></td>
+                      <td data-label="Topic">${block.title}</td>
+                      <td data-label="Days">${blockDays}</td>
+                    </tr>
+                  `;
+                }).join('')}
+              </tbody>
+            </table>
+            <p class="schedule-v2b-blocks-footnote">*Individual blocks available for separate registration</p>
+          `;
+        } else {
+          // Non-block program with description
+          const desc = program.description || programDescription || 'Program details available upon registration.';
+          contentHtml = `<p class="schedule-v2b-program-description">${desc}</p>`;
+        }
+
+        return `
+          <article class="schedule-v2b-card-row">
+            <div class="schedule-v2b-image-col">
+              <img src="${program.image}" alt="${program.title}" class="schedule-v2b-hero-image" loading="lazy">
+              <div class="schedule-v2b-image-overlay">
+                <span class="schedule-v2b-format-badge ${program.format}">${program.formatDisplay}</span>
               </div>
             </div>
-          </div>
-          <div class="card-content">
-            <div class="card-title">
-              <span class="program-name">${program.title}</span>
+            <div class="schedule-v2b-info-col">
+              <header class="schedule-v2b-header">
+                <h3 class="schedule-v2b-program-title">${program.title}</h3>
+                <div class="schedule-v2b-dates-location">
+                  <time datetime="${program.rawStartDate}">${formatDateRange(program.rawStartDate, program.rawEndDate)}</time>
+                  <span class="schedule-v2b-location-venue">
+                    <strong>${program.location}</strong>${program.venue ? ` - ${program.venue}` : ''}
+                  </span>
+                </div>
+              </header>
+              <div class="schedule-v2b-blocks-grid">
+                ${contentHtml}
+              </div>
             </div>
-            <div class="card-actions">
-              <button class="btn-learn-more" onclick="openProgramModal('${program.id}')">Learn More</button>
+            <div class="schedule-v2b-action-col">
+              <button class="schedule-v2b-learn-btn" onclick="openProgramModal('${program.id}')">
+                Learn More
+              </button>
             </div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderList(programs) {
-      const header = `
-        <div class="list-header">
-          <div>Program Dates</div>
-          <div>Program</div>
-          <div>Location & Venue</div>
-          <div></div>
-        </div>
-      `;
-
-      const rows = programs.map(program => `
-        <div class="list-item">
-          <div class="list-date">
-            <div class="grid-date-range">${formatDateRange(program.rawStartDate, program.rawEndDate)}</div>
-          </div>
-          <div class="list-program">
-            <span class="program-name">${program.title}</span>
-          </div>
-          <div class="list-location">
-            <div class="location-city">${program.location}</div>
-            <div class="venue-name">${program.venue}</div>
-          </div>
-          <div class="list-actions">
-            <button class="btn-learn-more" onclick="openProgramModal('${program.id}')">Learn More</button>
-          </div>
-        </div>
-      `).join('');
-
-      return header + rows;
+          </article>
+        `;
+      }).join('');
     }
 
     // ============================================================================
-    // EVENT HANDLERS
-    // ============================================================================
-    // Filter change listeners
-    ['formatFilter', 'programFilter', 'locationFilter'].forEach(id => {
-      document.getElementById(id).addEventListener('change', filterPrograms);
-    });
-
-    // Update view switcher to re-render with current filters
-    viewButtons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        setTimeout(filterPrograms, 50);
-      });
-    });
-
-    // Load data on page ready
-    document.addEventListener('DOMContentLoaded', loadProgramsFromAirtable);
-
-    // ============================================================================
-    // PROGRAM DETAILS MODAL
+    // MODAL
     // ============================================================================
     function openProgramModal(programId) {
-      // Find the program by ID
       const program = allPrograms.find(p => p.id === programId);
-      if (!program) {
-        console.error('Program not found:', programId);
-        return;
-      }
+      if (!program) return;
 
-      // Populate modal content
       document.getElementById('programModal-image').style.backgroundImage = `url('${program.image}')`;
       document.getElementById('programModal-title').textContent = program.title;
       document.getElementById('programModal-dates').textContent = formatDateRange(program.rawStartDate, program.rawEndDate);
       document.getElementById('programModal-duration').textContent = program.duration ? `${program.duration} days` : 'Contact for details';
       document.getElementById('programModal-location').textContent = program.venue ? `${program.location} • ${program.venue}` : program.location;
 
-      // Set format badge
       const formatBadge = document.getElementById('programModal-format');
       formatBadge.textContent = program.formatDisplay;
       formatBadge.className = `programModal-format-badge ${program.format}`;
 
-      // Render blocks if they exist
       const blocksContainer = document.getElementById('programModal-blocks');
       if (program.blocks && program.blocks.length > 0) {
         const programDays = BLOCK_DAYS_MAP[program.title] || {};
@@ -3005,6 +3137,7 @@
               </div>
               <div class="programModal-block-details">
                 ${blockDays ? `<div class="programModal-block-days">${blockDays}</div>` : ''}
+                ${block.instructor ? `<div class="programModal-block-instructor">${block.instructor}</div>` : ''}
               </div>
             </div>
           `}).join('')}
@@ -3015,42 +3148,42 @@
         blocksContainer.style.display = 'none';
       }
 
-      // Set button URLs
       document.getElementById('programModal-register').href = program.registrationUrl;
       document.getElementById('programModal-details').href = `/programs/${program.slug}?format=${program.format}`;
 
-      // Show modal
-      const modal = document.getElementById('programModal');
-      modal.classList.add('active');
+      document.getElementById('programModal').classList.add('active');
       document.body.style.overflow = 'hidden';
-
-      // Track event
-      if (typeof gtag === 'function') {
-        gtag('event', 'program_modal_open', {
-          program_title: program.title,
-          program_format: program.format
-        });
-      }
     }
 
     function closeProgramModal(event) {
-      // If called from overlay click, only close if clicking the overlay itself
       if (event && event.target !== event.currentTarget) return;
-
-      const modal = document.getElementById('programModal');
-      modal.classList.remove('active');
+      document.getElementById('programModal').classList.remove('active');
       document.body.style.overflow = 'auto';
     }
 
-    // Add escape key handler for program modal
+    // ============================================================================
+    // EVENT LISTENERS
+    // ============================================================================
+    document.getElementById('programTypeFilter').addEventListener('change', filterPrograms);
+    document.getElementById('formatFilter').addEventListener('change', filterPrograms);
+    document.getElementById('programFilter').addEventListener('change', filterPrograms);
+    document.getElementById('clearFilters').addEventListener('click', () => {
+      document.getElementById('programTypeFilter').value = '';
+      document.getElementById('formatFilter').value = '';
+      document.getElementById('programFilter').value = '';
+      renderPrograms(allPrograms);
+    });
+
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
-        const programModal = document.getElementById('programModal');
-        if (programModal.classList.contains('active')) {
+        const modal = document.getElementById('programModal');
+        if (modal.classList.contains('active')) {
           closeProgramModal();
         }
       }
     });
+
+    document.addEventListener('DOMContentLoaded', loadProgramsFromAirtable);
   </script>
 
 </body>
