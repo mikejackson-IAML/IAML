@@ -1404,8 +1404,9 @@
   }
 
   // ============================================
-  // SESSION LOADING
+  // SESSION LOADING - Static Cache with API Fallback
   // ============================================
+  const SESSION_CACHE_BASE = '/data/sessions/by-view';
 
   async function loadSessions() {
     const container = qs('#sessionList');
@@ -1436,13 +1437,30 @@
         throw new Error('Session configuration not available');
       }
 
-      const response = await fetch(`/api/airtable-programs?table=tblympiL1p6PmQz9i&view=${viewId}`);
+      let data;
 
-      if (!response.ok) {
-        throw new Error('Failed to load sessions');
+      // Try static cache first for faster loading
+      try {
+        const cacheResponse = await fetch(`${SESSION_CACHE_BASE}/${viewId}.json`);
+        if (cacheResponse.ok) {
+          data = await cacheResponse.json();
+          console.log('Sessions loaded from cache, generated:', data.generated);
+        }
+      } catch (cacheError) {
+        console.warn('Session cache unavailable, falling back to API');
       }
 
-      const data = await response.json();
+      // Fallback to API if cache failed or unavailable
+      if (!data || !data.records) {
+        const response = await fetch(`/api/airtable-programs?table=tblympiL1p6PmQz9i&view=${viewId}`);
+
+        if (!response.ok) {
+          throw new Error('Failed to load sessions');
+        }
+
+        data = await response.json();
+      }
+
       const sessions = data.records || [];
 
       loadingDiv.classList.add('hidden');

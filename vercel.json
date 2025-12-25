@@ -1,6 +1,14 @@
 {
   "version": 2,
   "cleanUrls": true,
+  "headers": [
+    {
+      "source": "/data/sessions/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600, stale-while-revalidate=86400" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/featured-programs", "destination": "/pages/featured-programs.html" },
     { "source": "/corporate-training", "destination": "/pages/corporate-training.html" },

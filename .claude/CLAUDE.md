@@ -465,6 +465,117 @@ document.addEventListener('DOMContentLoaded', lazyLoadImages);
 
 ---
 
+## CSS Safety & Visual Regression Testing
+
+**CRITICAL: Preventing CSS Regressions**
+
+CSS is global by default. Changes to one file can break other pages. We have two safeguards:
+
+### 1. Pre-commit CSS Audit Hook
+
+When you commit CSS changes, a hook automatically runs `qa/scripts/css-audit.js`:
+- **HIGH RISK**: Modifying base HTML elements, universal selectors, global classes
+- **MEDIUM RISK**: Unprefixed classes in `5-pages.css`, component class changes
+- **LOW RISK**: Using `!important`, new media queries
+
+**To bypass (use sparingly):** `git commit --no-verify`
+
+### 2. Visual Regression Tests
+
+Run before AND after CSS changes:
+
+```bash
+# Run visual tests (compares against baseline screenshots)
+npx playwright test visual-regression
+
+# Update baselines after intentional changes
+npx playwright test visual-regression --update-snapshots
+```
+
+### CSS Naming Convention for Page-Specific Styles
+
+**Always prefix page-specific classes in `5-pages.css`:**
+
+| Page | Prefix |
+|------|--------|
+| Corporate Training | `.ct-` |
+| About Us | `.about-` |
+| Featured Programs | `.fp-` |
+| Faculty | `.faculty-` |
+| Program Schedule | `.ps-` |
+| Program pages | `.erl-`, `.shr-`, etc. |
+
+**Example:**
+```css
+/* GOOD - Scoped to corporate training */
+.ct-hero-wrapper { ... }
+.ct-benefit-card { ... }
+
+/* BAD - Could affect other pages */
+.hero-wrapper { ... }
+.benefit-card { ... }
+```
+
+### CSS Change Workflow
+
+1. **Before making CSS changes:**
+   ```bash
+   npx playwright test visual-regression
+   ```
+
+2. **Make your CSS changes** (use proper prefixes!)
+
+3. **Run visual tests again:**
+   ```bash
+   npx playwright test visual-regression
+   ```
+
+4. **If tests fail:**
+   - Review the diff images in `playwright-report/`
+   - If changes are intentional: `--update-snapshots`
+   - If changes are unintentional: fix your CSS
+
+5. **Commit** (pre-commit hook will run CSS audit)
+
+---
+
+## QA Workflow
+
+**Claude should automatically run the appropriate QA based on what was changed:**
+
+| What Changed | Required QA |
+|--------------|-------------|
+| CSS (any file) | `npm run qa:visual` before AND after (mandatory) |
+| Nav/paths/assets/HTML | `/smoke` + `/links` |
+| Layout/spacing/responsive | `npm run qa:visual` + `/responsive` |
+| JavaScript | `/smoke` + `/semgrep-quick` |
+| Registration/payment flow | `/registration-payment-gate` + `/stripe-verify-latest-test-payment` + `/smoke` |
+
+### Quick Chooser (for Claude)
+
+When finishing work, run QA based on files touched:
+
+- **Touched CSS?** → Visual regression is mandatory. Run `npm run qa:visual`. If tests fail, review diffs and either fix CSS or update baselines with `npm run qa:visual:update`.
+- **Touched nav/paths/assets?** → Run `/smoke` + `/links`
+- **Touched layout/spacing?** → Run `npm run qa:visual` + `/responsive`
+- **Touched JS?** → Run `/smoke` + `/semgrep-quick`
+- **Touched registration/payment?** → Run `/registration-payment-gate` + Stripe verify + `/smoke`
+
+### End-of-Session Closeout
+
+Before committing, ensure:
+1. Visual tests are clean OR baselines intentionally updated
+2. If JS/HTML changed: Semgrep quick scan is clean
+3. If registration/payment touched: registration gate + Stripe verify passed
+
+### Deployed Checks (Vercel)
+
+- **Preview validation:** `/vercel-latest-preview` → run tests against preview URL
+- **Production health:** `/vercel-latest-prod` + `/deployed-smoke`
+- **Stripe webhook health:** `/stripe-webhook-health`
+
+---
+
 ## When Mike Asks for Features
 
 **Your job is to:**

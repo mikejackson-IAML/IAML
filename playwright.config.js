@@ -59,8 +59,8 @@ module.exports = defineConfig({
     }
   ],
 
-  /* Run local dev server before tests if not CI */
-  webServer: process.env.CI ? undefined : {
+  /* Run local dev server before tests if not CI and no BASE_URL provided */
+  webServer: (process.env.CI || process.env.BASE_URL) ? undefined : {
     command: 'vercel dev',
     url: 'http://localhost:3000',
     reuseExistingServer: true,
@@ -72,6 +72,15 @@ module.exports = defineConfig({
 
   /* Expect timeout */
   expect: {
-    timeout: 10000
-  }
+    timeout: 10000,
+    /* Visual comparison settings */
+    toHaveScreenshot: {
+      maxDiffPixelRatio: 0.01,
+      threshold: 0.2,
+      animations: 'disabled'
+    }
+  },
+
+  /* Snapshot path template */
+  snapshotPathTemplate: '{testDir}/__screenshots__/{testFilePath}/{arg}{ext}'
 });
