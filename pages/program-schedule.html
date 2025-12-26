@@ -49,22 +49,23 @@
   <!-- Page-Specific Styles -->
   <style>
     /* ===== HERO SECTION STYLES ===== */
+    /* Inner content container - flexbox centering handled by .hero-section from main.css */
     .program-schedule-hero {
       text-align: center;
       max-width: 1000px;
       width: 100%;
       margin: 0 auto;
-      padding: 40px 20px;
-      padding-top: 140px; /* Accounts for 100px header + 40px spacing */
-      padding-bottom: 96px; /* Match homepage: var(--space-4xl) */
+      padding: 0 20px;
+      z-index: 2;
     }
 
     .program-schedule-hero .trusted-text {
       color: #3b82f6;
-      font-size: 0.95rem;
+      font-size: 15px;
       font-weight: 600;
-      letter-spacing: 2px;
+      letter-spacing: 0.15em;
       text-transform: uppercase;
+      margin-top: 80px; /* Match homepage eyebrow spacing */
       margin-bottom: 32px; /* Match homepage */
     }
 
@@ -94,7 +95,7 @@
 
     .program-schedule-hero .button-container {
       display: flex;
-      gap: 30px;
+      gap: var(--space-md); /* Match homepage: 16px */
       justify-content: center;
       align-items: center;
       flex-wrap: wrap;
@@ -102,10 +103,6 @@
 
     /* Hero Responsive */
     @media (max-width: 768px) {
-      .program-schedule-hero {
-        padding-top: 104px; /* Accounts for 84px mobile header + 20px spacing */
-      }
-
       .program-schedule-hero .main-headline {
         font-size: 2.5rem;
       }
