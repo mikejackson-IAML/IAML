@@ -128,7 +128,7 @@
   color: var(--gray-900);
   margin-bottom: var(--space-md);
   line-height: 1.3;
-  text-align: left;
+  text-align: left !important;
 }
 
 .benefit-text {
@@ -136,7 +136,7 @@
   font-size: var(--text-base);
   color: var(--gray-600);
   line-height: 1.7;
-  text-align: left;
+  text-align: left !important;
 }
 
 /* Testimonial Cards */
