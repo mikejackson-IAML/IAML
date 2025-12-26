@@ -2284,15 +2284,6 @@ button#prev-btn {
       --success: #16a34a;
     }
 
-    /* Button fallbacks if DS .btn is not present */
-    .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: 14px; padding: 12px 20px; cursor: pointer; font-weight: 700; border: 1px solid transparent; transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.2s ease; font-family: 'Lato', sans-serif; text-transform: uppercase; }
-    .btn-primary { background: #1d4ed8; color: #fff; border-color: #1d4ed8; box-shadow: 0 16px 32px rgba(29, 78, 216, .32), inset 0 -2px 0 rgba(0,0,0,.08); }
-    .btn-primary:hover { background: #1e40af; transform: translateY(-1px); box-shadow: 0 20px 44px rgba(29, 78, 216, .36), inset 0 -2px 0 rgba(0,0,0,.08); }
-    .btn-secondary { background: #ffffff; color: #374151; border-color: #6B7280; box-shadow: 0 6px 16px rgba(2, 6, 23, 0.06); }
-    .btn-secondary:hover { border-color: #6B7280; transform: translateY(-1px); box-shadow: 0 10px 24px rgba(2, 6, 23, 0.08); }
-    .btn[disabled], .btn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow: none; transform: none; }
-    .hover-lift:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(2, 6, 23, 0.08); }
-
     .iaml-modal-overlay { position: fixed; inset: 0; display: none; align-items: center; justify-content: center; background: rgba(2,6,23,0.45); z-index: 1010; }
     .iaml-modal-overlay[data-open="true"] { display: flex; animation: fadeIn 200ms ease-out; }
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

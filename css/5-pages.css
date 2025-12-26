@@ -2112,17 +2112,6 @@
   transform: translateY(-2px);
 }
 
-.btn-register {
-  background: #d62828;
-  color: #fff;
-  border: none;
-}
-
-.btn-register:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(214, 40, 40, 0.4);
-}
-
 /* ===== PROGRAM PAGE HERO SECTION ===== */
 
 /* Two-column hero layout for program pages */
@@ -10083,7 +10072,7 @@ input[type="radio"].session-radio {
 .about-floating-logos-headline {
   font-family: var(--font-heading);
   font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 600;
+  font-weight: 400;
   color: var(--white);
   line-height: 1.2;
   margin: 0;
