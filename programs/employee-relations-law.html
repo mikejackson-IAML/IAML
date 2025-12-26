@@ -3621,7 +3621,7 @@ button#prev-btn {
     const CONFIG = {
       AIRTABLE: {
         PROGRAMS_TABLE: 'tblympiL1p6PmQz9i',
-        PROGRAMS_VIEW: 'viwX4En7WerGZSPCO',
+        PROGRAMS_VIEW: 'viwfys9oVCU3gFsel',
         VIRTUAL_VIEW: 'viwG1w68D5qVdMHIa',
         INSTRUCTORS_TABLE: 'Faculty',
         get PROGRAMS_ENDPOINT(){ return `${API_BASE}/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.PROGRAMS_VIEW)}`; },
@@ -9197,7 +9197,7 @@ button#prev-btn {
     // Configuration
     const NEXT_PROGRAM_CONFIG = {
       tableId: 'tblympiL1p6PmQz9i',
-      viewId: 'viwX4En7WerGZSPCO'
+      viewId: 'viwfys9oVCU3gFsel'
     };
 
     // Timezone-neutral date parsing to avoid date shifting issues
@@ -9246,7 +9246,7 @@ button#prev-btn {
           generateNextProgramCard(nextProgram);
         } else {
           console.log('No upcoming programs found'); // Debug log
-          console.warn('⚠️ Check Airtable view viwX4En7WerGZSPCO contains "Certificate in Employee Relations Law" programs');
+          console.warn('⚠️ Check Airtable view viwfys9oVCU3gFsel contains "Certificate in Employee Relations Law" programs');
 
           // Show friendly message instead of hiding
           document.getElementById('nextProgramCard').innerHTML = `
