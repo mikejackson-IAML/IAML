@@ -37,14 +37,14 @@ jobs:
       - name: Check for changes
         id: changes
         run: |
-          git diff --quiet data/sessions/ || echo "changed=true" >> $GITHUB_OUTPUT
+          git add data/sessions/
+          git diff --staged --quiet data/sessions/ || echo "changed=true" >> $GITHUB_OUTPUT
 
       - name: Commit and push if changed
         if: steps.changes.outputs.changed == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/sessions/
           git commit -m "chore: update session cache $(date +%Y-%m-%d)"
           git push
 
