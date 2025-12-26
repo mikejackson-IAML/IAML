@@ -11,15 +11,20 @@ const { test, expect } = require('@playwright/test');
  */
 
 // All pages to test (add new pages here as they're created)
-// Note: Some pages with heavy dynamic content may need longer timeouts
 const PAGES = [
+  // Homepage
+  { name: 'homepage', path: '/' },
+
+  // Pages folder
   { name: 'about-us', path: '/pages/about-us.html' },
   { name: 'featured-programs', path: '/pages/featured-programs.html' },
   { name: 'corporate-training', path: '/pages/corporate-training.html' },
   { name: 'faculty', path: '/pages/faculty.html' },
-  { name: 'program-schedule', path: '/pages/program-schedule.html' }
-  // Homepage, program pages, and register have dynamic content that causes flaky tests
-  // Add them back once their dynamic content is stabilized
+  { name: 'program-schedule', path: '/pages/program-schedule.html' },
+
+  // Program pages
+  { name: 'program-employee-relations-law', path: '/programs/employee-relations-law.html' },
+  { name: 'program-strategic-hr-leadership', path: '/programs/strategic-hr-leadership.html' }
 ];
 
 // Viewports to test

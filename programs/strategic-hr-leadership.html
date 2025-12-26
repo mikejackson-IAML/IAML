@@ -1272,7 +1272,7 @@
               Stop being seen as just an administrative function. Master the strategic frameworks that position HR as a business partner and competitive advantage for your organization.
             </p>
 
-            <button id="openModalBtn-strategic-hr" class="register-button" onclick="connectPopup_open()" type="button">
+            <button id="openModalBtn-strategic-hr" class="btn btn-register btn-lg" onclick="connectPopup_open()" type="button">
               Program Enrollment Fee: $2,375
             </button>
 
@@ -2992,30 +2992,18 @@
       gap: 1rem;
     }
 
-    .program-sessions-widget .pagination-btn {
+    .program-sessions-widget .pagination-btn-left,
+    .program-sessions-widget .pagination-btn-right {
       width: 50px;
       height: 50px;
-      background: rgba(59, 89, 152, 0.9);
-      border: 2px solid rgba(255, 255, 255, 0.2);
+      min-width: 50px;
+      padding: 0;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      color: white;
-      font-size: 1.2rem;
-      font-weight: bold;
       flex-shrink: 0;
     }
 
-    .program-sessions-widget .pagination-btn:hover {
-      background: rgba(74, 107, 168, 1);
-      transform: scale(1.1);
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
-    }
-
-    .program-sessions-widget .pagination-btn:disabled {
+    .program-sessions-widget .pagination-btn-left:disabled,
+    .program-sessions-widget .pagination-btn-right:disabled {
       opacity: 0.3;
       cursor: not-allowed;
       pointer-events: none;
@@ -3192,9 +3180,11 @@ button#prev-btn {
             gap: 1rem;
         }
 
-        .program-sessions-widget .pagination-btn {
+        .program-sessions-widget .pagination-btn-left,
+        .program-sessions-widget .pagination-btn-right {
             width: 45px;
             height: 45px;
+            min-width: 45px;
         }
 
         /* Reset absolute positioning for mobile */
@@ -3762,9 +3752,11 @@ button#prev-btn {
         flex-direction: column;
     }
 
-    .program-sessions-widget .pagination-btn {
+    .program-sessions-widget .pagination-btn-left,
+    .program-sessions-widget .pagination-btn-right {
         width: 40px;
         height: 40px;
+        min-width: 40px;
     }
 
     .program-sessions-widget .pagination-info {
@@ -3905,14 +3897,13 @@ button#prev-btn {
     /* Coupon row layout */
     .iaml-modal-overlay .coupon-row { display: flex; gap: 14px; align-items: stretch; }
     .iaml-modal-overlay .coupon-input { flex: 1 1 auto; border: 1px solid #cbd5e1; background: #fff; border-radius: 12px; padding: 12px 14px; font-size: 15px; color: #111827; }
-    .iaml-modal-overlay .apply-coupon-btn { flex: 0 0 180px; border: 1px solid #6B7280; background: #ffffff; color: #374151; font-weight: 600; border-radius: 12px; padding: 12px 16px; }
-    .iaml-modal-overlay .apply-coupon-btn:hover { background: #F3F4F6; }
+    .iaml-modal-overlay #applyCouponBtn { flex: 0 0 180px; }
     .iaml-modal-overlay .coupon-msg { font-size: 14px; margin-top: 8px; }
     .iaml-modal-overlay .coupon-msg.text-success { color: #059669; }
     .iaml-modal-overlay .coupon-msg.text-danger { color: #EF4444; }
     @media (max-width: 640px) {
       .iaml-modal-overlay .coupon-row { flex-direction: column; }
-      .iaml-modal-overlay .apply-coupon-btn { flex: 0 0 auto; width: 100%; }
+      .iaml-modal-overlay #applyCouponBtn { flex: 0 0 auto; width: 100%; }
     }
 
     /* Small badge for certificate items */
@@ -4730,7 +4721,7 @@ button#prev-btn {
           </div>
 
           <!-- Pagination Controls -->
-          <button id="prev-btn" class="pagination-btn pagination-btn-left" disabled>
+          <button id="prev-btn" class="btn btn-secondary pagination-btn-left" disabled>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/>
             </svg>
@@ -4748,7 +4739,7 @@ button#prev-btn {
             </div>
           </div>
 
-          <button id="next-btn" class="pagination-btn pagination-btn-right" disabled>
+          <button id="next-btn" class="btn btn-secondary pagination-btn-right" disabled>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/>
             </svg>
@@ -4852,7 +4843,7 @@ button#prev-btn {
               <label class="field"><span>Coupon Code</span>
                 <div class="coupon-row">
                   <input id="couponCode" class="coupon-input" placeholder="Optional">
-                  <button id="applyCouponBtn" class="apply-coupon-btn" type="button">Apply Coupon</button>
+                  <button id="applyCouponBtn" class="btn btn-secondary" type="button">Apply Coupon</button>
                 </div>
                 <div id="couponMsg" class="coupon-msg" aria-live="polite"></div>
                 <div id="couponSpinner" class="spinner hidden" aria-hidden="true"></div>
@@ -6290,7 +6281,7 @@ button#prev-btn {
                 ${program.venueName && formatKey!=='on-demand' ? `<div class="session-venue">${program.venueName}</div>` : ''}
                 ${program.venueName && formatKey!=='virtual' && formatKey!=='on-demand' ? `<div class="hotel-details-link" data-venue-action="show-modal" data-session-id="${program.id}" data-venue-name="${program.venueName}">(view hotel details)</div>` : ''}
                 ${formatKey==='on-demand' && program.price ? `<div class="session-price">$${program.price.toLocaleString()}</div>` : ''}
-                <a href="#" class="reserve-btn register-btn"
+                <a href="#" class="btn btn-register reserve-btn"
                    data-section="employee-relations-law"
                    data-format="${format}"
                    data-program="${program.program}"
