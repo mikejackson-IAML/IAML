@@ -11,6 +11,9 @@ on:
         required: false
         default: 'false'
 
+permissions:
+  contents: write
+
 jobs:
   update-cache:
     name: Fetch and Cache Sessions
