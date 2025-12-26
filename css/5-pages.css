@@ -4421,17 +4421,17 @@
   margin-bottom: 32px;
 }
 
-.faculty-main-headline {
+.faculty-hero-section .faculty-main-headline {
   font-family: "Playfair Display", serif;
   font-size: 3.5rem;
   font-weight: 400;
-  color: #1f2937;
+  color: var(--white);
   line-height: 1.1;
   margin-bottom: 40px;
   max-width: 1200px;
   margin-left: auto;
   margin-right: auto;
-  text-align: left;
+  text-align: center;
 }
 
 .faculty-hero-description {
