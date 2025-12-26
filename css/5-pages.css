@@ -555,6 +555,7 @@
 .benefits-section {
   padding: 80px 0 134px 0;
   background: var(--white);
+  margin-top: 0;
 }
 
 .section-header {
@@ -567,6 +568,7 @@
   font-size: 48px;
   font-weight: 600;
   color: var(--gray-900);
+  margin-top: 0;
   margin-bottom: 20px;
   line-height: 1.2;
 }
@@ -658,13 +660,15 @@
   padding-left: 60px;
 }
 
-.step-number {
+.timeline-step .step-number {
   position: absolute;
   top: 0;
+  left: 50%;
+  transform: translateX(-50%);
   width: 60px;
   height: 60px;
   background: #fcd34d;
-  border: 4px solid var(--white);
+  border: none;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -672,16 +676,11 @@
   font-size: 28px;
   font-weight: bold;
   color: var(--gray-900);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 0 0 4px var(--gray-50),
+    0 0 0 8px white,
+    0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 3;
-}
-
-.timeline-step:nth-child(odd) .step-number {
-  right: calc(50% - 30px);
-}
-
-.timeline-step:nth-child(even) .step-number {
-  left: calc(50% - 30px);
 }
 
 .step-content h3 {
@@ -1274,8 +1273,9 @@
 }
 
 #testimonials-splide .splide__slide.spotlight-active .testimonial-card {
-  box-shadow: 0 0 0 1px rgba(24, 139, 246, 0.3),
-    0 20px 40px rgba(24, 139, 246, 0.2), 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 0 2px rgba(24, 139, 246, 0.7),
+    0 0 20px rgba(24, 139, 246, 0.4),
+    0 20px 40px rgba(24, 139, 246, 0.25), 0 20px 40px rgba(0, 0, 0, 0.4);
   animation: spotlightPulse 3s ease-in-out infinite;
 }
 
@@ -2676,95 +2676,6 @@
   flex-wrap: wrap;
 }
 
-/* Glass Buttons */
-.fp-group-buttons .fp-glass-btn {
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-family: var(--font-body);
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  backdrop-filter: blur(15px) saturate(130%);
-  -webkit-backdrop-filter: blur(15px) saturate(130%);
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.fp-group-buttons .fp-glass-btn-blue {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 82, 140, 0.9) 0%,
-    rgba(30, 58, 95, 0.95) 100%
-  );
-  color: white;
-  border-color: rgba(40, 82, 140, 0.6);
-}
-
-.fp-group-buttons .fp-glass-btn-red {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 0, 0, 0.9) 0%,
-    rgba(220, 0, 0, 0.95) 100%
-  );
-  color: white;
-  border-color: rgba(255, 0, 0, 0.6);
-}
-
-.fp-group-buttons .fp-glass-btn-lg {
-  padding: 16px 32px;
-  font-size: 1.1rem;
-  border-radius: 14px;
-}
-
-.fp-group-buttons .fp-glass-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.fp-group-buttons .fp-glass-btn-blue:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 82, 140, 1) 0%,
-    rgba(30, 58, 95, 1) 100%
-  );
-  border-color: rgba(40, 82, 140, 0.8);
-  box-shadow: 0 12px 32px rgba(40, 82, 140, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.fp-group-buttons .fp-glass-btn-red:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(220, 0, 0, 1) 100%
-  );
-  border-color: rgba(255, 0, 0, 0.8);
-  box-shadow: 0 12px 32px rgba(255, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.fp-group-buttons .fp-glass-btn:active {
-  transform: translateY(0);
-  transition: all 0.1s ease;
-}
-
-.fp-group-buttons .fp-glass-btn:focus {
-  outline: none;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 3px rgba(59, 130, 246, 0.3);
-}
-
 /* Programs Section */
 .fp-programs-section {
   background: #f8f9fa;
@@ -2996,73 +2907,6 @@
   background: #f5f5f5;
   border: 1px solid #e5e5e5;
   color: #737373;
-}
-
-/* Glass Button - Program Cards */
-.fp-glass-btn {
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-family: var(--font-body);
-  font-size: 0.875rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  flex-shrink: 0;
-  backdrop-filter: blur(15px) saturate(130%);
-  -webkit-backdrop-filter: blur(15px) saturate(130%);
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.fp-glass-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.fp-glass-btn-blue {
-  background: var(--blue-primary);
-  color: white;
-  border-color: var(--blue-primary);
-}
-
-.fp-glass-btn-blue:hover {
-  background: var(--blue-dark);
-  border-color: var(--blue-dark);
-  color: white;
-  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-}
-
-.fp-glass-btn-outline {
-  background: rgba(255, 255, 255, 0.1);
-  color: currentColor;
-}
-
-.fp-glass-btn-outline.fp-glass-btn-blue {
-  background: white;
-  color: #1e3a5f;
-  border: 2px solid #1e3a5f;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  font-weight: 600;
-}
-
-.fp-glass-btn-outline.fp-glass-btn-blue:hover {
-  background: #1e3a5f;
-  color: white;
-  border-color: #1e3a5f;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(30, 58, 95, 0.3),
-    0 4px 12px rgba(30, 58, 95, 0.2);
 }
 
 .fp-learn-more-btn::after {
@@ -3796,95 +3640,6 @@
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-}
-
-/* Glass Button Styles */
-.group-buttons .glass-btn {
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-family: "Lato", sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  backdrop-filter: blur(15px) saturate(130%);
-  -webkit-backdrop-filter: blur(15px) saturate(130%);
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.group-buttons .glass-btn-blue {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 82, 140, 0.9) 0%,
-    rgba(30, 58, 95, 0.95) 100%
-  );
-  color: white;
-  border-color: rgba(40, 82, 140, 0.6);
-}
-
-.group-buttons .glass-btn-red {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 0, 0, 0.9) 0%,
-    rgba(220, 0, 0, 0.95) 100%
-  );
-  color: white;
-  border-color: rgba(255, 0, 0, 0.6);
-}
-
-.group-buttons .glass-btn-lg {
-  padding: 16px 32px;
-  font-size: 1.1rem;
-  border-radius: 14px;
-}
-
-.group-buttons .glass-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.group-buttons .glass-btn-blue:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 82, 140, 1) 0%,
-    rgba(30, 58, 95, 1) 100%
-  );
-  border-color: rgba(40, 82, 140, 0.8);
-  box-shadow: 0 12px 32px rgba(40, 82, 140, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.group-buttons .glass-btn-red:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(220, 0, 0, 1) 100%
-  );
-  border-color: rgba(255, 0, 0, 0.8);
-  box-shadow: 0 12px 32px rgba(255, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.group-buttons .glass-btn:active {
-  transform: translateY(0);
-  transition: all 0.1s ease;
-}
-
-.group-buttons .glass-btn:focus {
-  outline: none;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 3px rgba(59, 130, 246, 0.3);
 }
 
 /* ===== WHAT MAKES DIFFERENT SECTION ===== */
@@ -4628,10 +4383,10 @@
 }
 
 .faculty-card {
-  text-align: center;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
 .faculty-photo-wrapper {
@@ -5280,7 +5035,7 @@
     gap: 16px;
   }
 
-  .faculty-button-container .glass-btn {
+  .faculty-button-container .btn {
     width: 100%;
     max-width: 300px;
   }
@@ -5395,7 +5150,7 @@
     gap: 20px;
   }
 
-  .glass-btn {
+  .about-button-container .btn {
     width: 100%;
     max-width: 300px;
   }
@@ -8644,7 +8399,7 @@ input[type="radio"].session-radio {
   gap: 1px;
 }
 
-.faculty-name {
+.faculty-member .faculty-name {
   color: #fff;
   text-decoration: none;
   font-weight: 600;
@@ -8655,7 +8410,7 @@ input[type="radio"].session-radio {
   transition: color 0.2s ease;
 }
 
-.faculty-name:hover {
+.faculty-member .faculty-name:hover {
   color: var(--blue-primary);
   text-decoration: underline;
 }
@@ -9710,97 +9465,6 @@ input[type="radio"].session-radio {
   flex-wrap: wrap;
 }
 
-/* ===== CT GLASS BUTTONS ===== */
-.ct-glass-btn {
-  padding: 14px 28px;
-  border-radius: 12px;
-  font-family: "Lato", sans-serif;
-  font-size: 1rem;
-  font-weight: 700;
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-  backdrop-filter: blur(15px) saturate(130%);
-  -webkit-backdrop-filter: blur(15px) saturate(130%);
-  text-decoration: none;
-  display: inline-block;
-  text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
-  position: relative;
-  overflow: hidden;
-}
-
-.ct-glass-btn-blue {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 82, 140, 0.9) 0%,
-    rgba(30, 58, 95, 0.95) 100%
-  );
-  color: white;
-  border-color: rgba(40, 82, 140, 0.6);
-}
-
-.ct-glass-btn-red {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 0, 0, 0.9) 0%,
-    rgba(220, 0, 0, 0.95) 100%
-  );
-  color: white;
-  border-color: rgba(255, 0, 0, 0.6);
-}
-
-.ct-glass-btn-lg {
-  padding: 16px 32px;
-  font-size: 1.1rem;
-  border-radius: 14px;
-}
-
-.ct-glass-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.ct-glass-btn-blue:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 82, 140, 1) 0%,
-    rgba(30, 58, 95, 1) 100%
-  );
-  color: white;
-  border-color: rgba(40, 82, 140, 0.8);
-  box-shadow: 0 12px 32px rgba(40, 82, 140, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.ct-glass-btn-red:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(255, 0, 0, 1) 0%,
-    rgba(220, 0, 0, 1) 100%
-  );
-  color: white;
-  border-color: rgba(255, 0, 0, 0.8);
-  box-shadow: 0 12px 32px rgba(255, 0, 0, 0.3), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3);
-}
-
-.ct-glass-btn:active {
-  transform: translateY(0);
-  transition: all 0.1s ease;
-}
-
-.ct-glass-btn:focus {
-  outline: none;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.2), 0 4px 12px rgba(0, 0, 0, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 0 0 3px rgba(59, 130, 246, 0.3);
-}
-
 /* ===== CT BENEFITS SECTION ===== */
 .ct-benefits-section {
   background: #f8fafc;
@@ -10364,7 +10028,7 @@ input[type="radio"].session-radio {
     gap: 16px;
   }
 
-  .ct-glass-btn-lg {
+  .ct-button-container .btn {
     width: 100%;
     text-align: center;
   }
@@ -10442,7 +10106,7 @@ input[type="radio"].session-radio {
 
 /* Accessibility */
 @media (prefers-reduced-motion: reduce) {
-  .ct-glass-btn,
+  .ct-button-container .btn,
   .ct-benefit-card,
   .ct-hiw-cta-button,
   .ct-program-btn {

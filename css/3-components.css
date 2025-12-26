@@ -71,29 +71,19 @@
   color: var(--white);
 }
 
-/* Glass Button Variants */
-.glass-btn {
-  backdrop-filter: blur(15px) saturate(130%);
-  -webkit-backdrop-filter: blur(15px) saturate(130%);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 2px 6px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+/* Button Size Variants */
+.btn-lg {
+  padding: 18px 36px;
+  font-size: 1.1rem;
+  min-width: 220px;
+  height: 60px;
 }
 
-.glass-btn-blue {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 82, 140, 0.9) 0%,
-    rgba(30, 58, 95, 0.95) 100%
-  );
-  color: var(--white);
-}
-
-.glass-btn-blue:hover {
-  background: linear-gradient(
-    135deg,
-    rgba(40, 82, 140, 1) 0%,
-    rgba(30, 58, 95, 1) 100%
-  );
+.btn-sm {
+  padding: 12px 24px;
+  font-size: var(--text-sm);
+  min-width: 160px;
+  height: 44px;
 }
 
 /* ===== CARDS ===== */
@@ -112,6 +102,7 @@
   border-radius: var(--radius-xl);
   padding: 40px 35px;
   transition: all var(--transition-slow);
+  text-align: left;
 }
 
 .benefit-card:hover {
