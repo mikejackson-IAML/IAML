@@ -75,7 +75,7 @@ async function fetchAllFaculty(baseId, apiKey) {
     'Short Bio (250-300 characters)',
     'Headshot Photo',
     'Full Bio URL',
-    'Program Record IDs'
+    'PROGRAMS (Faculty)'
   ];
 
   const fieldParams = fields.map(f => `fields[]=${encodeURIComponent(f)}`).join('&');
@@ -96,7 +96,7 @@ function mapFacultyRecord(record) {
     bio: record.fields['Short Bio (250-300 characters)'] || '',
     imageUrl: record.fields['Headshot Photo'] || '',
     bioLink: record.fields['Full Bio URL'] || '',
-    programRecordIds: record.fields['Program Record IDs'] || []
+    programRecordIds: record.fields['PROGRAMS (Faculty)'] || []
   };
 }
 
