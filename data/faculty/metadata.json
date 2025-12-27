@@ -1,0 +1,18 @@
+{
+  "generated": "2025-12-27T22:59:43.278Z",
+  "version": "1.0.0",
+  "totalFaculty": 18,
+  "programsCount": 2,
+  "programStats": [
+    {
+      "slug": "strategic-hr-leadership",
+      "count": 10,
+      "name": "Certificate in Strategic HR Leadership"
+    },
+    {
+      "slug": "employee-relations-law",
+      "count": 10,
+      "name": "Certificate in Employee Relations Law"
+    }
+  ]
+}
