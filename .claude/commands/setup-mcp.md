@@ -16,9 +16,9 @@ Open LastPass and find the note called **"MCP Credentials"**. This contains bash
 
 The content looks like:
 ```bash
-# IAML MCP Server Credentials
-export SUPABASE_URL="https://xxx.supabase.co"
-export SUPABASE_SERVICE_ROLE_KEY="eyJ..."
+# MCP Server Credentials
+export SUPABASE_PROJECT_REF="xxx"
+export SUPABASE_TOKEN="eyJ..."
 export N8N_API_URL="https://..."
 export N8N_API_KEY="..."
 # ... etc
@@ -32,28 +32,28 @@ Copy the entire contents of the "MCP Credentials" LastPass note and paste it int
 
 | Server | Required Environment Variables |
 |--------|-------------------------------|
-| supabase | `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` |
+| supabase | `SUPABASE_PROJECT_REF`, `SUPABASE_TOKEN` |
 | n8n | `N8N_API_URL`, `N8N_API_KEY` |
 | apify | `APIFY_TOKEN` |
 | exa | `EXA_API_KEY` |
 | airtable | `AIRTABLE_API_KEY` |
-| gohighlevel | `GHL_API_KEY`, `GHL_LOCATION_ID` |
+| gohighlevel | `GHL_PIT_TOKEN`, `GHL_LOCATION_ID` |
 | smartlead | `SMARTLEAD_API_KEY` |
 | zapmail | `ZAPMAIL_API_KEY` |
 | apollo | `APOLLO_API_KEY` |
 | semgrep | `SEMGREP_APP_TOKEN` |
-| dataforseo | `DATAFORSEO_LOGIN`, `DATAFORSEO_PASSWORD` |
-| vercel | `VERCEL_TOKEN`, `VERCEL_TEAM_ID` |
-| notion | `NOTION_API_KEY` |
+| dataforseo | `DATAFORSEO_USERNAME`, `DATAFORSEO_PASSWORD` |
+| vercel | `VERCEL_TOKEN` |
+| notion | `NOTION_TOKEN` |
 | perplexity | `PERPLEXITY_API_KEY` |
 | gemini | `GEMINI_API_KEY` |
 | brave-search | `BRAVE_API_KEY` |
 | firecrawl | `FIRECRAWL_API_KEY` |
-| stripe | `STRIPE_SECRET_KEY` |
+| stripe | `STRIPE_API_KEY` |
 | elevenlabs | `ELEVENLABS_API_KEY` |
-| vapi | `VAPI_API_KEY` |
-| google-search-console | `GOOGLE_SERVICE_ACCOUNT_KEY` |
-| google-workspace | `GOOGLE_SERVICE_ACCOUNT_KEY` |
+| vapi | `VAPI_TOKEN` |
+| google-search-console | `GOOGLE_APPLICATION_CREDENTIALS` |
+| google-workspace | `GOOGLE_APPLICATION_CREDENTIALS` |
 
 **Servers that don't need credentials:**
 - playwright (no auth needed)
@@ -70,14 +70,15 @@ For Google Search Console and Google Workspace, you need the service account JSO
 3. Create the key file:
 
 ```bash
-cat > ~/.config/gcloud/mcp-service-account.json << 'EOF'
+mkdir -p ~/.config/gcloud
+cat > ~/.config/gcloud/mcp-gsc-credentials.json << 'EOF'
 # Paste your JSON key here
 EOF
 ```
 
 4. Set the environment variable:
 ```bash
-export GOOGLE_SERVICE_ACCOUNT_KEY="$HOME/.config/gcloud/mcp-service-account.json"
+export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/gcloud/mcp-gsc-credentials.json"
 ```
 
 ### Step 4: Verify Setup
@@ -86,13 +87,13 @@ Run this command to verify all required variables are set:
 
 ```bash
 echo "=== MCP Credentials Check ===" && \
-for var in SUPABASE_URL SUPABASE_SERVICE_ROLE_KEY N8N_API_URL N8N_API_KEY \
-  APIFY_TOKEN EXA_API_KEY AIRTABLE_API_KEY GHL_API_KEY GHL_LOCATION_ID \
+for var in SUPABASE_PROJECT_REF SUPABASE_TOKEN N8N_API_URL N8N_API_KEY \
+  APIFY_TOKEN EXA_API_KEY AIRTABLE_API_KEY GHL_PIT_TOKEN GHL_LOCATION_ID \
   SMARTLEAD_API_KEY ZAPMAIL_API_KEY APOLLO_API_KEY SEMGREP_APP_TOKEN \
-  DATAFORSEO_LOGIN DATAFORSEO_PASSWORD VERCEL_TOKEN VERCEL_TEAM_ID \
-  NOTION_API_KEY PERPLEXITY_API_KEY GEMINI_API_KEY BRAVE_API_KEY \
-  FIRECRAWL_API_KEY STRIPE_SECRET_KEY ELEVENLABS_API_KEY VAPI_API_KEY \
-  GOOGLE_SERVICE_ACCOUNT_KEY; do \
+  DATAFORSEO_USERNAME DATAFORSEO_PASSWORD VERCEL_TOKEN \
+  NOTION_TOKEN PERPLEXITY_API_KEY GEMINI_API_KEY BRAVE_API_KEY \
+  FIRECRAWL_API_KEY STRIPE_API_KEY ELEVENLABS_API_KEY VAPI_TOKEN \
+  GOOGLE_APPLICATION_CREDENTIALS; do \
   if [ -n "${!var}" ]; then \
     echo "✓ $var is set"; \
   else \
@@ -108,12 +109,12 @@ done
 If you need to create the LastPass note from scratch, here's the template:
 
 ```bash
-# IAML MCP Server Credentials
+# MCP Server Credentials
 # Copy this entire block and paste into terminal at start of each cloud session
 
 # Supabase
-export SUPABASE_URL=""
-export SUPABASE_SERVICE_ROLE_KEY=""
+export SUPABASE_PROJECT_REF=""
+export SUPABASE_TOKEN=""
 
 # n8n
 export N8N_API_URL=""
@@ -129,7 +130,7 @@ export EXA_API_KEY=""
 export AIRTABLE_API_KEY=""
 
 # GoHighLevel
-export GHL_API_KEY=""
+export GHL_PIT_TOKEN=""
 export GHL_LOCATION_ID=""
 
 # SmartLead
@@ -145,15 +146,14 @@ export APOLLO_API_KEY=""
 export SEMGREP_APP_TOKEN=""
 
 # DataForSEO
-export DATAFORSEO_LOGIN=""
+export DATAFORSEO_USERNAME=""
 export DATAFORSEO_PASSWORD=""
 
 # Vercel
 export VERCEL_TOKEN=""
-export VERCEL_TEAM_ID=""
 
 # Notion
-export NOTION_API_KEY=""
+export NOTION_TOKEN=""
 
 # Perplexity
 export PERPLEXITY_API_KEY=""
@@ -168,16 +168,20 @@ export BRAVE_API_KEY=""
 export FIRECRAWL_API_KEY=""
 
 # Stripe
-export STRIPE_SECRET_KEY=""
+export STRIPE_API_KEY=""
 
 # ElevenLabs
 export ELEVENLABS_API_KEY=""
 
 # Vapi
-export VAPI_API_KEY=""
+export VAPI_TOKEN=""
 
 # Google (path to service account JSON)
-export GOOGLE_SERVICE_ACCOUNT_KEY="$HOME/.config/gcloud/mcp-service-account.json"
+export GOOGLE_APPLICATION_CREDENTIALS="$HOME/.config/gcloud/mcp-gsc-credentials.json"
+
+# Google OAuth (for some integrations)
+export GOOGLE_CLIENT_ID=""
+export GOOGLE_CLIENT_SECRET=""
 ```
 
 ---

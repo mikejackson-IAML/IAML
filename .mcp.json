@@ -15,8 +15,8 @@
       "command": "npx",
       "args": ["-y", "@supabase/mcp-server"],
       "env": {
-        "SUPABASE_URL": "${SUPABASE_URL}",
-        "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_SERVICE_ROLE_KEY}"
+        "SUPABASE_URL": "https://mnkuffgxemfyitcjnjdc.supabase.co",
+        "SUPABASE_SERVICE_ROLE_KEY": "${SUPABASE_TOKEN}"
       }
     },
     "n8n": {
@@ -57,7 +57,7 @@
       "command": "npx",
       "args": ["-y", "@gohighlevel/mcp-server"],
       "env": {
-        "GHL_API_KEY": "${GHL_API_KEY}",
+        "GHL_API_KEY": "${GHL_PIT_TOKEN}",
         "GHL_LOCATION_ID": "${GHL_LOCATION_ID}"
       }
     },
@@ -93,7 +93,7 @@
       "command": "npx",
       "args": ["-y", "@anthropic/dataforseo-mcp-server"],
       "env": {
-        "DATAFORSEO_LOGIN": "${DATAFORSEO_LOGIN}",
+        "DATAFORSEO_LOGIN": "${DATAFORSEO_USERNAME}",
         "DATAFORSEO_PASSWORD": "${DATAFORSEO_PASSWORD}"
       }
     },
@@ -106,29 +106,28 @@
       "command": "npx",
       "args": ["-y", "@anthropic/google-search-console-mcp-server"],
       "env": {
-        "GOOGLE_SERVICE_ACCOUNT_KEY": "${GOOGLE_SERVICE_ACCOUNT_KEY}"
+        "GOOGLE_SERVICE_ACCOUNT_KEY": "${GOOGLE_APPLICATION_CREDENTIALS}"
       }
     },
     "vercel": {
       "command": "npx",
       "args": ["-y", "@anthropic/vercel-mcp-server"],
       "env": {
-        "VERCEL_TOKEN": "${VERCEL_TOKEN}",
-        "VERCEL_TEAM_ID": "${VERCEL_TEAM_ID}"
+        "VERCEL_TOKEN": "${VERCEL_TOKEN}"
       }
     },
     "notion": {
       "command": "npx",
       "args": ["-y", "@anthropic/notion-mcp-server"],
       "env": {
-        "NOTION_API_KEY": "${NOTION_API_KEY}"
+        "NOTION_API_KEY": "${NOTION_TOKEN}"
       }
     },
     "google-workspace": {
       "command": "npx",
       "args": ["-y", "@anthropic/google-workspace-mcp-server"],
       "env": {
-        "GOOGLE_SERVICE_ACCOUNT_KEY": "${GOOGLE_SERVICE_ACCOUNT_KEY}"
+        "GOOGLE_SERVICE_ACCOUNT_KEY": "${GOOGLE_APPLICATION_CREDENTIALS}"
       }
     },
     "perplexity": {
@@ -163,7 +162,7 @@
       "command": "npx",
       "args": ["-y", "@stripe/mcp-server"],
       "env": {
-        "STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}"
+        "STRIPE_SECRET_KEY": "${STRIPE_API_KEY}"
       }
     },
     "elevenlabs": {
@@ -177,7 +176,7 @@
       "command": "npx",
       "args": ["-y", "@anthropic/vapi-mcp-server"],
       "env": {
-        "VAPI_API_KEY": "${VAPI_API_KEY}"
+        "VAPI_API_KEY": "${VAPI_TOKEN}"
       }
     }
   }
