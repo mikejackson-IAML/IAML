@@ -1,14 +1,18 @@
 /**
  * IAML Faculty Module
  * Dynamically loads and renders faculty members for program pages
- * Data sourced from Airtable Faculty table, filtered by program relationships
+ * Data sourced from cached JSON (preferred) or Airtable API (fallback)
  *
  * Features:
- * - Two-step Airtable API query (PROGRAMS → Faculty)
+ * - Cache-first loading (weekly cache from GitHub Actions)
+ * - Fallback to real-time Airtable API if cache unavailable
  * - Random shuffle on each page load (Fisher-Yates algorithm)
- * - Progressive enhancement (fallback to static HTML if API fails)
+ * - Progressive enhancement (fallback to static HTML if all fetches fail)
  * - Responsive grid layout with line-clamped bios
  */
+
+// Cache configuration
+const FACULTY_CACHE_BASE = '/data/faculty/by-program';
 
 /**
  * Fisher-Yates shuffle algorithm
@@ -24,8 +28,30 @@ const shuffleArray = (array) => {
 };
 
 /**
+ * Fetch faculty from cache (preferred method)
+ * Returns null if cache is unavailable
+ */
+const fetchFacultyFromCache = async (programSlug) => {
+  try {
+    const cacheUrl = `${FACULTY_CACHE_BASE}/${programSlug}.json`;
+    const response = await fetch(cacheUrl);
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const data = await response.json();
+    console.log(`Faculty loaded from cache, generated: ${data.generated}`);
+    return data.faculty || [];
+  } catch (error) {
+    console.log('Faculty cache unavailable:', error.message);
+    return null;
+  }
+};
+
+/**
  * Fetch program record from Airtable by slug
- * First step of two-step query to get program record ID
+ * First step of two-step API query to get program record ID
  */
 const fetchProgramBySlug = async (slug) => {
   const formula = `{Slug}='${slug}'`;
@@ -53,8 +79,8 @@ const fetchProgramBySlug = async (slug) => {
 };
 
 /**
- * Fetch faculty records linked to a specific program
- * Second step of two-step query using program record ID
+ * Fetch faculty records linked to a specific program from Airtable
+ * Second step of two-step API query using program record ID
  */
 const fetchFacultyByProgram = async (programRecordId) => {
   const formula = `SEARCH("${programRecordId}", ARRAYJOIN({Program Record IDs}))`;
@@ -89,6 +115,34 @@ const fetchFacultyByProgram = async (programRecordId) => {
     console.error('Error fetching faculty:', error);
     throw error;
   }
+};
+
+/**
+ * Fetch faculty from Airtable API (fallback method)
+ */
+const fetchFacultyFromAPI = async (programSlug) => {
+  console.log('Falling back to Airtable API for faculty...');
+
+  const programId = await fetchProgramBySlug(programSlug);
+  if (!programId) {
+    return [];
+  }
+
+  return await fetchFacultyByProgram(programId);
+};
+
+/**
+ * Fetch faculty for a program - tries cache first, then API
+ */
+const fetchFacultyForProgram = async (programSlug) => {
+  // Try cache first
+  const cachedFaculty = await fetchFacultyFromCache(programSlug);
+  if (cachedFaculty !== null && cachedFaculty.length > 0) {
+    return cachedFaculty;
+  }
+
+  // Fallback to API
+  return await fetchFacultyFromAPI(programSlug);
 };
 
 /**
@@ -144,7 +198,7 @@ const renderFacultyCards = (facultyArray) => {
 
 /**
  * Main initialization function
- * Orchestrates two-step fetch and render process
+ * Orchestrates cache-first fetch and render process
  */
 const initializeFaculty = async () => {
   const facultySection = document.querySelector('[data-program-slug]');
@@ -163,16 +217,8 @@ const initializeFaculty = async () => {
   }
 
   try {
-    // Step 1: Get program record ID from slug
-    const programId = await fetchProgramBySlug(programSlug);
-
-    if (!programId) {
-      console.warn(`Could not find program for slug: ${programSlug}`);
-      return; // Fallback to static HTML
-    }
-
-    // Step 2: Fetch faculty linked to this program
-    const faculty = await fetchFacultyByProgram(programId);
+    // Fetch faculty (cache-first with API fallback)
+    const faculty = await fetchFacultyForProgram(programSlug);
 
     if (faculty.length === 0) {
       console.warn(`No faculty found for program: ${programSlug}`);
