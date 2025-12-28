@@ -216,12 +216,12 @@
       <div class="faculty-page-container">
 
         <!-- Quick Navigation -->
-        <nav class="practice-nav" role="navigation" aria-label="Practice areas">
-          <div class="nav-container">
-            <a href="#employment-law" class="nav-link active">Employment Law</a>
-            <a href="#hr-management" class="nav-link">HR Management</a>
-            <a href="#benefits-law" class="nav-link">Benefits Law</a>
-            <a href="#safety-law" class="nav-link">Environmental Health & Safety</a>
+        <nav class="unified-nav faculty-nav" role="navigation" aria-label="Practice areas">
+          <div class="unified-nav-container">
+            <a href="#employment-law" class="unified-nav-item active">Employment Law</a>
+            <a href="#hr-management" class="unified-nav-item">HR Management</a>
+            <a href="#benefits-law" class="unified-nav-item">Benefits Law</a>
+            <a href="#safety-law" class="unified-nav-item">Environmental Health & Safety</a>
           </div>
         </nav>
 
@@ -339,7 +339,7 @@
     function forceFixNavigation() {
       if (navigationFixed) return;
 
-      const navLinks = document.querySelectorAll('.practice-nav .nav-link');
+      const navLinks = document.querySelectorAll('.unified-nav-item');
 
       // Remove all existing event listeners by cloning elements
       navLinks.forEach((link, index) => {
@@ -348,7 +348,7 @@
       });
 
       // Get fresh references
-      const freshNavLinks = document.querySelectorAll('.practice-nav .nav-link');
+      const freshNavLinks = document.querySelectorAll('.unified-nav-item');
 
       // Apply our click handlers
       freshNavLinks.forEach(link => {

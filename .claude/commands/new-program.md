@@ -4,18 +4,16 @@ Generate a new IAML program page with integrated SEO research and optimization.
 
 ## Prerequisites
 
-Before running this command, ensure MCP credentials are configured:
-- **DataForSEO**: For keyword research and competition analysis
-- **Google Search Console**: For existing rankings data
-- **Lighthouse**: For post-generation SEO audit (no credentials needed)
-
-Run `/setup-mcp` if credentials are not set. SEO research can be skipped if credentials are unavailable.
+Before running this command, ensure:
+- Program exists in Airtable with the correct slug
+- Faculty members are linked to the program in Airtable
+- Airtable view IDs are created for session filtering
 
 ## Your Task
 
 You are generating a new program page for IAML with SEO optimization. This command handles:
-1. **Data collection** - Gather program information
-2. **SEO research** - Use MCP servers to research keywords and competition
+1. **Data collection** - Gather program information from user
+2. **SEO research** - Automatically research keywords and generate optimized metadata
 3. **Page generation** - Create optimized HTML with enhanced meta tags
 4. **SEO validation** - Run Lighthouse audit to verify SEO quality
 
@@ -40,21 +38,38 @@ Let's set up your program page. Please provide:
 
 1. **Program Name** (as it appears in Airtable):
 2. **Program Slug** (URL-friendly, e.g., "strategic-hr-management"):
-3. **Registration URL** (external registration link):
+3. **Registration URL** (external registration link, or "#" as placeholder):
 4. **Enrollment Fee** (number only, e.g., 2375):
-5. **Duration** (e.g., "4½ days", "3 days"):
+5. **Duration** (e.g., "4½ days", "3 days", "2 days"):
 6. **Delivery Options** (comma-separated: In Person, Virtual, On Demand):
 ```
 
-### Step 2.2: SEO & Meta
-```
-Now let's set up SEO:
+### Step 2.2: SEO & Meta (AUTO-GENERATED)
 
-1. **Page Title** (e.g., "Certificate in Strategic HR Management - IAML"):
-2. **Meta Description** (150-160 chars for SEO):
-3. **Keywords** (comma-separated):
-4. **OG Image URL** (or press Enter to use default):
+**DO NOT ask the user for SEO input.** Instead:
+
+1. Use WebSearch to research keywords related to the program name
+2. Analyze competitor pages and search intent
+3. Auto-generate optimized metadata:
+   - **Page Title**: `[Program Name] | IAML` (include "Training" if relevant)
+   - **Meta Description**: 150-160 chars focusing on outcomes, duration, and credits
+   - **Keywords**: 6-10 relevant keywords from research
+   - **OG Image**: Use default `https://iaml.com/images/og-image.jpg`
+
+4. Present the generated SEO data to the user for confirmation:
 ```
+=== Auto-Generated SEO Metadata ===
+
+Based on keyword research, I've generated:
+
+Page Title: [generated title]
+Meta Description: [generated description]
+Keywords: [generated keywords]
+
+>>> These look good? [Y/n to customize]
+```
+
+If user says "n", allow customization. Otherwise, proceed.
 
 ### Step 2.3: Hero Content
 ```
@@ -80,7 +95,7 @@ Testimonials - paste in any format:
 Accepted formats:
 - "Quote text" - Name, Title, Company
 - Quote | Name | Title | Company
-- Or just paste a spreadsheet export
+- Or just paste a spreadsheet/CSV export
 
 Paste your testimonials (or type "skip" to add later):
 ```
@@ -90,7 +105,22 @@ Paste your testimonials (or type "skip" to add later):
 Curriculum structure - How many blocks? (1-3):
 ```
 
-Then for each block:
+For single-block programs (like 2-day advanced programs):
+```
+Since this is a single cohesive program, I'll create one curriculum block.
+
+Paste your curriculum content. Format:
+- Group title and description on first line
+- Skills with levels (FOUNDATION/ADVANCED/EXPERT) and descriptions below
+
+Example:
+New Administration Agenda - Prepare for What's Coming
+FOUNDATION — DOL enforcement priorities: Understand the new administration's focus
+ADVANCED — NLRB policy shifts: Navigate changes to joint-employer tests
+EXPERT — Contractor classification: Anticipate rule changes on gig worker status
+```
+
+For multi-block programs:
 ```
 Block [N] details:
 1. **Label** (e.g., "Block I"):
@@ -99,26 +129,29 @@ Block [N] details:
 4. **Price** (individual block price):
 
 Now list competency groups for Block [N].
-For each group, provide:
-- Group title and description
-- Skills with levels (Foundation/Advanced/Expert) and descriptions
-
-Paste or type your competency groups:
 ```
 
-### Step 2.7: Faculty
-```
-Faculty/Instructors (1-12):
+### Step 2.7: Faculty (DYNAMIC FROM AIRTABLE)
 
-For each instructor, provide:
-- Name (with credentials, e.g., "Ray Deeny, Esq.")
-- Title and Organization
-- Bio (3-4 sentences)
-- Photo URL (Google Cloud Storage)
-- Full bio link (optional)
+**DO NOT ask the user for faculty information.**
 
-Paste your faculty list:
+Faculty is loaded dynamically from Airtable:
+1. The HTML page includes `data-program-slug="[slug]"` on the faculty section
+2. The `/js/faculty.js` script fetches faculty from cache or Airtable API
+3. Faculty must be linked to the program in Airtable via the `PROGRAMS (Faculty)` field
+
+Simply confirm with the user:
 ```
+Faculty will be loaded dynamically from Airtable.
+
+Please ensure:
+- Faculty members are linked to "[Program Name]" in Airtable
+- Each faculty member has: name, title, bio, and headshot photo
+
+>>> Faculty is set up in Airtable? [Y/n]
+```
+
+If "n", remind them to set up faculty in Airtable before the page will display correctly.
 
 ### Step 2.8: FAQ
 ```
@@ -131,14 +164,16 @@ Paste your Q&A pairs in any format:
 Paste your FAQs:
 ```
 
-### Step 2.9: Benefits Section
-```
-Benefits customization:
+### Step 2.9: Benefits Section (SKIP - USE TEMPLATE)
 
-1. **Credit Count** (e.g., "35.75 SHRM/HRCI/CLE"):
-2. **Update Period** (default: "12 months"):
-3. **Alumni Discount** (default: "$300-$500"):
-```
+**DO NOT ask the user for benefits section input.**
+
+The benefits section uses the template's default content and styling. Simply use the values from the FAQ content:
+- Extract credit count from FAQ answers (e.g., "13.75 SHRM/HRCI/CLE")
+- Use default update period: "12 months"
+- Extract alumni discount from FAQ answers (e.g., "$300")
+
+If these values aren't clear from the FAQ, use sensible defaults based on the program duration.
 
 ### Step 2.10: Airtable View IDs
 ```
@@ -147,201 +182,20 @@ Airtable View Configuration:
 These view IDs connect your program to Airtable session data.
 Create filtered views in Airtable for this program, then paste the view IDs below.
 
+Based on your delivery options ([list options]), I need:
+
 1. **In-Person View ID** (required):
-   - Used for "Next Program" card and In-Person sessions in "Choose Your Format"
-   - Filters: Program = "[Program Name]", Format = "In-Person"
-   - Example: viwfys9oVCU3gFsel
-
-2. **Virtual View ID** (optional - press Enter to skip if no virtual option):
-   - Used for Virtual sessions in "Choose Your Format"
-   - Filters: Program = "[Program Name]", Format = "Virtual"
-   - Example: viwG1w68D5qVdMHIa
-
-3. **On-Demand View ID** (optional - press Enter to skip if no on-demand option):
-   - Used for On-Demand sessions in "Choose Your Format"
-   - Filters: Program = "[Program Name]", Format = "On-Demand"
-   - Example: viw123456789abcd
-
-Paste your view IDs:
+   Example: viwfys9oVCU3gFsel
 ```
 
----
-
-## PHASE 2.5: SEO Research & Suggestions (MCP-Powered)
-
-This phase uses MCP servers to research keywords, analyze competition, and suggest optimized metadata. All suggestions are presented for user approval before applying.
-
-### Step 2.5.1: Check MCP Availability
-
-Before starting research, verify MCP server availability:
-
+Only ask for Virtual and On-Demand view IDs if those delivery options were specified:
 ```
-=== SEO Research Setup ===
+2. **Virtual View ID**:
+   Example: viwG1w68D5qVdMHIa
 
-Checking MCP server availability...
-
-[✓] DataForSEO - Available (keyword research, SERP analysis)
-[✓] Google Search Console - Available (existing rankings)
-[✓] Lighthouse - Available (post-generation audit)
-
->>> Proceed with SEO research? [Y/n/skip]
+3. **On-Demand View ID**:
+   Example: viw123456789abcd
 ```
-
-If a server is unavailable:
-```
-[✗] DataForSEO - Not configured
-    Run /setup-mcp to configure, or continue without keyword research.
-
->>> [C]onfigure now / [S]kip SEO research / [P]roceed without this server
-```
-
-### Step 2.5.2: DataForSEO Keyword Research
-
-Query DataForSEO with program-related keywords:
-
-**Keywords to research:**
-- Program name (e.g., "Certificate in Employee Relations Law")
-- Program name + "training" / "course" / "certification"
-- Topic keywords (e.g., "employee relations", "HR law")
-- Competitor terms (e.g., "SHRM certification", "HR training program")
-
-**Present results to user:**
-```
-=== Keyword Research Results (DataForSEO) ===
-
-Primary Keyword Analysis:
-┌─────────────────────────────────────────┬────────┬─────────────┬───────┐
-│ Keyword                                 │ Volume │ Competition │ CPC   │
-├─────────────────────────────────────────┼────────┼─────────────┼───────┤
-│ employee relations law training         │ 720    │ Medium      │ $8.50 │
-│ employee relations certification        │ 590    │ Low         │ $6.20 │
-│ HR law training program                 │ 480    │ Medium      │ $7.80 │
-│ employment law course for HR            │ 320    │ Low         │ $5.40 │
-└─────────────────────────────────────────┴────────┴─────────────┴───────┘
-
-Related Keywords (for meta keywords):
-- employee relations, HR certification, employment law training
-- workplace compliance, SHRM certification, HRCI credits
-- labor relations, HR professional development
-
-Questions People Ask (for FAQ optimization):
-- "What is employee relations law?"
-- "How do I get certified in employee relations?"
-- "What does an employee relations specialist do?"
-- "Is HR certification worth it?"
-
->>> Save keyword data to program JSON? [Y/n]
-```
-
-### Step 2.5.3: Google Search Console Analysis
-
-Check existing rankings for the IAML domain:
-
-```
-=== Existing Rankings (Google Search Console) ===
-
-Site: iaml.com (Last 90 days)
-
-Current rankings for related terms:
-┌─────────────────────────────────────┬──────────┬─────────────┬───────┐
-│ Query                               │ Position │ Impressions │ CTR   │
-├─────────────────────────────────────┼──────────┼─────────────┼───────┤
-│ hr training courses                 │ 12       │ 1,200       │ 2.3%  │
-│ employment law certificate          │ 18       │ 890         │ 1.8%  │
-│ hr certification programs           │ 24       │ 650         │ 1.2%  │
-└─────────────────────────────────────┴──────────┴─────────────┴───────┘
-
-Opportunity Analysis:
-- "employee relations certification" - No current ranking (high opportunity)
-- "employment law training" - Position 18 (can improve with new content)
-
->>> Continue to competition analysis? [Y/n]
-```
-
-### Step 2.5.4: Competition SERP Analysis
-
-Analyze top-ranking pages for primary keywords:
-
-```
-=== Competition Analysis (DataForSEO SERP) ===
-
-Top 5 results for "employee relations law training":
-
-1. shrm.org/learning/employee-relations
-   Title: "Employee Relations Certificate | SHRM" (45 chars)
-   Description: "Develop expertise in employee relations..." (155 chars)
-   Schema: Course, EducationalOrganization
-
-2. cornellcollege.edu/hr/employee-relations
-   Title: "Employee Relations Law Certificate Program" (48 chars)
-   Description: "Cornell's online employee relations..." (148 chars)
-   Schema: Course
-
-3. hr.com/employee-relations-training
-   Title: "Employee Relations Training | HR.com" (40 chars)
-   Description: "Master employee relations with..." (152 chars)
-   Schema: Course, Offer
-
-Common Patterns:
-- Title length: 40-50 characters
-- Include "Certificate" or "Training" in title
-- Description mentions outcomes + credentials
-- All use Course schema
-
->>> Continue to SEO suggestions? [Y/n]
-```
-
-### Step 2.5.5: Present SEO Suggestions for Approval
-
-Based on all research, present consolidated suggestions:
-
-```
-=== SEO Optimization Suggestions ===
-
-Based on keyword research and competition analysis, here are my recommendations:
-
-PAGE TITLE:
-  Your input:    "Certificate in Employee Relations Law - IAML"
-  Suggested:     "Certificate in Employee Relations Law | IAML Training"
-  Reason:        Adding "Training" matches search intent (720 searches/mo).
-                 Format matches top competitors.
-
->>> Accept title suggestion? [Y/n/customize]
-
-META DESCRIPTION:
-  Your input:    "Master employee relations strategies with practicing attorneys."
-  Suggested:     "Master employee relations law in 4.5 days. Earn SHRM/HRCI/CLE
-                 credits. Taught by practicing attorneys. Real cases, practical
-                 solutions. Certificate program."
-  Reason:        Includes high-value keywords (certification, credits) and
-                 specific outcomes. 158 characters (optimal).
-
->>> Accept description suggestion? [Y/n/customize]
-
-META KEYWORDS:
-  Suggested:     employee relations law, HR certification, employment law training,
-                 workplace compliance, SHRM certification, HRCI credits,
-                 labor relations training, HR professional development
-  Source:        DataForSEO keyword research + related terms
-
->>> Accept keywords? [Y/n/customize]
-
-SCHEMA.ORG DATA:
-  Type:          Course
-  Level:         intermediate
-  Duration:      P4DT4H (4.5 days in ISO 8601)
-  Skills:        ["Employee Relations", "Employment Law", "Workplace Compliance",
-                 "Labor Relations", "HR Legal Compliance"]
-
->>> Accept schema data? [Y/n/customize]
-
-CANONICAL URL:
-  https://iaml.com/programs/employee-relations-law
-
->>> Accept? [Y/enter]
-```
-
-After user approves each suggestion, store in the program data for Phase 3.
 
 ---
 
@@ -349,103 +203,48 @@ After user approves each suggestion, store in the program data for Phase 3.
 
 After collecting all data, create `programs/data/[program-slug].json` with the structured data.
 
+Include all collected data plus auto-generated SEO fields:
+- `seo.canonicalUrl`
+- `seo.schema.educationalLevel` (beginner/intermediate/advanced based on program type)
+- `seo.schema.timeRequired` (ISO 8601 duration)
+- `seo.schema.teaches` (array of skills from curriculum)
+- `seo.keywordData` (research results for reference)
+
 Show the user: "Data saved to programs/data/[slug].json"
 
 ---
 
 ## PHASE 4: Generate HTML Page
 
-1. Read the template: `programs/_template.html`
-2. Replace ALL placeholders with program data
-3. Generate curriculum blocks HTML (maintain existing structure from template)
-4. Generate faculty cards HTML
-5. Generate FAQ items HTML
-6. Write to: `programs/[program-slug].html`
+Use the generator script or manual template replacement:
 
-### Placeholders Reference
+1. Read existing program page as base (e.g., `programs/employee-relations-law.html`)
+2. Replace all program-specific content:
+   - Meta tags and SEO
+   - Hero section
+   - Content section
+   - Testimonials data
+   - Curriculum blocks
+   - FAQ items
+   - Airtable view IDs
+3. Set `data-program-slug` attribute for dynamic faculty loading
+4. Adjust "Choose Your Format" section based on delivery options
+5. Write to: `programs/[program-slug].html`
 
-**Meta & SEO (NEW - from Phase 2.5):**
-- `{{META_TITLE}}`, `{{META_DESCRIPTION}}`, `{{META_KEYWORDS}}`
-- `{{OG_TITLE}}`, `{{OG_DESCRIPTION}}`, `{{OG_IMAGE}}`, `{{PROGRAM_SLUG}}`
-- `{{TWITTER_CARD}}` - Card type (default: `summary_large_image`)
-- `{{TWITTER_TITLE}}`, `{{TWITTER_DESCRIPTION}}`, `{{TWITTER_IMAGE}}` - Twitter Card tags
-- `{{CANONICAL_URL}}` - Full canonical URL (e.g., `https://iaml.com/programs/employee-relations-law`)
-- `{{META_ROBOTS}}` - Robots directive (default: `index, follow`)
-- `{{SCHEMA_JSON_LD}}` - Complete Schema.org Course JSON-LD block
+### Key Replacements
 
-**Hero:**
-- `{{PROGRAM_TITLE}}`, `{{PROGRAM_DESCRIPTION}}`, `{{PROGRAM_PRICE}}`
-- `{{REGISTRATION_URL}}`, `{{DELIVERY_OPTIONS}}`
+**For In-Person only programs:**
+- Remove Virtual and On-Demand tabs from format toggle
+- Update subtitle text to reflect in-person only
 
-**Content:**
-- `{{CONTENT_HEADLINE}}`, `{{CONTENT_DESCRIPTION}}`, `{{CONTENT_BENEFITS}}`
+**For curriculum:**
+- Single-block programs: Remove block navigation cards, show all competency groups
+- Multi-block programs: Include navigation cards with pricing
 
-**Data:**
-- `{{TESTIMONIALS_DATA}}` - JSON array
-- `{{PROGRAM_NAME}}` - For Airtable queries
-- `{{PROGRAM_NAME_LOWERCASE}}` - For string matching
-
-**Curriculum:**
-- `{{CURRICULUM_HEADER_TITLE}}`, `{{CURRICULUM_HEADER_DESC}}`
-- `{{CURRICULUM_NAV_CARDS}}`, `{{CURRICULUM_BLOCKS}}`
-
-**Faculty:**
-- `{{FACULTY_HEADLINE}}`, `{{FACULTY_SUBTITLE}}`, `{{FACULTY_CARDS}}`
-
-**Benefits:**
-- `{{BENEFIT_CREDITS}}`, `{{BENEFIT_UPDATES}}`, `{{BENEFIT_DISCOUNT}}`
-
-**FAQ:**
-- `{{FAQ_ITEMS}}`
-
-**Airtable:**
-- `{{AIRTABLE_IN_PERSON_VIEW_ID}}` - View ID for in-person sessions (required)
-- `{{AIRTABLE_VIRTUAL_VIEW_ID}}` - View ID for virtual sessions (empty string if not provided)
-- `{{AIRTABLE_ON_DEMAND_VIEW_ID}}` - View ID for on-demand sessions (empty string if not provided)
-
-### Schema.org JSON-LD Template
-
-When generating `{{SCHEMA_JSON_LD}}`, use this structure:
-
-```json
-{
-  "@context": "https://schema.org",
-  "@type": "Course",
-  "name": "{{PROGRAM_NAME}}",
-  "description": "{{META_DESCRIPTION}}",
-  "url": "{{CANONICAL_URL}}",
-  "image": "{{OG_IMAGE}}",
-  "provider": {
-    "@type": "Organization",
-    "name": "Institute for Applied Management & Law",
-    "url": "https://iaml.com",
-    "logo": "https://storage.googleapis.com/msgsndr/MjGEy0pobNT9su2YJqFI/media/69042ba0346960d8775fb4a4.svg"
-  },
-  "educationalLevel": "{{EDUCATIONAL_LEVEL}}",
-  "timeRequired": "{{TIME_REQUIRED}}",
-  "teaches": {{TEACHES_ARRAY}},
-  "offers": {
-    "@type": "Offer",
-    "price": "{{PROGRAM_PRICE}}",
-    "priceCurrency": "USD",
-    "availability": "https://schema.org/InStock",
-    "url": "{{REGISTRATION_URL}}"
-  },
-  "hasCourseInstance": [
-    {
-      "@type": "CourseInstance",
-      "courseMode": ["onsite", "online"],
-      "courseWorkload": "{{DURATION}}"
-    }
-  ]
-}
-```
-
-**Field Mappings:**
-- `{{EDUCATIONAL_LEVEL}}` - From `seo.schema.educationalLevel` (beginner/intermediate/advanced)
-- `{{TIME_REQUIRED}}` - From `seo.schema.timeRequired` (ISO 8601, e.g., "P4DT4H")
-- `{{TEACHES_ARRAY}}` - JSON array from `seo.schema.teaches`
-- `{{DURATION}}` - From `hero.duration`
+**For faculty:**
+- Set `data-program-slug="[slug]"` on faculty section
+- Include `/js/faculty.js` script
+- Add placeholder static content that JS will replace
 
 ---
 
@@ -460,23 +259,18 @@ Files created:
 - programs/[slug].html
 
 Post-generation checklist:
-[ ] Verify images are uploaded to Google Cloud Storage
+[ ] Verify program exists in Airtable with slug "[slug]"
+[ ] Verify faculty are linked to this program in Airtable
+[ ] Verify Airtable view ID returns sessions for this program
 [ ] Test registration URL works correctly
-[ ] Check Airtable has sessions for this program name
 [ ] Preview the page in browser
-[ ] Test responsive layouts (mobile, tablet, desktop)
-
-SEO verification:
-[ ] Twitter Card preview (cards-dev.twitter.com/validator)
-[ ] Schema.org validation (validator.schema.org)
-[ ] Open Graph preview (developers.facebook.com/tools/debug)
 
 >>> Ready for Lighthouse SEO audit? [Y/n/skip]
 ```
 
 ---
 
-## PHASE 6: Lighthouse SEO Audit (MCP-Powered)
+## PHASE 6: Lighthouse SEO Audit
 
 Run an automated SEO audit on the generated page to verify quality.
 
@@ -491,139 +285,36 @@ Wait for server to be ready, then proceed.
 
 ### Step 6.2: Run Lighthouse SEO Audit
 
-Using the Lighthouse MCP server, run an SEO-focused audit:
-
-**Audit Configuration:**
+Run SEO-focused audit:
 - URL: `http://localhost:3000/programs/[program-slug].html`
-- Categories: `seo` only (faster than full audit)
-- Device: Desktop
+- Categories: `seo` only
 
-### Step 6.3: Report Results
+### Step 6.3: Report Results and Fix Issues
 
-```
-=== Lighthouse SEO Audit ===
+Report SEO score and any issues found. Auto-fix simple issues like missing alt attributes.
 
-URL: http://localhost:3000/programs/employee-relations-law.html
-SEO Score: 98/100
-
-PASSED:
-[✓] Document has a <title> element
-[✓] Document has a meta description
-[✓] Page has successful HTTP status code
-[✓] Links have descriptive text
-[✓] Links are crawlable
-[✓] Page isn't blocked from indexing
-[✓] Document has valid hreflang
-[✓] Document has valid rel=canonical
-[✓] Document uses legible font sizes
-[✓] Tap targets are sized appropriately
-[✓] Document has valid structured data (Course schema)
-
-WARNINGS:
-[!] Image elements missing [alt] attributes (2 found)
-    - Line 234: <img src="faculty-photo.jpg">
-    - Line 289: <img src="sponsor-logo.png">
-
->>> Fix warnings automatically? [Y/n]
-```
-
-### Step 6.4: Auto-Fix Simple Issues
-
-If user approves, automatically fix common issues:
-
-**Fixable issues:**
-- Missing alt attributes on images (generate from context/filename)
-- Missing aria-labels on interactive elements
-- Links with generic text ("click here", "read more")
-
-**Not auto-fixable (report only):**
-- Slow page load (requires optimization)
-- Missing structured data fields
-- Complex accessibility issues
-
-### Step 6.5: Final Summary
+### Step 6.4: Final Summary
 
 ```
 === Generation Complete ===
 
-Program: Certificate in Employee Relations Law
-URL:     https://iaml.com/programs/employee-relations-law
+Program: [Program Name]
+URL:     https://iaml.com/programs/[slug]
 
 Files:
-  ✓ programs/data/employee-relations-law.json
-  ✓ programs/employee-relations-law.html
+  ✓ programs/data/[slug].json
+  ✓ programs/[slug].html
 
 SEO Status:
-  ✓ Lighthouse Score: 98/100
+  ✓ Lighthouse Score: [score]/100
   ✓ Schema.org: Course (valid)
-  ✓ Twitter Card: summary_large_image
   ✓ Open Graph: Complete
   ✓ Canonical: Set
-  ✓ Keywords: 8 targeted
 
 Next Steps:
-  1. Review the page in browser: http://localhost:3000/programs/employee-relations-law.html
-  2. Commit changes: git add . && git commit -m "feat: add employee-relations-law program page"
+  1. Review the page in browser
+  2. Commit changes
   3. Push to deploy
-```
-
----
-
-## HTML Generation Templates
-
-### Delivery Options Pills
-```html
-<span class="format-pill">In Person</span>
-<span class="format-pill">Virtual</span>
-<span class="format-pill">On Demand</span>
-```
-
-### Curriculum Nav Card
-```html
-<div class="curriculum-nav-card [active]" data-target="block[N]" tabindex="[0|-1]" role="tab" aria-selected="[true|false]" aria-controls="block[N]">
-  <div class="block-label">[Label]</div>
-  <h3>[Title]</h3>
-  <p>[Description]</p>
-  <div class="curriculum-price">$[Price]</div>
-  <div class="curriculum-availability">Available individually</div>
-</div>
-```
-
-### Curriculum Block Content
-Keep the existing block structure from the template, replacing competency groups and skills.
-
-### Faculty Card
-```html
-<article class="faculty-card">
-  <div class="faculty-card-inner">
-    <div class="faculty-image">
-      <img src="[imageUrl]" alt="[name]">
-    </div>
-    <div class="faculty-content">
-      <h3 class="faculty-name">[name]</h3>
-      <p class="faculty-title">[title]</p>
-      <p class="faculty-bio">[bio]</p>
-      <a href="[bioLink]" class="faculty-link">Read [firstName]'s full bio →</a>
-    </div>
-  </div>
-</article>
-```
-
-### FAQ Item
-```html
-<div class="faq-item [active - first one only]">
-  <button class="faq-question">
-    [question]
-    <svg class="faq-chevron" viewBox="0 0 20 20" fill="currentColor">
-      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"/>
-    </svg>
-  </button>
-  <div class="faq-answer">
-    <div class="faq-answer-content">
-      [answer]
-    </div>
-  </div>
-</div>
 ```
 
 ---
@@ -633,26 +324,27 @@ Keep the existing block structure from the template, replacing competency groups
 1. **Vanilla JS only** - No frameworks or build tools
 2. **Keep heading hierarchy**: H1 (title), H2 (sections), H3 (subsections), H4 (skills)
 3. **Sessions widget** uses program name for Airtable queries - must match exactly
-4. **No registration modal** - Uses external registration URL
-5. **Preserve inline CSS** - Template has ~3000 lines of inline styles
+4. **Faculty is dynamic** - Loaded from Airtable, not hardcoded
+5. **Benefits section** - Use template defaults, extract values from FAQ content
+6. **SEO is auto-generated** - Research and generate, don't ask for manual input
 
-### SEO Rules (NEW)
+### Automation Summary
 
-6. **Always generate Schema.org JSON-LD** - Use Course type with valid structure
-7. **Meta description length** - Keep between 150-160 characters for optimal SERP display
-8. **Canonical URL format** - Always use `https://iaml.com/programs/[slug]` (no .html)
-9. **Twitter Card defaults** - Use `summary_large_image` unless specified otherwise
-10. **Keyword research** - Store in JSON for future reference, even if user skips suggestions
-11. **ISO 8601 duration** - Convert program duration (e.g., "4½ days" → "P4DT4H")
+| Section | User Input Required? | How It Works |
+|---------|---------------------|--------------|
+| SEO/Meta | NO | Auto-generated from keyword research |
+| Faculty | NO | Dynamic from Airtable via `data-program-slug` |
+| Benefits | NO | Use template, extract from FAQ content |
+| Basic Info | YES | User provides program name, price, duration, etc. |
+| Hero | YES | User provides title and description |
+| Content | YES | User provides headline, description, benefits |
+| Testimonials | YES | User pastes CSV or formatted list |
+| Curriculum | YES | User provides structure and content |
+| FAQ | YES | User provides Q&A pairs |
+| Airtable IDs | YES | User provides view IDs |
 
-### MCP Server Usage
-
-- **DataForSEO**: Keyword research (volume, competition), SERP analysis
-- **Google Search Console**: Existing rankings, impression data, CTR
-- **Lighthouse**: Post-generation SEO audit, accessibility check
-
-If MCP servers are unavailable, the command can still generate pages with sensible defaults for SEO fields.
+---
 
 ## Schema Reference
 
-See `programs/data/_schema.json` for the complete data structure (includes new `seo` object).
+See `programs/data/_schema.json` for the complete data structure.

@@ -2232,24 +2232,26 @@
     <!-- Schedule Section -->
     <section class="schedule-section">
       <div class="schedule-v2b-container">
-        <!-- Filters -->
-        <div class="schedule-v2b-filters">
-          <select class="schedule-v2b-filter" id="programTypeFilter" aria-label="Filter by program type">
-            <option value="">All Types</option>
-            <option value="employment-law">Employment Law</option>
-            <option value="benefits-law">Benefits Law</option>
-            <option value="hr-management">HR Management</option>
-          </select>
-          <select class="schedule-v2b-filter" id="formatFilter" aria-label="Filter by format">
-            <option value="">All Formats</option>
-            <option value="in-person">In-Person</option>
-            <option value="virtual">Virtual</option>
-          </select>
-          <select class="schedule-v2b-filter" id="programFilter" aria-label="Filter by program">
-            <option value="">All Programs</option>
-          </select>
-          <button class="schedule-v2b-clear" id="clearFilters">Clear</button>
-        </div>
+        <!-- Filters - Unified Nav Style -->
+        <nav class="unified-nav ps-filter-nav" role="navigation" aria-label="Program filters">
+          <div class="unified-nav-container ps-filter-container">
+            <select class="unified-nav-select" id="programTypeFilter" aria-label="Filter by program type">
+              <option value="">All Types</option>
+              <option value="employment-law">Employment Law</option>
+              <option value="benefits-law">Benefits Law</option>
+              <option value="hr-management">HR Management</option>
+            </select>
+            <select class="unified-nav-select" id="formatFilter" aria-label="Filter by format">
+              <option value="">All Formats</option>
+              <option value="in-person">In-Person</option>
+              <option value="virtual">Virtual</option>
+            </select>
+            <select class="unified-nav-select" id="programFilter" aria-label="Filter by program">
+              <option value="">All Programs</option>
+            </select>
+            <button class="unified-nav-item" id="clearFilters">Clear</button>
+          </div>
+        </nav>
 
         <!-- Program List -->
         <div class="schedule-v2b-list" id="programList">

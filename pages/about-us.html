@@ -218,6 +218,17 @@
 
           <!-- Carousel Container -->
           <div class="hero-testimonial-carousel">
+            <!-- Navigation Arrows -->
+            <button class="about-carousel-arrow about-carousel-arrow--prev" id="carouselPrev" aria-label="Previous testimonial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+              </svg>
+            </button>
+            <button class="about-carousel-arrow about-carousel-arrow--next" id="carouselNext" aria-label="Next testimonial">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 6 15 12 9 18"></polyline>
+              </svg>
+            </button>
             <div class="hero-testimonial-track">
 
               <!-- Testimonial 1 -->
@@ -455,7 +466,7 @@
       <div class="about-floating-logos-container">
         <!-- Left Content -->
         <div class="about-floating-logos-content">
-          <h2 class="about-floating-logos-headline">A few of the organizations that trust us to train their teams</h2>
+          <h2 class="about-floating-logos-headline">A few of the organizations that have trusted us to train their teams for decades</h2>
         </div>
 
         <!-- Right Logo Marquee -->
@@ -643,6 +654,11 @@
         updatePositions();
       }
 
+      function prevSlide() {
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updatePositions();
+      }
+
       function startAutoRotate() {
         autoRotateInterval = setInterval(nextSlide, 5000);
       }
@@ -651,10 +667,33 @@
         clearInterval(autoRotateInterval);
       }
 
+      function restartAutoRotate() {
+        stopAutoRotate();
+        startAutoRotate();
+      }
+
       // Pause on hover
       const carousel = document.querySelector('.hero-testimonial-carousel');
       carousel.addEventListener('mouseenter', stopAutoRotate);
       carousel.addEventListener('mouseleave', startAutoRotate);
+
+      // Arrow navigation
+      const prevBtn = document.getElementById('carouselPrev');
+      const nextBtn = document.getElementById('carouselNext');
+
+      if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+          prevSlide();
+          restartAutoRotate();
+        });
+      }
+
+      if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+          nextSlide();
+          restartAutoRotate();
+        });
+      }
 
       // Initialize
       updatePositions();
