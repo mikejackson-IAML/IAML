@@ -1356,13 +1356,20 @@ hr.separator {
   color: var(--blue-primary);
 }
 
-.competency-group.active .competency-toggle {
-  transform: rotate(180deg);
+.competency-toggle::before {
+  content: "›";
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.7);
+  transition: transform var(--transition-base), color var(--transition-base);
 }
 
-.competency-toggle::before {
-  content: "▼";
-  font-size: 12px;
+.competency-header:hover .competency-toggle::before {
+  color: rgba(255, 255, 255, 1);
+}
+
+.competency-group.active .competency-toggle {
+  transform: rotate(90deg);
 }
 
 .competency-content {

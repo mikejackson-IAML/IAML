@@ -432,6 +432,25 @@
           "description": "Final CTA headline"
         }
       }
+    },
+    "airtable": {
+      "type": "object",
+      "description": "Airtable view IDs for session data (Next Program and Choose Your Format sections)",
+      "required": ["inPersonViewId"],
+      "properties": {
+        "inPersonViewId": {
+          "type": "string",
+          "description": "View ID for in-person sessions (required) - used for Next Program card and In-Person format"
+        },
+        "virtualViewId": {
+          "type": ["string", "null"],
+          "description": "View ID for virtual sessions (optional) - used for Virtual format"
+        },
+        "onDemandViewId": {
+          "type": ["string", "null"],
+          "description": "View ID for on-demand sessions (optional) - used for On-Demand format"
+        }
+      }
     }
   }
 }

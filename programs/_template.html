@@ -3633,15 +3633,17 @@ button#prev-btn {
        CONFIG
        =========================== */
     // CONFIG FOR PROGRAM SESSIONS
-    // The PROGRAMS_VIEW will be different for each program page:
-    // - Certificate & Strategic HR Leadership: viwjSrF7oSzlzYuIc (THIS PAGE)
-    // - Other programs: Change PROGRAMS_VIEW value when copying this template
+    // View IDs are set during /new-program generation from Airtable view configuration
     const CONFIG = {
       AIRTABLE: {
         PROGRAMS_TABLE: 'tblympiL1p6PmQz9i',
-        PROGRAMS_VIEW: 'viwjSrF7oSzlzYuIc', // Certificate & Strategic HR Leadership In-Person
+        PROGRAMS_VIEW: '{{AIRTABLE_IN_PERSON_VIEW_ID}}',
+        VIRTUAL_VIEW: '{{AIRTABLE_VIRTUAL_VIEW_ID}}',
+        ON_DEMAND_VIEW: '{{AIRTABLE_ON_DEMAND_VIEW_ID}}',
         INSTRUCTORS_TABLE: 'Faculty',
         get PROGRAMS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.PROGRAMS_VIEW)}`; },
+        get VIRTUAL_ENDPOINT(){ return this.VIRTUAL_VIEW ? `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.VIRTUAL_VIEW)}` : null; },
+        get ON_DEMAND_ENDPOINT(){ return this.ON_DEMAND_VIEW ? `/api/airtable-programs?table=${encodeURIComponent(this.PROGRAMS_TABLE)}&view=${encodeURIComponent(this.ON_DEMAND_VIEW)}` : null; },
         get INSTRUCTORS_ENDPOINT(){ return `/api/airtable-programs?table=${encodeURIComponent(this.INSTRUCTORS_TABLE)}`; }
       },
       PROGRAMS_DATA: [],
@@ -8875,10 +8877,10 @@ button#prev-btn {
   <script>
     // Next Program Card Component JavaScript
 
-    // Configuration
+    // Configuration - View ID set during /new-program generation
     const NEXT_PROGRAM_CONFIG = {
       tableId: 'tblympiL1p6PmQz9i',
-      viewId: 'viwjSrF7oSzlzYuIc'
+      viewId: '{{AIRTABLE_IN_PERSON_VIEW_ID}}'
     };
 
     // Timezone-neutral date parsing to avoid date shifting issues

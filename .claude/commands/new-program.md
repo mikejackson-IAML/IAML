@@ -140,6 +140,31 @@ Benefits customization:
 3. **Alumni Discount** (default: "$300-$500"):
 ```
 
+### Step 2.10: Airtable View IDs
+```
+Airtable View Configuration:
+
+These view IDs connect your program to Airtable session data.
+Create filtered views in Airtable for this program, then paste the view IDs below.
+
+1. **In-Person View ID** (required):
+   - Used for "Next Program" card and In-Person sessions in "Choose Your Format"
+   - Filters: Program = "[Program Name]", Format = "In-Person"
+   - Example: viwfys9oVCU3gFsel
+
+2. **Virtual View ID** (optional - press Enter to skip if no virtual option):
+   - Used for Virtual sessions in "Choose Your Format"
+   - Filters: Program = "[Program Name]", Format = "Virtual"
+   - Example: viwG1w68D5qVdMHIa
+
+3. **On-Demand View ID** (optional - press Enter to skip if no on-demand option):
+   - Used for On-Demand sessions in "Choose Your Format"
+   - Filters: Program = "[Program Name]", Format = "On-Demand"
+   - Example: viw123456789abcd
+
+Paste your view IDs:
+```
+
 ---
 
 ## PHASE 2.5: SEO Research & Suggestions (MCP-Powered)
@@ -372,6 +397,11 @@ Show the user: "Data saved to programs/data/[slug].json"
 
 **FAQ:**
 - `{{FAQ_ITEMS}}`
+
+**Airtable:**
+- `{{AIRTABLE_IN_PERSON_VIEW_ID}}` - View ID for in-person sessions (required)
+- `{{AIRTABLE_VIRTUAL_VIEW_ID}}` - View ID for virtual sessions (empty string if not provided)
+- `{{AIRTABLE_ON_DEMAND_VIEW_ID}}` - View ID for on-demand sessions (empty string if not provided)
 
 ### Schema.org JSON-LD Template
 
