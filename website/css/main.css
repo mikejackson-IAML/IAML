@@ -3,6 +3,9 @@
    Imports all CSS modules in correct order
    ============================================ */
 
+/* Dashboard Kit Styles (Tailwind-based) */
+@import '../../dashboard-kit/styles/globals.css';
+
 /* 1. Design System Variables */
 @import url('1-variables.css');
 
