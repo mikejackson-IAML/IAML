@@ -1,10 +1,27 @@
 {
   "mcpServers": {
-    "playwright": {
+    "airtable": {
       "command": "npx",
-      "args": ["-y", "@playwright/mcp@latest", "--viewport-size=1280x720"]
+      "args": ["-y", "airtable-mcp-server"],
+      "env": {
+        "AIRTABLE_API_KEY": "${AIRTABLE_API_KEY}"
+      }
     },
-
+    "apify": {
+      "command": "npx",
+      "args": ["-y", "apify-mcp-server"],
+      "env": {
+        "APIFY_API_TOKEN": "${APIFY_API_TOKEN}"
+      }
+    },
+    "apollo": {
+      "command": "npx",
+      "args": ["-y", "@thevgergroup/apollo-io-mcp@latest"],
+      "env": {
+        "APOLLO_API_KEY": "${APOLLO_API_KEY}",
+        "APOLLO_BASE_URL": "https://api.apollo.io/api/v1"
+      }
+    },
     "exa": {
       "command": "npx",
       "args": ["-y", "exa-mcp-server"],
@@ -19,11 +36,11 @@
         "FIRECRAWL_API_KEY": "${FIRECRAWL_API_KEY}"
       }
     },
-    "vercel": {
+    "gemini": {
       "command": "npx",
-      "args": ["-y", "vercel-mcp"],
+      "args": ["-y", "gemini-mcp-server"],
       "env": {
-        "VERCEL_TOKEN": "${VERCEL_TOKEN}"
+        "GEMINI_API_KEY": "${GEMINI_API_KEY}"
       }
     },
     "n8n": {
@@ -38,23 +55,16 @@
       "command": "npx",
       "args": ["-y", "n8n-mcp"]
     },
-    "apify": {
+    "playwright": {
       "command": "npx",
-      "args": ["-y", "@apify/actors-mcp-server"],
-      "env": {
-        "APIFY_TOKEN": "${APIFY_TOKEN}"
-      }
+      "args": ["-y", "@playwright/mcp@latest", "--viewport-size=1280x720"]
     },
-    "airtable": {
+    "semgrep": {
       "command": "npx",
-      "args": ["-y", "airtable-mcp-server"],
+      "args": ["-y", "semgrep-mcp-server"],
       "env": {
-        "AIRTABLE_API_KEY": "${AIRTABLE_API_KEY}"
+        "SEMGREP_API_KEY": "${SEMGREP_API_KEY}"
       }
-    },
-    "stripe": {
-      "command": "npx",
-      "args": ["-y", "@stripe/mcp", "--tools=all", "--api-key=${STRIPE_API_KEY}"]
     },
     "smartlead": {
       "command": "npx",
@@ -63,31 +73,26 @@
         "SMARTLEAD_API_KEY": "${SMARTLEAD_API_KEY}"
       }
     },
+    "stripe": {
+      "command": "npx",
+      "args": ["-y", "@stripe/mcp", "--tools=all"],
+      "env": {
+        "STRIPE_SECRET_KEY": "${STRIPE_SECRET_KEY}"
+      }
+    },
+    "vercel": {
+      "command": "npx",
+      "args": ["-y", "vercel-mcp"],
+      "env": {
+        "VERCEL_TOKEN": "${VERCEL_TOKEN}"
+      }
+    },
     "zapmail": {
       "command": "npx",
-      "args": ["-y", "zapmail-mcp"],
+      "args": ["-y", "zapmail-mcp-server"],
       "env": {
         "ZAPMAIL_API_KEY": "${ZAPMAIL_API_KEY}"
       }
-    },
-    "apollo": {
-      "command": "npx",
-      "args": ["-y", "@thevgergroup/apollo-io-mcp@latest"],
-      "env": {
-        "APOLLO_API_KEY": "${APOLLO_API_KEY}",
-        "APOLLO_BASE_URL": "https://api.apollo.io/api/v1"
-      }
-    },
-    "gemini": {
-      "command": "npx",
-      "args": ["-y", "aistudio-mcp-server"],
-      "env": {
-        "GEMINI_API_KEY": "${GEMINI_API_KEY}"
-      }
-    },
-    "semgrep": {
-      "command": "uvx",
-      "args": ["semgrep-mcp"]
     }
   }
 }
